@@ -12,6 +12,7 @@ namespace until.system
         void Update()
         {
             singleton.PrefabInstantiateMediator.Instance.onUpdate();
+            singleton.GameObjectControlMediator.Instance.onUpdate();
         }
     }
 }
