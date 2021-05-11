@@ -30,15 +30,38 @@ namespace until.system.singleton
         #endregion
 
         #region Methods.
-        #region Behaviour
+        #region Singleton
         public override void onSingletonAwake()
         {
-            var BootModeList = typeof(BootMode).getImplementedClasses();
-            foreach (var BootModeType in BootModeList)
+            var mode_list = typeof(BootMode).getImplementedClasses();
+            Mode candidate = null;
+#if TEST
+            Mode test_candidate = null;
+#endif
+            foreach (var mode_type in mode_list)
             {
-                CurrentMode = Activator.CreateInstance(BootModeType) as Mode;
-                break;
+                if (Activator.CreateInstance(mode_type) is Mode mode)
+                {
+#if TEST
+                    if (mode_type.FullName.StartsWith("until.test."))
+                    {
+                        test_candidate = mode;
+                    }
+                    else
+#endif
+                    {
+                        candidate = mode;
+                        break;
+                    }
+                }
             }
+            CurrentMode = candidate;
+#if TEST
+            if (CurrentMode == null)
+            {
+                CurrentMode = test_candidate;
+            }
+#endif
         }
 
         public override void onSingletonStart()
@@ -48,7 +71,9 @@ namespace until.system.singleton
         public override void onSingletonDestroy()
         {
         }
+        #endregion
 
+        #region Process Control
         // Update is called once per frame
         public void onUpdate()
         {
@@ -95,7 +120,7 @@ namespace until.system.singleton
         private void transit(Phase NextPhase)
         {
             Log.info(this, $"Change Phase {CurrentPhase} => {NextPhase}");
-            switch(NextPhase)
+            switch (NextPhase)
             {
                 case Phase.ModeInit:
                     Log.info(this, $"mode '{CurrentMode.GetType().FullName}' is starting.");
