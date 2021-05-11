@@ -3,7 +3,7 @@
 
 namespace until.develop
 {
-    public static class Log
+    public class Log
     {
         [Conditional("TEST")]
         public static void fatal(object Source, string Text, params object[] Args)

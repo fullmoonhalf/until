@@ -13,7 +13,7 @@ namespace until.system.defines
 
     public static class ExecutionOrder
     {
-        public const int GameObjectManagementBehavior = -1000;
+        public const int System_Head_10 = -1000;
         public const int ApplicationStart = -500;
         public const int ApplicationEnd = 500;
     }
