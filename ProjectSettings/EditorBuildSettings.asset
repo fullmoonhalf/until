@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Until/Test/Scenes/TestIngame.unity
-    guid: 7935a3b7960076849970316cdd05fa09
+    path: Assets/Until/Modules/Camera/Scenes/CameraModule.unity
+    guid: 08eff487f088b7a4d888855b41a1ab94
   m_configObjects: {}
