@@ -14,6 +14,9 @@ namespace until.system
             Log.info(nameof(Startup), "onApplicationStart - begin");
             SingletonBase.createAllSingleton();
 
+            var SystemObject = GameObject.Instantiate(Resources.Load(defines.Resources.SystemContainer));
+            GameObject.DontDestroyOnLoad(SystemObject);
+
             Log.info(nameof(Startup), "onApplicationStart - end");
         }
     }
