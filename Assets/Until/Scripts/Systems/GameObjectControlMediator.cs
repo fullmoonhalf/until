@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using until.system;
 
 
-namespace until.system.singleton
+namespace until.singleton
 {
     public class GameObjectControlMediator : Singleton<GameObjectControlMediator>
     {

@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using until.develop;
+using until.system;
 
 
-namespace until.system.singleton
+namespace until.singleton
 {
     public class PrefabInstantiateMediator : Singleton<PrefabInstantiateMediator>
     {

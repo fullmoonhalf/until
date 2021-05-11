@@ -36,12 +36,12 @@ namespace until.test
                     transit(Phase.StartSceneLoad);
                     break;
                 case Phase.StartSceneLoad:
-                    system.singleton.SceneLoader.Instance.requestToLoad(0, () => _CurrentPhase = Phase.NextMode);
+                    singleton.SceneLoader.Instance.requestToLoad(0, () => _CurrentPhase = Phase.NextMode);
                     break;
                 case Phase.WaitSceneLoad:
                     break;
                 case Phase.NextMode:
-                    system.singleton.ModeManager.Instance.enqueueNextMode<IngameMode>();
+                    singleton.ModeManager.Instance.enqueueNextMode<IngameMode>();
                     transit(Phase.Finish);
                     break;
                 default:

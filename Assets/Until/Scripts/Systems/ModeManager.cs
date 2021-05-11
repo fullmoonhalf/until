@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using until.develop;
 using until.utils;
+using until.system;
 
 
-namespace until.system.singleton
+namespace until.singleton
 {
     [DisallowMultipleComponent]
     public class ModeManager : Singleton<ModeManager>

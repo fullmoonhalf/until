@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
+using until.system;
 
 
-namespace until.system.singleton
+namespace until.singleton
 {
     [DisallowMultipleComponent]
     public class InputManager : Singleton<InputManager>
