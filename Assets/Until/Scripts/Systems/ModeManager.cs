@@ -1,0 +1,124 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+using until.develop;
+using until.utils;
+
+
+namespace until.system.singleton
+{
+    [DisallowMultipleComponent]
+    public class ModeManager : Singleton<ModeManager>
+    {
+        #region Definitions.
+        public enum Phase
+        {
+            Wait,
+            ModeInit,
+            ModeUpdate,
+            ModeExit,
+        }
+        #endregion
+
+        #region Properties.
+        public Phase CurrentPhase { get; private set; } = Phase.Wait;
+        private Mode CurrentMode = null;
+        private Mode NextMode = null;
+        #endregion
+
+        #region Fields.
+        #endregion
+
+        #region Methods.
+        #region Behaviour
+        public override void onSingletonAwake()
+        {
+            var BootModeList = typeof(BootMode).getImplementedClasses();
+            foreach (var BootModeType in BootModeList)
+            {
+                CurrentMode = Activator.CreateInstance(BootModeType) as Mode;
+                break;
+            }
+        }
+
+        public override void onSingletonStart()
+        {
+        }
+
+        public override void onSingletonDestroy()
+        {
+        }
+
+        // Update is called once per frame
+        public void onUpdate()
+        {
+            switch (CurrentPhase)
+            {
+                case Phase.Wait:
+                    if (CurrentMode != null)
+                    {
+                        transit(Phase.ModeInit);
+                    }
+                    break;
+                case Phase.ModeInit:
+                    if (CurrentMode.init() == Mode.Control.Done)
+                    {
+                        transit(Phase.ModeUpdate);
+                    }
+                    break;
+                case Phase.ModeUpdate:
+                    if (CurrentMode.update() == Mode.Control.Done)
+                    {
+                        transit(Phase.ModeExit);
+                    }
+                    break;
+                case Phase.ModeExit:
+                    if (CurrentMode.exit() == Mode.Control.Done)
+                    {
+                        CurrentMode = NextMode;
+                        NextMode = null;
+                        if (CurrentMode != null)
+                        {
+                            transit(Phase.ModeInit);
+                        }
+                        else
+                        {
+                            transit(Phase.Wait);
+                        }
+                    }
+                    break;
+            }
+        }
+        #endregion
+
+        #region PhaseControl.
+        private void transit(Phase NextPhase)
+        {
+            Log.info(this, $"Change Phase {CurrentPhase} => {NextPhase}");
+            switch(NextPhase)
+            {
+                case Phase.ModeInit:
+                    Log.info(this, $"mode '{CurrentMode.GetType().FullName}' is starting.");
+                    break;
+            }
+            CurrentPhase = NextPhase;
+
+
+        }
+        #endregion
+
+        #region requests.
+        public void enqueueNextMode<T>() where T : Mode, new()
+        {
+            Log.info(this, $"enqueueNextMode {typeof(T).Name}");
+            NextMode = new T();
+        }
+        #endregion
+        #endregion
+
+        #region Tests.
+#if TEST
+#endif
+        #endregion
+    }
+}

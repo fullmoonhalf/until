@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace until.system
 {
-    [DefaultExecutionOrder(defines.ExecutionOrder.GameObjectManagementBehavior)]
+    [DefaultExecutionOrder(defines.ExecutionOrder.System_Head_10)]
     public class GameObjectManagementBehavior : MonoBehaviour
     {
         void Update()
