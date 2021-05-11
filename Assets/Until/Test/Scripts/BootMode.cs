@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using until.system;
 using until.develop;
-
+using until.modules.camera;
 
 namespace until.test
 {
@@ -12,12 +12,16 @@ namespace until.test
         private enum Phase
         {
             Start,
-            StartSceneLoad,
-            WaitSceneLoad,
+            StartCameraLoad,
+            WaitCameraLoad,
             NextMode,
             Finish,
         }
         private Phase _CurrentPhase = Phase.Start;
+
+        private const int SceneIndex_Camera = 0;
+
+
 
         public Mode.Control init()
         {
@@ -33,15 +37,16 @@ namespace until.test
             {
                 case Phase.Start:
                     TestLog.test(this, "update");
-                    transit(Phase.StartSceneLoad);
+                    transit(Phase.StartCameraLoad);
                     break;
-                case Phase.StartSceneLoad:
-                    system.singleton.SceneLoader.Instance.requestToLoad(0, () => _CurrentPhase = Phase.NextMode);
+                case Phase.StartCameraLoad:
+                    singleton.SceneLoader.Instance.requestToLoad(SceneIndex_Camera, () => _CurrentPhase = Phase.NextMode);
                     break;
-                case Phase.WaitSceneLoad:
+                case Phase.WaitCameraLoad:
                     break;
                 case Phase.NextMode:
-                    system.singleton.ModeManager.Instance.enqueueNextMode<IngameMode>();
+                    singleton.CameraManager.Instance.transitCamera<CameraActionFree>();
+                    singleton.ModeManager.Instance.enqueueNextMode<IngameMode>();
                     transit(Phase.Finish);
                     break;
                 default:

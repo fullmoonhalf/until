@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using until.develop;
+using until.system;
 
 
-namespace until.system.singleton
+namespace until.singleton
 {
     [DisallowMultipleComponent]
     public class SceneLoader : Singleton<SceneLoader>
