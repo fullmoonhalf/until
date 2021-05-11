@@ -150,25 +150,8 @@ namespace until.system.singleton
 
         public override void onSingletonStart()
         {
-        }
-
-        public override void onSingletonDestroy()
-        {
-        }
-        #endregion
-
-        #region Process Control
-        // Update is called once per frame
-        public void onUpdate()
-        {
-            _ActiveSceneCollection.RemoveWhere(control => control.onUpdate());
-        }
-        #endregion
-
-        #region Control from application
-        public void startManagement(int scene_count)
-        {
             // シーンリストの生成
+            var scene_count = SceneManager.sceneCount;
             _SceneCollection = new SceneController[scene_count];
             for (int scene_index = 0; scene_index < scene_count; ++scene_index)
             {
@@ -179,9 +162,17 @@ namespace until.system.singleton
             }
         }
 
-        public void endManagement()
+        public override void onSingletonDestroy()
         {
             _SceneCollection = null;
+        }
+        #endregion
+
+        #region Process Control
+        // Update is called once per frame
+        public void onUpdate()
+        {
+            _ActiveSceneCollection.RemoveWhere(control => control.onUpdate());
         }
         #endregion
 
