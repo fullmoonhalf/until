@@ -11,6 +11,7 @@ namespace until.system
     {
         void Update()
         {
+            singleton.SceneLoader.Instance.onUpdate();
             singleton.PrefabInstantiateMediator.Instance.onUpdate();
             singleton.GameObjectControlMediator.Instance.onUpdate();
         }
