@@ -12,6 +12,7 @@ namespace until.test
         private enum Phase
         {
             Start,
+            StartDevelop,
             StartCameraLoad,
             WaitCameraLoad,
             NextMode,
@@ -37,6 +38,17 @@ namespace until.test
             {
                 case Phase.Start:
                     TestLog.test(this, "update");
+                    transit(Phase.StartDevelop);
+                    break;
+                case Phase.StartDevelop:
+#if TEST
+                    singleton.DevelopIndicator.Instance.create<DevelopIndicatorFrameCounter>(DevelopIndicatorAnchor.LeftTop);
+                    singleton.DevelopIndicator.Instance.create<DevelopIndicatorFrameProfile>(DevelopIndicatorAnchor.LeftTop);
+                    singleton.DevelopIndicator.Instance.regist(singleton.InputManager.Instance, DevelopIndicatorAnchor.LeftBottom);
+                    singleton.DevelopIndicator.Instance.regist(singleton.ModeManager.Instance, DevelopIndicatorAnchor.RightTop);
+                    singleton.DevelopIndicator.Instance.regist(singleton.CameraManager.Instance, DevelopIndicatorAnchor.RightTop);
+                    singleton.DevelopIndicator.Instance.regist(singleton.SceneLoader.Instance, DevelopIndicatorAnchor.RightBottom);
+#endif
                     transit(Phase.StartCameraLoad);
                     break;
                 case Phase.StartCameraLoad:

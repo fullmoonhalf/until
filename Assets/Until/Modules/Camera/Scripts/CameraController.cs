@@ -12,6 +12,7 @@ namespace until.modules.camera
         #region Properties
         public Vector3 Position { get; private set; } = Vector3.zero;
         public Quaternion Rotation { get; private set; } = Quaternion.identity;
+        public CameraAction CurrentAction { get => _CurrentAction; }
         #endregion
 
         #region Fields.

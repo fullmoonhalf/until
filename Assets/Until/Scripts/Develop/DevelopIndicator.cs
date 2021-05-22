@@ -1,3 +1,4 @@
+#if TEST
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,12 +17,12 @@ namespace until.develop
         RightBottom,
     }
 
-    public abstract class DevelopIndicatorElement
+    public interface DevelopIndicatorElement
     {
-        public abstract string DisplayText { get; }
-        public abstract int Width { get; }
-        public abstract int Height { get; }
-        public bool Visible { get; set; } = true;
+        public abstract string DevelopIndicatorText { get; }
+        public abstract int DevelopIndicatorWidth { get; }
+        public abstract int DevelopIndicatorHeight { get; }
+        public abstract void onIndicatorUpdate();
     }
 }
 
@@ -65,7 +66,23 @@ namespace until.singleton
         #endregion
 
         #region Requests
-        public void regist(DevelopIndicatorElement element, DevelopIndicatorAnchor anchor = DevelopIndicatorAnchor.RightTop)
+        /// <summary>
+        /// ê∂ê¨ÇµÇƒìoò^Ç∑ÇÈ
+        /// </summary>
+        /// <typeparam name="T">ìoò^ÇµÇΩÇ¢ÉCÉìÉWÉPÅ[É^Å[</typeparam>
+        /// <param name="anchor"></param>
+        public void create<T>(DevelopIndicatorAnchor anchor = DevelopIndicatorAnchor.LeftTop)
+            where T : DevelopIndicatorElement, new()
+        {
+            regist(new T(), anchor);
+        }
+
+        /// <summary>
+        /// ê∂ê¨Ç≥ÇÍÇΩÉIÉuÉWÉFÉNÉgÇìoò^Ç∑ÇÈ
+        /// </summary>
+        /// <param name="element">ìoò^ÇµÇΩÇ¢ÉCÉìÉWÉPÅ[É^Å[</param>
+        /// <param name="anchor"></param>
+        public void regist(DevelopIndicatorElement element, DevelopIndicatorAnchor anchor = DevelopIndicatorAnchor.LeftTop)
         {
             var context = _ContextCollection[(int)anchor];
             context.Collection.Add(element);
@@ -73,29 +90,40 @@ namespace until.singleton
         #endregion
 
         #region Service
+        public void update()
+        {
+            foreach (var context in _ContextCollection)
+            {
+                foreach (var element in context.Collection)
+                {
+                    element.onIndicatorUpdate();
+                }
+            }
+        }
+
         /// <summary>
         /// ï`âÊ
         /// </summary>
         /// <param name="screen">âÊñ óÃàÊ</param>
         public void draw(RectInt screen)
         {
-            // âEè„ÇÃï`âÊ
-            drawAnchor(_ContextCollection[(int)DevelopIndicatorAnchor.RightTop], screen.x, screen.y);
-
-            // âEâ∫ÇÃï`âÊ
-            var rb_context = _ContextCollection[(int)DevelopIndicatorAnchor.RightBottom];
-            var rb_size = calculateSize(rb_context);
-            drawAnchor(rb_context, screen.x, screen.y + screen.height - rb_size.y);
-
             // ç∂è„ÇÃï`âÊ
-            var lt_context = _ContextCollection[(int)DevelopIndicatorAnchor.LeftTop];
-            var lt_size = calculateSize(lt_context);
-            drawAnchor(lt_context, screen.x + screen.width - lt_size.x, screen.y);
+            drawAnchor(_ContextCollection[(int)DevelopIndicatorAnchor.LeftTop], screen.x, screen.y);
 
             // ç∂â∫ÇÃï`âÊ
             var lb_context = _ContextCollection[(int)DevelopIndicatorAnchor.LeftBottom];
             var lb_size = calculateSize(lb_context);
-            drawAnchor(lb_context, screen.x + screen.width - lb_size.x, screen.y + screen.height - lb_size.y);
+            drawAnchor(lb_context, screen.x, screen.y + screen.height - lb_size.y);
+
+            // âEè„ÇÃï`âÊ
+            var rt_context = _ContextCollection[(int)DevelopIndicatorAnchor.RightTop];
+            var rt_size = calculateSize(rt_context);
+            drawAnchor(rt_context, screen.x + screen.width - rt_size.x, screen.y);
+
+            // âEâ∫ÇÃï`âÊ
+            var rb_context = _ContextCollection[(int)DevelopIndicatorAnchor.RightBottom];
+            var rb_size = calculateSize(rb_context);
+            drawAnchor(rb_context, screen.x + screen.width - rb_size.x, screen.y + screen.height - rb_size.y);
         }
 
         /// <summary>
@@ -109,9 +137,9 @@ namespace until.singleton
             var rect = new Rect(x, y, 0, 0);
             foreach (var element in context.Collection)
             {
-                rect.width = element.Width;
-                rect.height = element.Height;
-                GUI.Label(rect, element.DisplayText);
+                rect.width = element.DevelopIndicatorWidth;
+                rect.height = element.DevelopIndicatorHeight;
+                GUI.Label(rect, element.DevelopIndicatorText);
                 rect.y = rect.y + rect.height;
             }
         }
@@ -126,8 +154,8 @@ namespace until.singleton
             var size = new Vector2Int();
             foreach (var element in context.Collection)
             {
-                size.x = Math.Max(size.x, element.Width);
-                size.y += element.Height;
+                size.x = Math.Max(size.x, element.DevelopIndicatorWidth);
+                size.y += element.DevelopIndicatorHeight;
             }
             return size;
         }
@@ -137,3 +165,4 @@ namespace until.singleton
         #endregion
     }
 }
+#endif

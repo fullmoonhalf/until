@@ -1,3 +1,4 @@
+#if TEST
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,11 @@ namespace until.develop
     [DefaultExecutionOrder(ExecutionOrder.Develop_Tail_10)]
     public class DevelopIndicatorBehavior : MonoBehaviour
     {
+        private void Update()
+        {
+            singleton.DevelopIndicator.Instance.update();
+        }
+
         // デバッグ描画
         private void OnGUI()
         {
@@ -16,3 +22,4 @@ namespace until.develop
         }
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if TEST
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,3 +16,4 @@ namespace until.develop
         public float FloatNumber { get; }
     }
 }
+#endif

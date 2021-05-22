@@ -1,12 +1,15 @@
 ﻿using System;
 using UnityEngine;
 using until.system;
-
+using until.develop;
 
 namespace until.singleton
 {
     [DisallowMultipleComponent]
     public class InputManager : Singleton<InputManager>
+#if TEST
+        , DevelopIndicatorElement
+#endif
     {
         #region Properties.
         #endregion
@@ -78,5 +81,20 @@ namespace until.singleton
             }
         }
         #endregion
+
+#if TEST
+        #region Indicator
+        public string DevelopIndicatorText => _DevelopIndicatorText;
+        public int DevelopIndicatorWidth => 300;
+        public int DevelopIndicatorHeight => 20;
+        private string _DevelopIndicatorText = "";
+
+        public void onIndicatorUpdate()
+        {
+            var down = Convert.ToString((int)CurrentDown, 2).PadLeft(32, '0');
+            _DevelopIndicatorText = $"[Key] {down}";
+        }
+        #endregion
+#endif
     }
 }
