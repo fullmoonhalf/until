@@ -10,6 +10,9 @@ namespace until.singleton
 {
     [DisallowMultipleComponent]
     public class ModeManager : Singleton<ModeManager>
+#if TEST
+        , DevelopIndicatorElement
+#endif
     {
         #region Definitions.
         public enum Phase
@@ -25,6 +28,9 @@ namespace until.singleton
         public Phase CurrentPhase { get; private set; } = Phase.Wait;
         private Mode CurrentMode = null;
         private Mode NextMode = null;
+#if TEST
+        private Mode PreviousMode = null;
+#endif
         #endregion
 
         #region Fields.
@@ -101,6 +107,9 @@ namespace until.singleton
                 case Phase.ModeExit:
                     if (CurrentMode.exit() == Mode.Control.Done)
                     {
+#if TEST
+                        PreviousMode = CurrentMode;
+#endif
                         CurrentMode = NextMode;
                         NextMode = null;
                         if (CurrentMode != null)
@@ -144,6 +153,20 @@ namespace until.singleton
 
         #region Tests.
 #if TEST
+        #region Indicator
+        public string DevelopIndicatorText => _DevelopIndicatorText;
+        public int DevelopIndicatorWidth => 300;
+        public int DevelopIndicatorHeight => 20;
+        private string _DevelopIndicatorText = "";
+
+        public void onIndicatorUpdate()
+        {
+            var prev = PreviousMode?.GetType().Name ?? "(empty)";
+            var curr = CurrentMode?.GetType().Name ?? "(empty)";
+            var next = NextMode?.GetType().Name ?? "(empty)";
+            _DevelopIndicatorText = $"[Mode] {prev}=>{curr}=>{next}";
+        }
+        #endregion
 #endif
         #endregion
     }

@@ -10,6 +10,9 @@ namespace until.singleton
 {
     [DisallowMultipleComponent]
     public class SceneLoader : Singleton<SceneLoader>
+#if TEST
+        , DevelopIndicatorElement
+#endif
     {
         #region Definition
         public enum Phase
@@ -221,5 +224,27 @@ namespace until.singleton
         }
         #endregion
         #endregion
+
+#if TEST
+        #region Indicator
+        public string DevelopIndicatorText => _DevelopIndicatorText;
+        public int DevelopIndicatorWidth => 300;
+        public int DevelopIndicatorHeight => 40;
+        private string _DevelopIndicatorText = "";
+
+        public void onIndicatorUpdate()
+        {
+            var scenes = "loading: ";
+            var separator = "";
+            foreach(var scene in _ActiveSceneCollection)
+            {
+                scenes += separator + scene.SceneName;
+                separator = ", ";
+            }
+
+            _DevelopIndicatorText = $"[SceneLoader] {_ActiveSceneCollection.Count}/{_SceneCollection.Length}\n{scenes}";
+        }
+        #endregion
+#endif
     }
 }

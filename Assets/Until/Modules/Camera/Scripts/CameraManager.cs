@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using until.system;
 using until.modules.camera;
+using until.develop;
 
 
 namespace until.singleton
 {
     public class CameraManager : Singleton<CameraManager>
+#if TEST
+        , DevelopIndicatorElement
+#endif
     {
         #region Field.
         private CameraController RefCameraController = null;
@@ -74,6 +78,22 @@ namespace until.singleton
             return (RefCameraController != null) ? RefCameraController.Rotation : Quaternion.identity;
         }
         #endregion
+
+#if TEST
+        #region Indicator
+        public string DevelopIndicatorText => _DevelopIndicatorText;
+        public int DevelopIndicatorWidth => 300;
+        public int DevelopIndicatorHeight => 40;
+        private string _DevelopIndicatorText = "";
+
+        public void onIndicatorUpdate()
+        {
+            var action = RefCameraController?.CurrentAction?.GetType().Name ?? "(not exist)";
+            var position = RefCameraController?.Position ?? Vector3.zero;
+            _DevelopIndicatorText = $"[Camera] screen={Screen.width}x{Screen.height} {action}\nposition={position}";
+        }
+        #endregion
+#endif
     }
 }
 
