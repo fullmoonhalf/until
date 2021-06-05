@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace until.modules.astral
 {
-    public abstract class AstralBody
+    public abstract class AstralBody : AstralElement
     {
         #region Interfaces.
         /// <summary>現在のグラマー</summary>
@@ -19,6 +19,10 @@ namespace until.modules.astral
         #endregion
 
         #region Methods.
+        public AstralBody(int id) : base(id)
+        {
+        }
+
         /// <summary>
         /// 更新処理
         /// </summary>
@@ -40,9 +44,6 @@ namespace until.modules.astral
             }
         }
         #endregion
-
-
-
     }
 }
 
