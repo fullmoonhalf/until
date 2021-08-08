@@ -78,9 +78,9 @@ namespace until.test
             var world = new World();
             var space = world.createSpace(0);
             var spot = world.createSpace(1);
-            var body = world.createBody(2);
+            world.createBody(2);
             space.regist(spot);
-
+            singleton.AstralAdministrator.Instance.regist(world);
             transit(Phase.Transit);
         }
         #endregion
