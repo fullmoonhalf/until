@@ -8,11 +8,6 @@ namespace until.modules.astral
 {
     public abstract class AstralBody : AstralElement
     {
-        #region Interfaces.
-        /// <summary>現在のグラマー</summary>
-        protected abstract AstralGlamour CurrentGlamour { get; }
-        #endregion
-
         #region Fields.
         /// <summary>現在のアクション</summary>
         private AstralAction _CurrentAction = null;
@@ -28,13 +23,6 @@ namespace until.modules.astral
         /// </summary>
         public void onAstralUpdate()
         {
-            if (_CurrentAction == null)
-            {
-                if (CurrentGlamour != null)
-                {
-                    _CurrentAction = CurrentGlamour.getNextAction();
-                }
-            }
             if (_CurrentAction != null)
             {
                 if (!_CurrentAction.onAstralUpdate())
