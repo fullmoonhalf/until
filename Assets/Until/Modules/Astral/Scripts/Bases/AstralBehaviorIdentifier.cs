@@ -6,26 +6,26 @@ using UnityEngine;
 
 namespace until.modules.astral
 {
-    public class AstralPointIdentifier
+    public class AstralBehaviorIdentifier
     {
         #region definition
-        public static readonly AstralPointIdentifier ORIGIN = new AstralPointIdentifier(0, 0);
+        public static readonly AstralBehaviorIdentifier NOP = new AstralBehaviorIdentifier(0, 0);
         #endregion
 
         #region Properties
-        public int SpaceID { get; private set; } = 0;
-        public int PointID { get; private set; } = 0;
+        public int CategoryID { get; private set; } = 0;
+        public int ActionID { get; private set; } = 0;
         #endregion
 
         #region Methods
-        public AstralPointIdentifier()
+        public AstralBehaviorIdentifier()
         {
         }
 
-        public AstralPointIdentifier(int space, int point)
+        public AstralBehaviorIdentifier(int category, int action)
         {
-            SpaceID = space;
-            PointID = point;
+            CategoryID = category;
+            ActionID = action;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace until.modules.astral
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            if (obj is AstralPointIdentifier identifier)
+            if (obj is AstralBehaviorIdentifier identifier)
             {
                 return equals(identifier);
             }
@@ -47,9 +47,9 @@ namespace until.modules.astral
         /// </summary>
         /// <param name="identifier"></param>
         /// <returns></returns>
-        private bool equals(AstralPointIdentifier identifier)
+        private bool equals(AstralBehaviorIdentifier identifier)
         {
-            return SpaceID == identifier.SpaceID && PointID == identifier.PointID;
+            return CategoryID == identifier.CategoryID && ActionID == identifier.ActionID;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace until.modules.astral
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return SpaceID.GetHashCode() ^ PointID.GetHashCode();
+            return CategoryID.GetHashCode() ^ ActionID.GetHashCode();
         }
         #endregion
     }

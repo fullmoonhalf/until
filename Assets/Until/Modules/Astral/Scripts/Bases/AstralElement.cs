@@ -5,10 +5,11 @@ using UnityEngine;
 
 namespace until.modules.astral
 {
-    public class AstralElement
+    public abstract class AstralElement
     {
         #region Properties
         public int ID { get; private set; }
+        public string Name { get; set; }
         public AstralPointIdentifier Point { get; protected set; } = AstralPointIdentifier.ORIGIN;
         #endregion
 
@@ -17,6 +18,11 @@ namespace until.modules.astral
         {
             ID = id;
         }
+
+
+        public abstract void requestBehaviorStart(AstralBehaviorRequest request);
+        public abstract void requestBehaviorEnd(AstralBehaviorRequest request);
+        public abstract AstralBehaviorStatus checkBehavior(AstralBehaviorIdentifier identifier);
         #endregion
     }
 }

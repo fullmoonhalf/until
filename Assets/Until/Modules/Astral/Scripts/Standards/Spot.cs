@@ -8,7 +8,6 @@ namespace until.modules.astral.standard
     public class Spot : AstralSpot
     {
         #region Properties
-        public string Name { get; private set; } = "";
         #endregion
 
         #region Methods

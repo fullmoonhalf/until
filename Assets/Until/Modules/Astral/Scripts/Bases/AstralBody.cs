@@ -31,6 +31,21 @@ namespace until.modules.astral
                 }
             }
         }
+
+        #region AstralElement
+        public override void requestBehaviorStart(AstralBehaviorRequest request)
+        {
+        }
+
+        public override void requestBehaviorEnd(AstralBehaviorRequest request)
+        {
+        }
+
+        public override AstralBehaviorStatus checkBehavior(AstralBehaviorIdentifier identifier)
+        {
+            return AstralBehaviorStatus.Inactivating;
+        }
+        #endregion
         #endregion
     }
 }

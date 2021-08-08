@@ -53,23 +53,26 @@ namespace until.modules.astral.standard
         #endregion
 
         #region Factory Methods.
-        public Space createSpace(int id)
+        public Space createSpace(int id, string name = "")
         {
             var space = new Space(id);
+            space.Name = name;
             _SpaceCollection.Add(id, space);
             return space;
         }
 
-        public Spot createSpot(int id)
+        public Spot createSpot(int id, string name = "")
         {
             var spot = new Spot(id);
+            spot.Name = name;
             _SpotCollection.Add(id, spot);
             return spot;
         }
 
-        public Body createBody(int id)
+        public Body createBody(int id, string name = "")
         {
             var body = new Body(id);
+            body.Name = name;
             _BodyCollection.Add(id, body);
             return body;
         }

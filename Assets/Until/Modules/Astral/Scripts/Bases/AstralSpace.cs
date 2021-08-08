@@ -11,6 +11,21 @@ namespace until.modules.astral
         public AstralSpace(int id) : base(id)
         {
         }
+
+        #region AstralElement
+        public override void requestBehaviorStart(AstralBehaviorRequest request)
+        {
+        }
+
+        public override void requestBehaviorEnd(AstralBehaviorRequest request)
+        {
+        }
+
+        public override AstralBehaviorStatus checkBehavior(AstralBehaviorIdentifier identifier)
+        {
+            return AstralBehaviorStatus.Inactivating;
+        }
+        #endregion
         #endregion
     }
 }

@@ -20,11 +20,19 @@ namespace until.modules.astral.standard
         }
 
         #region Registration
+        /// <summary>
+        /// スポットの登録
+        /// </summary>
+        /// <param name="spot"></param>
         public void regist(Spot spot)
         {
             _SpotCollection.Add(spot);
         }
 
+        /// <summary>
+        /// サブスペース登録
+        /// </summary>
+        /// <param name="space"></param>
         public void regist(Space space)
         {
             _SubSpaceCollection.Add(space);

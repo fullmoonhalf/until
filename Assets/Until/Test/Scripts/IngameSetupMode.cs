@@ -73,13 +73,33 @@ namespace until.test
         }
 
 
+        private int createID(int category, int floor, int area, int id)
+        {
+            return category << 24 | floor << 16 | area << 8 | id;
+        }
+
         private void updateConstructAstral()
         {
             var world = new World();
-            var space = world.createSpace(0);
-            var spot = world.createSpace(1);
-            world.createBody(2);
-            space.regist(spot);
+
+            // 部屋構成
+            var space_homebase = world.createSpace(createID(1, 0, 0, 0), "拠点");
+            var space_homebase_reception = world.createSpace(createID(1, 1, 1, 0), "拠点.受付");
+            var space_homebase_office = world.createSpace(createID(1, 1, 2, 0), "拠点.事務所");
+            var space_dungeon = world.createSpace(createID(2, 0, 0, 0), "迷宮");
+            var space_dungeon_1f_a = world.createSpace(createID(2, 1, 1, 0), "迷宮.1F.A");
+            var space_dungeon_1f_b = world.createSpace(createID(2, 1, 2, 0), "迷宮.1F.B");
+            space_homebase.regist(space_homebase_reception);
+            space_homebase.regist(space_homebase_office);
+            space_dungeon.regist(space_dungeon_1f_a);
+            space_dungeon.regist(space_dungeon_1f_b);
+
+            // スポット構成
+            var spot_homebase_counter = world.createSpot(createID(1, 1, 1, 1), "拠点.受付.カウンター");
+            space_homebase_reception.regist(spot_homebase_counter);
+            var spot_dungeon_mine = world.createSpot(createID(2, 1, 1, 1), "迷宮.1F.A.採掘");
+            space_dungeon_1f_a.regist(spot_dungeon_mine);
+
             singleton.AstralAdministrator.Instance.regist(world);
             transit(Phase.Transit);
         }
