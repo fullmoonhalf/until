@@ -1,3 +1,4 @@
+#if TEST
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,9 @@ namespace until.test
                 TestLog.test(this, "update");
                 _FirstUpdate = false;
             }
+
+            singleton.AstralAdministrator.Instance.updateAstral();
+
             return Mode.Control.Keep;
         }
 
@@ -35,5 +39,4 @@ namespace until.test
         }
     }
 }
-
-
+#endif

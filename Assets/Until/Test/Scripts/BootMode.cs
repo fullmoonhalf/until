@@ -1,3 +1,4 @@
+#if TEST
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,7 +42,6 @@ namespace until.test
                     transit(Phase.StartDevelop);
                     break;
                 case Phase.StartDevelop:
-#if TEST
                     singleton.DevelopIndicator.Instance.create<DevelopIndicatorFrameCounter>(DevelopIndicatorAnchor.LeftTop);
                     singleton.DevelopIndicator.Instance.create<DevelopIndicatorFrameProfile>(DevelopIndicatorAnchor.LeftTop);
                     singleton.DevelopIndicator.Instance.regist(singleton.InputManager.Instance, DevelopIndicatorAnchor.LeftBottom);
@@ -62,7 +62,6 @@ namespace until.test
                     singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandInt("t3", "t3", 0));
                     singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandInt("t7", "t7", 0, -10));
                     singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandInt("t8", "t8", 0, -10, 10));
-#endif
                     transit(Phase.StartCameraLoad);
                     break;
                 case Phase.StartCameraLoad:
@@ -72,7 +71,7 @@ namespace until.test
                     break;
                 case Phase.NextMode:
                     singleton.CameraManager.Instance.transitCamera<CameraActionFree>();
-                    singleton.ModeManager.Instance.enqueueNextMode<IngameMode>();
+                    singleton.ModeManager.Instance.enqueueNextMode<IngameSetupMode>();
                     transit(Phase.Finish);
                     break;
                 default:
@@ -95,3 +94,4 @@ namespace until.test
         }
     }
 }
+#endif
