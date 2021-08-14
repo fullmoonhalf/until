@@ -47,7 +47,7 @@ namespace until.test
                     updateConstructAstral();
                     break;
                 case Phase.Transit:
-                    singleton.ModeManager.Instance.enqueueNextMode<IngameMode>();
+                    Singleton.ModeManager.enqueueNextMode<IngameMode>();
                     transit(Phase.Exit);
                     result = Mode.Control.Done;
                     break;
@@ -114,7 +114,7 @@ namespace until.test
             session.bind(score);
             world.regist(session);
 
-            singleton.AstralAdministrator.Instance.regist(world);
+            Singleton.AstralAdministrator.regist(world);
 
             transit(Phase.Transit);
         }

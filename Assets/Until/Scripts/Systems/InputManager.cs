@@ -3,7 +3,7 @@ using UnityEngine;
 using until.system;
 using until.develop;
 
-namespace until.singleton
+namespace until.system
 {
     [DisallowMultipleComponent]
     public class InputManager : Singleton<InputManager>

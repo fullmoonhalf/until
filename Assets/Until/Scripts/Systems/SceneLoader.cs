@@ -6,7 +6,7 @@ using until.develop;
 using until.system;
 
 
-namespace until.singleton
+namespace until.system
 {
     [DisallowMultipleComponent]
     public class SceneLoader : Singleton<SceneLoader>

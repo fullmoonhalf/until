@@ -12,13 +12,13 @@ namespace until.develop
     {
         private void Update()
         {
-            singleton.DevelopIndicator.Instance.update();
+            Singleton.DevelopIndicator.update();
         }
 
         // デバッグ描画
         private void OnGUI()
         {
-            singleton.DevelopIndicator.Instance.draw(new RectInt(0, 0, Screen.width, Screen.height));
+            Singleton.DevelopIndicator.draw(new RectInt(0, 0, Screen.width, Screen.height));
         }
     }
 }

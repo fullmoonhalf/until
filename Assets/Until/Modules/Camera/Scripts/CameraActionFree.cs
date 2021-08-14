@@ -14,8 +14,8 @@ namespace until.modules.camera
 
         public void onSwitchingStart()
         {
-            Position = singleton.CameraManager.Instance.getPosition();
-            Rotation = singleton.CameraManager.Instance.getRotation();
+            Position = Singleton.CameraManager.getPosition();
+            Rotation = Singleton.CameraManager.getRotation();
         }
         public void onSwitchingEnd()
         {
@@ -29,21 +29,21 @@ namespace until.modules.camera
         public void onUpdate(float deltaTime)
         {
             var speed = 1.0f;
-            if (singleton.InputManager.Instance.isDown(InputPad.Player1, InputButton.R1))
+            if (Singleton.InputManager.isDown(InputPad.Player1, InputButton.R1))
             {
                 speed *= 5.0f;
             }
-            else if (singleton.InputManager.Instance.isDown(InputPad.Player1, InputButton.L1))
+            else if (Singleton.InputManager.isDown(InputPad.Player1, InputButton.L1))
             {
                 speed *= 0.2f;
             }
 
-            var stickL = singleton.InputManager.Instance.getStick(InputPad.Player1, InputStickType.L);
-            var Ydirection = singleton.InputManager.Instance.isDown(InputPad.Player1, InputButton.L2) ? Vector3.forward : Vector3.up;
+            var stickL = Singleton.InputManager.getStick(InputPad.Player1, InputStickType.L);
+            var Ydirection = Singleton.InputManager.isDown(InputPad.Player1, InputButton.L2) ? Vector3.forward : Vector3.up;
             var move = Rotation * Vector3.right * stickL.X + Rotation * Ydirection * stickL.Y;
             Position += move * deltaTime * speed;
 
-            var stickR = singleton.InputManager.Instance.getStick(InputPad.Player1, InputStickType.R);
+            var stickR = Singleton.InputManager.getStick(InputPad.Player1, InputStickType.R);
             var eularAngle = Rotation.eulerAngles;
             eularAngle.y = math.getDegreeArgument(eularAngle.y + stickR.X * 90 * deltaTime);
             eularAngle.x = Mathf.Clamp(eularAngle.x - stickR.Y * 90 * deltaTime, -80.0f, 80.0f);

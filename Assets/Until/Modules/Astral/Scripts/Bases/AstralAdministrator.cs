@@ -5,7 +5,7 @@ using until.system;
 using until.modules.astral;
 
 
-namespace until.singleton
+namespace until.modules.astral
 {
     public class AstralAdministrator : Singleton<AstralAdministrator>
     {

@@ -27,7 +27,7 @@ namespace until.test
                 _FirstUpdate = false;
             }
 
-            singleton.AstralAdministrator.Instance.updateAstral();
+            Singleton.AstralAdministrator.updateAstral();
 
             return Mode.Control.Keep;
         }
