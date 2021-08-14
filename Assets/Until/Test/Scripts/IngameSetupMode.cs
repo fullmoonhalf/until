@@ -106,7 +106,7 @@ namespace until.test
 
             // うろうろするスコア
             var score = new AstralScore();
-            score.appendNote(new modules.astral.note.BeginBehavior(TestAstralRole.Leader, TestAstralBehaviorIdentifier.StatusMove), true);
+            score.appendNote(new modules.astral.note.BeginBehavior(TestAstralRole.Leader, TestAstralBehaviorIdentifier.StatusWait), true);
 
             // セッション
             var session = new AstralSession();

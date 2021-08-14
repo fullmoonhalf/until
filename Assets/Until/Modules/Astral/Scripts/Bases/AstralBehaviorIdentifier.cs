@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace until.modules.astral
 {
-    public class AstralBehaviorIdentifier
+    public class AstralBehaviorIdentifier : IEquatable<AstralBehaviorIdentifier>
     {
         #region definition
         public static readonly AstralBehaviorIdentifier NOP = new AstralBehaviorIdentifier(0, 0);
@@ -28,6 +29,7 @@ namespace until.modules.astral
             ActionID = action;
         }
 
+        #region ìôâøê´îªífèàóù
         /// <summary>
         /// ìôâøï]âø
         /// </summary>
@@ -37,7 +39,7 @@ namespace until.modules.astral
         {
             if (obj is AstralBehaviorIdentifier identifier)
             {
-                return equals(identifier);
+                return Equals(identifier);
             }
             return false;
         }
@@ -47,7 +49,7 @@ namespace until.modules.astral
         /// </summary>
         /// <param name="identifier"></param>
         /// <returns></returns>
-        private bool equals(AstralBehaviorIdentifier identifier)
+        public bool Equals(AstralBehaviorIdentifier identifier)
         {
             return CategoryID == identifier.CategoryID && ActionID == identifier.ActionID;
         }
@@ -60,6 +62,22 @@ namespace until.modules.astral
         {
             return CategoryID.GetHashCode() ^ ActionID.GetHashCode();
         }
+
+
+        public static bool operator ==(AstralBehaviorIdentifier lhs, AstralBehaviorIdentifier rhs)
+        {
+            if (lhs != null && rhs != null)
+            {
+                return lhs.Equals(rhs);
+            }
+            return false;
+        }
+
+        public static bool operator !=(AstralBehaviorIdentifier lhs, AstralBehaviorIdentifier rhs)
+        {
+            return !(lhs == rhs);
+        }
+        #endregion
         #endregion
     }
 }

@@ -14,7 +14,7 @@ namespace until.modules.astral.note
         {
             private EndBehavior _Note = null;
             private AstralBehaviorRequest _Request = null;
-            private bool _ActionEnd = false;
+            private bool _KeepAlive = true;
 
             public Context(EndBehavior note)
             {
@@ -25,15 +25,15 @@ namespace until.modules.astral.note
             {
                 _Request = new AstralBehaviorRequest();
                 _Request.Identifier = _Note.Identifier;
-                _Request.onAccepted += onAccept;
-                _Request.onRejected += onReject;
-                _Request.onCompeleted += onComplete;
+                _Request.onAcceptEvent += onAccept;
+                _Request.onRejectedEvent += onReject;
+                _Request.onCompeletedEvent += onComplete;
                 session.requestEndAction(_Note.Role, _Request);
             }
 
             public override bool update(AstralSession session)
             {
-                return _ActionEnd;
+                return _KeepAlive;
             }
 
             public override AstralNote exit(AstralSession session)
@@ -47,12 +47,12 @@ namespace until.modules.astral.note
 
             public void onReject()
             {
-                _ActionEnd = true;
+                _KeepAlive = false;
             }
 
             public void onComplete()
             {
-                _ActionEnd = true;
+                _KeepAlive = false;
             }
         }
         #endregion
