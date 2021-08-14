@@ -112,8 +112,10 @@ namespace until.test
             var session = new AstralSession();
             session.assign(TestAstralRole.Leader, avatar);
             session.bind(score);
+            world.regist(session);
 
             singleton.AstralAdministrator.Instance.regist(world);
+
             transit(Phase.Transit);
         }
         #endregion

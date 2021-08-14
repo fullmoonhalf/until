@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using until.develop;
 
 
 
@@ -50,6 +51,7 @@ namespace until.modules.astral
         /// </summary>
         public void init()
         {
+            Log.info(this, "init");
             _NextNote = _Score.EntryPoint;
         }
 
@@ -88,6 +90,7 @@ namespace until.modules.astral
         /// </summary>
         public void exit()
         {
+            Log.info(this, "exit");
         }
         #endregion
 
