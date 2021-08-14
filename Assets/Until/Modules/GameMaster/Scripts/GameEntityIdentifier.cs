@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using until.system;
 
 
 namespace until.modules.gamemaster
 {
-    public class GameEntityIdentifier : IEquatable<GameEntityIdentifier>
+    public class GameEntityIdentifier : Identifier<GameEntityIdentifier>
     {
         #region Properties
         public string Expression { get; private set; } = "";
+        public override int Hashcode => _Hashcode;
         #endregion
 
         #region Fields.
@@ -24,43 +26,10 @@ namespace until.modules.gamemaster
             _Hashcode = Expression.GetHashCode();
         }
 
-        #region 等価性判断
-        public override bool Equals(object obj)
+        public override bool equal(GameEntityIdentifier other)
         {
-            if (obj is GameEntityIdentifier id)
-            {
-                return Equals(id);
-            }
-            return false;
+            return Expression == other.Expression;
         }
-
-        public bool Equals(GameEntityIdentifier other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-            if (_Hashcode != other._Hashcode)
-            {
-                return false;
-            }
-            return _Hashcode == other._Hashcode;
-        }
-
-        public override int GetHashCode()
-        {
-            return _Hashcode;
-        }
-
-        public static bool operator ==(GameEntityIdentifier lhs, GameEntityIdentifier rhs)
-        {
-            return lhs != null && lhs.Equals(rhs);
-        }
-        public static bool operator !=(GameEntityIdentifier lhs, GameEntityIdentifier rhs)
-        {
-            return !(lhs == rhs);
-        }
-        #endregion
         #endregion
     }
 }

@@ -2,20 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using until.system;
 
 
 namespace until.modules.astral
 {
-    public class AstralBehaviorIdentifier : IEquatable<AstralBehaviorIdentifier>
+    public class AstralBehaviorIdentifier : Identifier<AstralBehaviorIdentifier>
     {
         #region definition
         public static readonly AstralBehaviorIdentifier NOP = new AstralBehaviorIdentifier(0, 0);
         #endregion
 
         #region Properties
+        public override int Hashcode => _Hashcode;
         public int CategoryID { get; private set; } = 0;
         public int ActionID { get; private set; } = 0;
+        #endregion
+
+        #region Fields.
+        public int _Hashcode = 0;
         #endregion
 
         #region Methods
@@ -27,21 +32,7 @@ namespace until.modules.astral
         {
             CategoryID = category;
             ActionID = action;
-        }
-
-        #region 等価性判断処理
-        /// <summary>
-        /// 等価評価
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj is AstralBehaviorIdentifier identifier)
-            {
-                return Equals(identifier);
-            }
-            return false;
+            _Hashcode = CategoryID.GetHashCode() ^ ActionID.GetHashCode();
         }
 
         /// <summary>
@@ -49,35 +40,10 @@ namespace until.modules.astral
         /// </summary>
         /// <param name="identifier"></param>
         /// <returns></returns>
-        public bool Equals(AstralBehaviorIdentifier identifier)
+        public override bool equal(AstralBehaviorIdentifier identifier)
         {
             return CategoryID == identifier.CategoryID && ActionID == identifier.ActionID;
         }
-
-        /// <summary>
-        /// ハッシュコードの取得
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return CategoryID.GetHashCode() ^ ActionID.GetHashCode();
-        }
-
-
-        public static bool operator ==(AstralBehaviorIdentifier lhs, AstralBehaviorIdentifier rhs)
-        {
-            if (lhs != null && rhs != null)
-            {
-                return lhs.Equals(rhs);
-            }
-            return false;
-        }
-
-        public static bool operator !=(AstralBehaviorIdentifier lhs, AstralBehaviorIdentifier rhs)
-        {
-            return !(lhs == rhs);
-        }
-        #endregion
         #endregion
     }
 }

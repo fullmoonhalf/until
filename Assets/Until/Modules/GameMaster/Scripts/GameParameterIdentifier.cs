@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using until.system;
 
-
 namespace until.modules.gamemaster
 {
-    public class GameAffairIdentifier : Identifier<GameAffairIdentifier>
+    public class GameParameterIdentifier : Identifier<GameParameterIdentifier>
     {
         #region Properties
         public string Expression { get; private set; } = "";
@@ -20,15 +19,15 @@ namespace until.modules.gamemaster
         #endregion
 
         #region Methods
-        public GameAffairIdentifier(string mnemonic)
+        public GameParameterIdentifier(string mnemonic)
         {
             Expression = mnemonic;
             _Hashcode = Expression.GetHashCode();
         }
 
-        public override bool equal(GameAffairIdentifier other)
+        public override bool equal(GameParameterIdentifier other)
         {
-            return _Hashcode == other._Hashcode;
+            return Expression == other.Expression;
         }
         #endregion
     }
