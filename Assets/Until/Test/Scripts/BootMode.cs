@@ -42,36 +42,36 @@ namespace until.test
                     transit(Phase.StartDevelop);
                     break;
                 case Phase.StartDevelop:
-                    singleton.DevelopIndicator.Instance.create<DevelopIndicatorFrameCounter>(DevelopIndicatorAnchor.LeftTop);
-                    singleton.DevelopIndicator.Instance.create<DevelopIndicatorFrameProfile>(DevelopIndicatorAnchor.LeftTop);
-                    singleton.DevelopIndicator.Instance.regist(singleton.InputManager.Instance, DevelopIndicatorAnchor.LeftBottom);
-                    singleton.DevelopIndicator.Instance.regist(singleton.ModeManager.Instance, DevelopIndicatorAnchor.RightTop);
-                    singleton.DevelopIndicator.Instance.regist(singleton.CameraManager.Instance, DevelopIndicatorAnchor.RightTop);
-                    singleton.DevelopIndicator.Instance.regist(singleton.SceneLoader.Instance, DevelopIndicatorAnchor.RightBottom);
-                    singleton.DevelopCommandManager.Instance.addPage("test");
-                    singleton.DevelopCommandManager.Instance.addCommand("test", new DevelopCommandBool("t1", "t1", false));
-                    singleton.DevelopCommandManager.Instance.addCommand("test", new DevelopCommandBool("t2", "t2", true));
-                    singleton.DevelopCommandManager.Instance.addCommand("test", new DevelopCommandInt("t3", "t3", 0));
-                    singleton.DevelopCommandManager.Instance.addCommand("test", new DevelopCommandInt("t4", "t4", 0, -10, 10));
-                    singleton.DevelopCommandManager.Instance.addPage("test2");
-                    singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandFloat("t4", "t4", 0.0f));
-                    singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandFloat("t5", "t5", 0.0f, 0.1f));
-                    singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandFloat("t6", "t6", 0.0f, 0.1f, -0.5f, 0.5f));
-                    singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandBool("t2", "t2", true));
-                    singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandBool("t1", "t1", false));
-                    singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandInt("t3", "t3", 0));
-                    singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandInt("t7", "t7", 0, -10));
-                    singleton.DevelopCommandManager.Instance.addCommand("test2", new DevelopCommandInt("t8", "t8", 0, -10, 10));
+                    Singleton.DevelopIndicator.create<DevelopIndicatorFrameCounter>(DevelopIndicatorAnchor.LeftTop);
+                    Singleton.DevelopIndicator.create<DevelopIndicatorFrameProfile>(DevelopIndicatorAnchor.LeftTop);
+                    Singleton.DevelopIndicator.regist(Singleton.InputManager, DevelopIndicatorAnchor.LeftBottom);
+                    Singleton.DevelopIndicator.regist(Singleton.ModeManager, DevelopIndicatorAnchor.RightTop);
+                    Singleton.DevelopIndicator.regist(Singleton.CameraManager, DevelopIndicatorAnchor.RightTop);
+                    Singleton.DevelopIndicator.regist(Singleton.SceneLoader, DevelopIndicatorAnchor.RightBottom);
+                    Singleton.DevelopCommandManager.addPage("test");
+                    Singleton.DevelopCommandManager.addCommand("test", new DevelopCommandBool("t1", "t1", false));
+                    Singleton.DevelopCommandManager.addCommand("test", new DevelopCommandBool("t2", "t2", true));
+                    Singleton.DevelopCommandManager.addCommand("test", new DevelopCommandInt("t3", "t3", 0));
+                    Singleton.DevelopCommandManager.addCommand("test", new DevelopCommandInt("t4", "t4", 0, -10, 10));
+                    Singleton.DevelopCommandManager.addPage("test2");
+                    Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandFloat("t4", "t4", 0.0f));
+                    Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandFloat("t5", "t5", 0.0f, 0.1f));
+                    Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandFloat("t6", "t6", 0.0f, 0.1f, -0.5f, 0.5f));
+                    Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandBool("t2", "t2", true));
+                    Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandBool("t1", "t1", false));
+                    Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandInt("t3", "t3", 0));
+                    Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandInt("t7", "t7", 0, -10));
+                    Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandInt("t8", "t8", 0, -10, 10));
                     transit(Phase.StartCameraLoad);
                     break;
                 case Phase.StartCameraLoad:
-                    singleton.SceneLoader.Instance.requestToLoad(SceneIndex_Camera, () => _CurrentPhase = Phase.NextMode);
+                    Singleton.SceneLoader.requestToLoad(SceneIndex_Camera, () => _CurrentPhase = Phase.NextMode);
                     break;
                 case Phase.WaitCameraLoad:
                     break;
                 case Phase.NextMode:
-                    singleton.CameraManager.Instance.transitCamera<CameraActionFree>();
-                    singleton.ModeManager.Instance.enqueueNextMode<IngameSetupMode>();
+                    Singleton.CameraManager.transitCamera<CameraActionFree>();
+                    Singleton.ModeManager.enqueueNextMode<IngameSetupMode>();
                     transit(Phase.Finish);
                     break;
                 default:

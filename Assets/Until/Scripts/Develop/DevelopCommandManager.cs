@@ -8,7 +8,7 @@ using until.develop;
 
 
 
-namespace until.singleton
+namespace until.develop
 {
     public class DevelopCommandManager : Singleton<DevelopCommandManager>
     {
@@ -29,7 +29,7 @@ namespace until.singleton
                 }
 
                 // çÄñ⁄êÿÇËë÷Ç¶
-                if (singleton.InputManager.Instance.isTrig(InputPad.Player1, InputButton.LDown))
+                if (Singleton.InputManager.isTrig(InputPad.Player1, InputButton.LDown))
                 {
                     --CurrentElement;
                     if (CurrentElement < 0)
@@ -37,7 +37,7 @@ namespace until.singleton
                         CurrentElement = Entries.Count - 1;
                     }
                 }
-                else if (singleton.InputManager.Instance.isTrig(InputPad.Player1, InputButton.LUp))
+                else if (Singleton.InputManager.isTrig(InputPad.Player1, InputButton.LUp))
                 {
                     ++CurrentElement;
                     if (CurrentElement >= Entries.Count)
@@ -45,15 +45,15 @@ namespace until.singleton
                         CurrentElement = 0;
                     }
                 }
-                if (singleton.InputManager.Instance.isTrig(InputPad.Player1, InputButton.LLeft))
+                if (Singleton.InputManager.isTrig(InputPad.Player1, InputButton.LLeft))
                 {
                     Entries[CurrentElement].onDevelopCountdown(1);
                 }
-                else if (singleton.InputManager.Instance.isTrig(InputPad.Player1, InputButton.LRight))
+                else if (Singleton.InputManager.isTrig(InputPad.Player1, InputButton.LRight))
                 {
                     Entries[CurrentElement].onDevelopCountup(1);
                 }
-                if (singleton.InputManager.Instance.isTrig(InputPad.Player1, InputButton.RDown))
+                if (Singleton.InputManager.isTrig(InputPad.Player1, InputButton.RDown))
                 {
                     Entries[CurrentElement].onDevelopExecute();
                 }
@@ -125,7 +125,7 @@ namespace until.singleton
                 }
 
                 // ÉyÅ[ÉWêÿÇËë÷Ç¶
-                if (singleton.InputManager.Instance.isTrig(InputPad.Player1, InputButton.L1))
+                if (Singleton.InputManager.isTrig(InputPad.Player1, InputButton.L1))
                 {
                     --CurrentPage;
                     if (CurrentPage < 0)
@@ -133,7 +133,7 @@ namespace until.singleton
                         CurrentPage = Pages.Count - 1;
                     }
                 }
-                else if (singleton.InputManager.Instance.isTrig(InputPad.Player1, InputButton.R1))
+                else if (Singleton.InputManager.isTrig(InputPad.Player1, InputButton.R1))
                 {
                     ++CurrentPage;
                     if (CurrentPage >= Pages.Count)
@@ -192,9 +192,9 @@ namespace until.singleton
             {
                 _Book.update();
             }
-            if (singleton.InputManager.Instance.isDown(InputPad.Player1, InputButton.L3))
+            if (Singleton.InputManager.isDown(InputPad.Player1, InputButton.L3))
             {
-                if (singleton.InputManager.Instance.isTrig(InputPad.Player1, InputButton.R3))
+                if (Singleton.InputManager.isTrig(InputPad.Player1, InputButton.R3))
                 {
                     _Book.Visible = !_Book.Visible;
                 }

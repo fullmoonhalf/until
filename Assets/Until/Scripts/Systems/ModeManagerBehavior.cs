@@ -11,7 +11,7 @@ namespace until.system
         // Update is called once per frame
         void Update()
         {
-            singleton.ModeManager.Instance.onUpdate();
+            Singleton.ModeManager.onUpdate();
         }
     }
 }

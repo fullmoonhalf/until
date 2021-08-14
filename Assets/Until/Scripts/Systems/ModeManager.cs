@@ -6,7 +6,7 @@ using until.utils;
 using until.system;
 
 
-namespace until.singleton
+namespace until.system
 {
     [DisallowMultipleComponent]
     public class ModeManager : Singleton<ModeManager>

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using until.develop;
-using until.system;
 
-namespace until.singleton
+
+namespace until.system
 {
     public class BootSystem : Singleton<BootSystem>
     {

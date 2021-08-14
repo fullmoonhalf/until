@@ -5,7 +5,7 @@ using UnityEngine;
 using until.system;
 
 
-namespace until.singleton
+namespace until.system
 {
     public class GameObjectControlMediator : Singleton<GameObjectControlMediator>
     {

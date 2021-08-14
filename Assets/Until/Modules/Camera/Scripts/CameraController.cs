@@ -29,7 +29,7 @@ namespace until.modules.camera
         void Start()
         {
             _RefCameraComponent = gameObject.GetComponent<Camera>();
-            singleton.CameraManager.Instance.regist(this);
+            Singleton.CameraManager.regist(this);
         }
 
         // Update is called once per frame
@@ -89,7 +89,7 @@ namespace until.modules.camera
 
         private void OnDestroy()
         {
-            singleton.CameraManager.Instance.unregist(this);
+            Singleton.CameraManager.unregist(this);
         }
         #endregion
 

@@ -12,7 +12,7 @@ namespace until.system
         // Update is called once per frame
         void Update()
         {
-            singleton.InputManager.Instance.onUpdate();
+            Singleton.InputManager.onUpdate();
         }
     }
 }

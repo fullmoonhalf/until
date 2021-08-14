@@ -24,11 +24,6 @@ namespace until.develop
         public abstract int DevelopIndicatorHeight { get; }
         public abstract void onIndicatorUpdate();
     }
-}
-
-
-namespace until.singleton
-{
 
     public class DevelopIndicator : Singleton<DevelopIndicator>
     {

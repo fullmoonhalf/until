@@ -13,13 +13,13 @@ namespace until.develop
         // Update is called once per frame
         private void Update()
         {
-            singleton.DevelopCommandManager.Instance.update();
+            Singleton.DevelopCommandManager.update();
         }
 
         private void OnGUI()
         {
             var screen = new Rect(200, 100, 400, 150);
-            singleton.DevelopCommandManager.Instance.draw(screen);
+            Singleton.DevelopCommandManager.draw(screen);
         }
     }
 }

@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using until.system;
-using until.modules.camera;
 using until.develop;
 
 
-namespace until.singleton
+namespace until.modules.camera
 {
     public class CameraManager : Singleton<CameraManager>
 #if TEST

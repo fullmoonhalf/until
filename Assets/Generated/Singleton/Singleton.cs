@@ -1,16 +1,16 @@
 #if true
 public class Singleton
 {
-public static until.singleton.AstralAdministrator AstralAdministrator = until.singleton.AstralAdministrator.Instance;
-public static until.singleton.CameraManager CameraManager = until.singleton.CameraManager.Instance;
-public static until.singleton.DevelopCommandManager DevelopCommandManager = until.singleton.DevelopCommandManager.Instance;
-public static until.singleton.DevelopIndicator DevelopIndicator = until.singleton.DevelopIndicator.Instance;
-public static until.singleton.BootSystem BootSystem = until.singleton.BootSystem.Instance;
-public static until.singleton.GameObjectControlMediator GameObjectControlMediator = until.singleton.GameObjectControlMediator.Instance;
-public static until.singleton.InputManager InputManager = until.singleton.InputManager.Instance;
-public static until.singleton.ModeManager ModeManager = until.singleton.ModeManager.Instance;
-public static until.singleton.PrefabInstantiateMediator PrefabInstantiateMediator = until.singleton.PrefabInstantiateMediator.Instance;
-public static until.singleton.SceneLoader SceneLoader = until.singleton.SceneLoader.Instance;
+public static until.system.BootSystem BootSystem = until.system.BootSystem.Instance;
+public static until.system.GameObjectControlMediator GameObjectControlMediator = until.system.GameObjectControlMediator.Instance;
+public static until.system.InputManager InputManager = until.system.InputManager.Instance;
+public static until.system.ModeManager ModeManager = until.system.ModeManager.Instance;
+public static until.system.PrefabInstantiateMediator PrefabInstantiateMediator = until.system.PrefabInstantiateMediator.Instance;
+public static until.system.SceneLoader SceneLoader = until.system.SceneLoader.Instance;
+public static until.develop.DevelopCommandManager DevelopCommandManager = until.develop.DevelopCommandManager.Instance;
+public static until.develop.DevelopIndicator DevelopIndicator = until.develop.DevelopIndicator.Instance;
+public static until.modules.camera.CameraManager CameraManager = until.modules.camera.CameraManager.Instance;
+public static until.modules.astral.AstralAdministrator AstralAdministrator = until.modules.astral.AstralAdministrator.Instance;
 
 }
 #endif
