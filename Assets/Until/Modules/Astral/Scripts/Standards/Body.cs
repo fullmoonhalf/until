@@ -11,9 +11,7 @@ namespace until.modules.astral.standard
         public Body(int id)
             : base(id)
         {
-
         }
-
         #endregion
     }
 }

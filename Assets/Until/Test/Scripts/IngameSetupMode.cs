@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using until.develop;
 using until.system;
+using until.modules.astral;
 using until.modules.astral.standard;
 
 
@@ -99,6 +100,18 @@ namespace until.test
             space_homebase_reception.regist(spot_homebase_counter);
             var spot_dungeon_mine = world.createSpot(createID(2, 1, 1, 1), "迷宮.1F.A.採掘");
             space_dungeon_1f_a.regist(spot_dungeon_mine);
+
+            // 何らかのアバター
+            var avatar = world.createBody(createID(0, 0, 0, 1), "主人公キャラ");
+
+            // うろうろするスコア
+            var score = new AstralScore();
+            score.appendNote(new modules.astral.note.BeginBehavior(TestAstralRole.Leader, TestAstralBehaviorIdentifier.StatusMove), true);
+
+            // セッション
+            var session = new AstralSession();
+            session.assign(TestAstralRole.Leader, avatar);
+            session.bind(score);
 
             singleton.AstralAdministrator.Instance.regist(world);
             transit(Phase.Transit);

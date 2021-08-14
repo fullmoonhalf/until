@@ -9,17 +9,9 @@ namespace until.modules.astral
 {
     public class AstralBehaviorRequest
     {
-        #region definition
-        #endregion
-
-        #region Properties
-        public AstralBehaviorIdentifier Identifier = AstralBehaviorIdentifier.NOP;
-        public event Action OnAccepted = null;
-        public event Action OnRejected = null;
-        public event Action OnCompeleted = null;
-        #endregion
-
-        #region Methods
-        #endregion
+        public AstralBehaviorIdentifier Identifier;
+        public event Action onAccepted;
+        public event Action onRejected;
+        public event Action onCompeleted;
     }
 }
