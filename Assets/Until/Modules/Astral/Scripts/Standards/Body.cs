@@ -38,13 +38,6 @@ namespace until.modules.astral.standard
             return _ActiveBehavior.Contains(identifier) ? AstralBehaviorStatus.Active : AstralBehaviorStatus.Inactive;
         }
         #endregion
-
-        #region AstralBody
-        public override void onAstralUpdate()
-        {
-        }
-        #endregion
-
         #endregion
     }
 }

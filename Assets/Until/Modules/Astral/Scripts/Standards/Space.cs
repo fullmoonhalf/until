@@ -8,7 +8,7 @@ namespace until.modules.astral.standard
     public class Space : AstralSpace
     {
         #region fields.
-        private List<Spot> _SpotCollection = new List<Spot>();
+        private List<Body> _SpotCollection = new List<Body>();
         private List<Space> _SubSpaceCollection = new List<Space>();
         #endregion
 
@@ -21,12 +21,12 @@ namespace until.modules.astral.standard
 
         #region Registration
         /// <summary>
-        /// ƒXƒ|ƒbƒg‚Ì“o˜^
+        /// ƒ{ƒfƒB‚Ì“o˜^
         /// </summary>
-        /// <param name="spot"></param>
-        public void regist(Spot spot)
+        /// <param name="body"></param>
+        public void regist(Body body)
         {
-            _SpotCollection.Add(spot);
+            _SpotCollection.Add(body);
         }
 
         /// <summary>

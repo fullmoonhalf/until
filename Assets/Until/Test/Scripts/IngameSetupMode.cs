@@ -96,9 +96,9 @@ namespace until.test
             space_dungeon.regist(space_dungeon_1f_b);
 
             // スポット構成
-            var spot_homebase_counter = world.createSpot(createID(1, 1, 1, 1), "拠点.受付.カウンター");
+            var spot_homebase_counter = world.createBody(createID(1, 1, 1, 1), "拠点.受付.カウンター");
             space_homebase_reception.regist(spot_homebase_counter);
-            var spot_dungeon_mine = world.createSpot(createID(2, 1, 1, 1), "迷宮.1F.A.採掘");
+            var spot_dungeon_mine = world.createBody(createID(2, 1, 1, 1), "迷宮.1F.A.採掘");
             space_dungeon_1f_a.regist(spot_dungeon_mine);
 
             // 何らかのアバター

@@ -13,7 +13,6 @@ namespace until.modules.astral.standard
 
         #region Fields.
         private Dictionary<int, Space> _SpaceCollection = new Dictionary<int, Space>();
-        private Dictionary<int, Spot> _SpotCollection = new Dictionary<int, Spot>();
         private Dictionary<int, Body> _BodyCollection = new Dictionary<int, Body>();
         #endregion
 
@@ -24,15 +23,6 @@ namespace until.modules.astral.standard
             if (_SpaceCollection.TryGetValue(id, out var space))
             {
                 return space;
-            }
-            return null;
-        }
-
-        public override AstralSpot getSpot(int id)
-        {
-            if (_SpotCollection.TryGetValue(id, out var spot))
-            {
-                return spot;
             }
             return null;
         }
@@ -59,14 +49,6 @@ namespace until.modules.astral.standard
             space.Name = name;
             _SpaceCollection.Add(id, space);
             return space;
-        }
-
-        public Spot createSpot(int id, string name = "")
-        {
-            var spot = new Spot(id);
-            spot.Name = name;
-            _SpotCollection.Add(id, spot);
-            return spot;
         }
 
         public Body createBody(int id, string name = "")

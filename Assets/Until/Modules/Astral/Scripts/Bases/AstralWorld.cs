@@ -9,7 +9,6 @@ namespace until.modules.astral
     {
         #region Definitions
         public abstract AstralSpace getSpace(int id);
-        public abstract AstralSpot getSpot(int id);
         public abstract AstralBody getBody(int id);
         public abstract IEnumerable<AstralBody> getUpdatableBodies();
         #endregion
@@ -46,13 +45,6 @@ namespace until.modules.astral
                 }
                 return !keepAlive;
             });
-
-            // エンティティの更新
-            var bodies = getUpdatableBodies();
-            foreach (var body in bodies)
-            {
-                body.onAstralUpdate();
-            }
         }
 
         /// <summary>
