@@ -9,6 +9,7 @@ public static until.system.PrefabInstantiateMediator PrefabInstantiateMediator =
 public static until.system.SceneLoader SceneLoader = until.system.SceneLoader.Instance;
 public static until.develop.DevelopCommandManager DevelopCommandManager = until.develop.DevelopCommandManager.Instance;
 public static until.develop.DevelopIndicator DevelopIndicator = until.develop.DevelopIndicator.Instance;
+public static until.modules.gamemaster.GameMaster GameMaster = until.modules.gamemaster.GameMaster.Instance;
 public static until.modules.camera.CameraManager CameraManager = until.modules.camera.CameraManager.Instance;
 public static until.modules.astral.AstralAdministrator AstralAdministrator = until.modules.astral.AstralAdministrator.Instance;
 

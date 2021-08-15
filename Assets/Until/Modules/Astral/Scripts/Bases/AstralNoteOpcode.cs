@@ -2,14 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using until.system;
 
 
 namespace until.modules.astral
 {
-    public class AstralNoteOpcode : IEquatable<AstralNoteOpcode>
+    public class AstralNoteOpcode : Identifier<AstralNoteOpcode>
     {
         #region Properties
+        public override int Hashcode => _HashCode;
         /// <summary>ニモニック</summary>
         public string Mnemonic { get; private set; } = "";
         #endregion
@@ -39,45 +40,10 @@ namespace until.modules.astral
             _HashCode = mnemonic.GetHashCode();
         }
 
-        #region 等価性判断
-        public override int GetHashCode()
+        public override bool equal(AstralNoteOpcode other)
         {
-            return _HashCode;
-        }
-
-
-        public override bool Equals(object obj)
-        {
-            if (obj is AstralNoteOpcode code)
-            {
-                return Equals(code);
-            }
-            return false;
-        }
-
-        public bool Equals(AstralNoteOpcode other)
-        {
-            if (_HashCode != other._HashCode)
-            {
-                return false;
-            }
             return Mnemonic == other.Mnemonic;
         }
-
-        public static bool operator ==(AstralNoteOpcode lhs, AstralNoteOpcode rhs)
-        {
-            if (lhs != null && rhs != null)
-            {
-                return lhs.Equals(rhs);
-            }
-            return false;
-        }
-
-        public static bool operator !=(AstralNoteOpcode lhs, AstralNoteOpcode rhs)
-        {
-            return !(lhs == rhs);
-        }
-        #endregion
         #endregion
     }
 }
