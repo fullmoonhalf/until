@@ -6,6 +6,7 @@ using until.develop;
 using until.system;
 using until.modules.astral;
 using until.modules.astral.standard;
+using until.modules.gamemaster;
 
 
 namespace until.test
@@ -102,7 +103,8 @@ namespace until.test
             space_dungeon_1f_a.regist(spot_dungeon_mine);
 
             // 何らかのアバター
-            var avatar = world.createBody(createID(0, 0, 0, 1), "主人公キャラ");
+            var avatar_gmid = new GameEntityIdentifier(createID(0, 0, 0, 1));
+            var avatar = world.createBody(avatar_gmid.AstralID, "主人公キャラ");
 
             // うろうろするスコア
             var score = new AstralScore();
@@ -130,6 +132,13 @@ namespace until.test
             Log.info(this, $"a != null > {a != null}");
 
             Singleton.AstralAdministrator.regist(world);
+
+            //
+            Singleton.GameMaster.set(avatar_gmid, TestGMParameterIdentifier.HP, TestGMAffairIdentifier.Initial, 100);
+            var param_global = Singleton.GameMaster.get(TestGMParameterIdentifier.HP);
+            var param_player = Singleton.GameMaster.get(avatar_gmid, TestGMParameterIdentifier.HP);
+            Log.info(this, $"{param_global.Value.DisplayText}");
+            Log.info(this, $"{param_player.Value.DisplayText}");
 
             transit(Phase.Transit);
         }

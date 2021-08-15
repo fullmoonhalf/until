@@ -9,7 +9,7 @@ namespace until.modules.gamemaster
     public class GameMaster : Singleton<GameMaster>
     {
         #region Fields.
-        private Dictionary<GameAffairIdentifier, GameAffairRecord> _Records = new Dictionary<GameAffairIdentifier, GameAffairRecord>();
+        private Dictionary<GameParameterIdentifier, GameParameterEntry> _ParameterCollection = new Dictionary<GameParameterIdentifier, GameParameterEntry>();
         #endregion
 
         #region Methods
@@ -30,69 +30,117 @@ namespace until.modules.gamemaster
 
         #region Affair
         /// <summary>
-        /// 値の設定
+        /// パラメータ設定
         /// </summary>
+        /// <param name="parameter"></param>
         /// <param name="affair"></param>
         /// <param name="value"></param>
-        public void set(GameAffairIdentifier affair, int value = 0)
+        public void set(GameParameterIdentifier parameter, GameAffairIdentifier affair, int value = 0)
         {
-            var record = get(affair);
-            if (record == null)
+            var entry = get(parameter, true);
+            if (entry != null)
             {
-                return;
+                entry.set(affair, value);
             }
-            record.set(value);
         }
 
         /// <summary>
-        /// 値の設定
+        /// パラメータ設定
         /// </summary>
-        /// <param name="affair"></param>
         /// <param name="source"></param>
+        /// <param name="parameter"></param>
+        /// <param name="affair"></param>
         /// <param name="value"></param>
-        public void set(GameAffairIdentifier affair, GameEntityIdentifier source, int value = 0)
+        public void set(GameEntityIdentifier source, GameParameterIdentifier parameter, GameAffairIdentifier affair, int value = 0)
         {
-            var record = get(affair);
-            if (record == null)
+            var entry = get(parameter, true);
+            if (entry != null)
             {
-                return;
+                entry.set(source, affair, value);
             }
-            record.set(value, source);
         }
 
         /// <summary>
-        /// 値の設定
+        /// パラメータ設定
         /// </summary>
-        /// <param name="affair"></param>
         /// <param name="source"></param>
         /// <param name="target"></param>
+        /// <param name="parameter"></param>
+        /// <param name="affair"></param>
         /// <param name="value"></param>
-        public void set(GameAffairIdentifier affair, GameEntityIdentifier source, GameEntityIdentifier target, int value = 0)
+        public void set(GameEntityIdentifier source, GameEntityIdentifier target, GameParameterIdentifier parameter, GameAffairIdentifier affair, int value = 0)
         {
-            var record = get(affair);
-            if (record == null)
+            var entry = get(parameter, true);
+            if (entry != null)
             {
-                return;
+                entry.set(source, target, affair, value);
             }
-            record.set(value, source, target);
         }
 
         /// <summary>
-        /// 値の取得
+        /// パラメータの取得
         /// </summary>
-        /// <param name="affair"></param>
+        /// <param name="parameter"></param>
+        /// <param name="create">無いなら生成する</param>
         /// <returns></returns>
-        public GameAffairRecord get(GameAffairIdentifier affair)
+        private GameParameterEntry get(GameParameterIdentifier parameter, bool create)
         {
-            if (_Records.TryGetValue(affair, out var record))
+            if (_ParameterCollection.TryGetValue(parameter, out var entry))
             {
-                return record;
+                return entry;
+            }
+            if (create)
+            {
+                entry = new GameParameterEntry(parameter);
+                _ParameterCollection.Add(parameter, entry);
+                return entry;
+            }
+            return null;
+
+        }
+
+        /// <summary>
+        /// パラメータの取得
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public GameParameter get(GameParameterIdentifier parameter)
+        {
+            var entry = get(parameter, false);
+            if (entry != null)
+            {
+                return entry.Parameter;
             }
             return null;
         }
+
+        /// <summary>
+        /// パラメータの取得
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public GameParameter get(GameEntityIdentifier source, GameParameterIdentifier parameter)
+        {
+            var entry = get(parameter, false);
+            if (entry == null)
+            {
+                return null;
+            }
+            return entry.get(source);
+        }
+
+        public GameParameter get(GameEntityIdentifier source, GameEntityIdentifier target, GameParameterIdentifier parameter)
+        {
+            var entry = get(parameter, false);
+            if (entry == null)
+            {
+                return null;
+            }
+            return entry.get(source, target);
+        }
+
         #endregion
-
-
         #endregion
     }
 }

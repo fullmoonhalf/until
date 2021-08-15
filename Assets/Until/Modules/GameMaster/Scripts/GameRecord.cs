@@ -9,6 +9,7 @@ namespace until.modules.gamemaster
 {
     public class GameRecord
     {
+        public string DisplayText => $"value={Value} count={Count} total={Total} Min={Min} Max={Max}";
         public int Value { get; private set; } = 0;
         public int Count { get; private set; } = 0;
         public int Total { get; private set; } = 0;
