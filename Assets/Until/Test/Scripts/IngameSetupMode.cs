@@ -82,7 +82,7 @@ namespace until.test
 
         private void updateConstructAstral()
         {
-            var world = new World();
+            var world = new TestAstralWorld();
 
             // •”‰®\¬
             var space_homebase = world.createSpace(createID(1, 0, 0, 0), "‹’“_");

@@ -5,27 +5,18 @@ using UnityEngine;
 
 namespace until.modules.astral
 {
-    public class AstralSpace : AstralElement
+    public abstract class AstralSpace : AstralElement
     {
+        #region 
+        public abstract void regist(AstralBody body);
+        public abstract void regist(AstralSpace space);
+        #endregion
+
+
         #region Methos
         public AstralSpace(int id) : base(id)
         {
         }
-
-        #region AstralElement
-        public override void requestBehaviorStart(AstralBehaviorRequest request)
-        {
-        }
-
-        public override void requestBehaviorEnd(AstralBehaviorRequest request)
-        {
-        }
-
-        public override AstralBehaviorStatus checkBehavior(AstralBehaviorIdentifier identifier)
-        {
-            return AstralBehaviorStatus.Inactivating;
-        }
-        #endregion
         #endregion
     }
 }

@@ -1,11 +1,15 @@
+Ôªø#if TEST
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using until.develop;
+using until.system;
+using until.modules.astral;
+using until.modules.gamemaster;
 
-
-namespace until.modules.astral.standard
+namespace until.test
 {
-    public class Space : AstralSpace
+    public class TestAstralSpace : AstralSpace
     {
         #region fields.
         private List<AstralBody> _SpotCollection = new List<AstralBody>();
@@ -13,10 +17,10 @@ namespace until.modules.astral.standard
         #endregion
 
         #region Methods
-        public Space(int id)
+        public TestAstralSpace(int id)
             : base(id)
         {
-            Point = new AstralPointIdentifier(id, 0);
+
         }
 
         #region AstralElement
@@ -36,7 +40,7 @@ namespace until.modules.astral.standard
 
         #region AstralSpace
         /// <summary>
-        /// É{ÉfÉBÇÃìoò^
+        /// „Éú„Éá„Ç£„ÅÆÁôªÈå≤
         /// </summary>
         /// <param name="body"></param>
         public override void regist(AstralBody body)
@@ -45,7 +49,7 @@ namespace until.modules.astral.standard
         }
 
         /// <summary>
-        /// ÉTÉuÉXÉyÅ[ÉXìoò^
+        /// „Çµ„Éñ„Çπ„Éö„Éº„ÇπÁôªÈå≤
         /// </summary>
         /// <param name="space"></param>
         public override void regist(AstralSpace space)
@@ -56,4 +60,4 @@ namespace until.modules.astral.standard
         #endregion
     }
 }
-
+#endif
