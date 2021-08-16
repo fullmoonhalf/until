@@ -37,11 +37,6 @@ namespace until.test
             return null;
         }
 
-        public override IEnumerable<AstralBody> getUpdatableBodies()
-        {
-            return _BodyCollection.Values;
-        }
-
         public override AstralBody createBody(int id, string name = "")
         {
             var body = new TestAstralBody(id);

@@ -8,7 +8,7 @@ namespace until.modules.astral.standard
     public class Body : AstralBody
     {
         #region Fields.
-        private HashSet<AstralBehaviorIdentifier> _ActiveBehavior = new HashSet<AstralBehaviorIdentifier>();
+        private HashSet<AstralBehaviorOperation> _ActiveBehavior = new HashSet<AstralBehaviorOperation>();
         #endregion
 
 
@@ -33,7 +33,7 @@ namespace until.modules.astral.standard
             request.notifyComplete();
         }
 
-        public override AstralBehaviorStatus checkBehavior(AstralBehaviorIdentifier identifier)
+        public override AstralBehaviorStatus checkBehavior(AstralBehaviorOperation identifier)
         {
             return _ActiveBehavior.Contains(identifier) ? AstralBehaviorStatus.Active : AstralBehaviorStatus.Inactive;
         }

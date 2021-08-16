@@ -24,8 +24,8 @@ namespace until.modules.astral.note
 
             public override void init(AstralSession session)
             {
-                _Request = new AstralBehaviorRequest();
-                _Request.Identifier = _Note.Identifier;
+                _Request = new AstralBehaviorRequest(_Note.Operation.createArgument());
+                _Request.Identifier = _Note.Operation;
                 _Request.onAcceptEvent += onAccept;
                 _Request.onRejectedEvent += onReject;
                 _Request.onCompeletedEvent += onComplete;
@@ -60,7 +60,7 @@ namespace until.modules.astral.note
 
         #region Properties
         public string Role { get; private set; } = "";
-        public AstralBehaviorIdentifier Identifier { get; private set; } = null;
+        public AstralBehaviorOperation Operation { get; private set; } = null;
         #endregion
 
         #region Methods.
@@ -76,10 +76,10 @@ namespace until.modules.astral.note
         /// </summary>
         /// <param name="role"></param>
         /// <param name="identifier"></param>
-        public BeginBehavior(string role, AstralBehaviorIdentifier identifier)
+        public BeginBehavior(string role, AstralBehaviorOperation identifier)
         {
             Role = role;
-            Identifier = identifier;
+            Operation = identifier;
         }
 
         #region AstralNote

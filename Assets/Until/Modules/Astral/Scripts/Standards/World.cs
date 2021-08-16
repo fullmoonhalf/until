@@ -36,11 +36,6 @@ namespace until.modules.astral.standard
             return null;
         }
 
-        public override IEnumerable<AstralBody> getUpdatableBodies()
-        {
-            return _BodyCollection.Values;
-        }
-
         public override AstralSpace createSpace(int id, string name = "")
         {
             var space = new Space(id);

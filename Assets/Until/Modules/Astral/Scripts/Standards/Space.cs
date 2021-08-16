@@ -28,7 +28,7 @@ namespace until.modules.astral.standard
         {
         }
 
-        public override AstralBehaviorStatus checkBehavior(AstralBehaviorIdentifier identifier)
+        public override AstralBehaviorStatus checkBehavior(AstralBehaviorOperation identifier)
         {
             return AstralBehaviorStatus.Inactivating;
         }

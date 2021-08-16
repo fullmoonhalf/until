@@ -12,7 +12,7 @@ namespace until.test
     public class TestAstralBody : AstralBody
     {
         #region Fields.
-        private HashSet<AstralBehaviorIdentifier> _ActiveBehavior = new HashSet<AstralBehaviorIdentifier>();
+        private HashSet<AstralBehaviorOperation> _ActiveBehavior = new HashSet<AstralBehaviorOperation>();
         #endregion
 
         #region Methods
@@ -36,7 +36,7 @@ namespace until.test
             request.notifyComplete();
         }
 
-        public override AstralBehaviorStatus checkBehavior(AstralBehaviorIdentifier identifier)
+        public override AstralBehaviorStatus checkBehavior(AstralBehaviorOperation identifier)
         {
             return _ActiveBehavior.Contains(identifier) ? AstralBehaviorStatus.Active : AstralBehaviorStatus.Inactive;
         }

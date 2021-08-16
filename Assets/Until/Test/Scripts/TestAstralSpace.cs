@@ -32,7 +32,7 @@ namespace until.test
         {
         }
 
-        public override AstralBehaviorStatus checkBehavior(AstralBehaviorIdentifier identifier)
+        public override AstralBehaviorStatus checkBehavior(AstralBehaviorOperation identifier)
         {
             return AstralBehaviorStatus.Inactivating;
         }
