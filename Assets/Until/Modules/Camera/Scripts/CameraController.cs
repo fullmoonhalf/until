@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using until.system;
 using until.develop;
 using until.utils;
 
 namespace until.modules.camera
 {
     [DefaultExecutionOrder(system.defines.ExecutionOrder.System_Head_50)]
-    public class CameraController : MonoBehaviour
+    public class CameraController : Behavior
     {
         #region Properties
         public Vector3 Position { get; private set; } = Vector3.zero;

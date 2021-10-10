@@ -6,7 +6,7 @@ using UnityEngine;
 namespace until.system
 {
     [DefaultExecutionOrder(defines.ExecutionOrder.System_Head_00)]
-    public class BootSystemBehavior : MonoBehaviour
+    public class BootSystemBehavior : Behavior
     {
         // Update is called once per frame
         void Update()
