@@ -9,8 +9,14 @@ namespace until.system
     [Serializable]
     public class PrefabWrapper
     {
+        #region Properties
+        public UnityEngine.Object Prefab
+        {
+            get => _Prefab;
+        }
         [SerializeField]
         private UnityEngine.Object _Prefab = null;
+        #endregion
 
         #region コンストラクタ
         public PrefabWrapper()

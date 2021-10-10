@@ -29,6 +29,8 @@ namespace until.system
 
         #region Fields.
         private List<Request> _RequestList = new List<Request>();
+        private Dictionary<string, PrefabWrapper> _PrefabCollection = new Dictionary<string, PrefabWrapper>();
+        private object _Lock = new object();
         #endregion
 
         #region Singleton
@@ -69,10 +71,39 @@ namespace until.system
             Log.info(this, $"requested {prefab.name}");
         }
 
-        public void request(string ResourceName, OnFinishAction onFinish = null, bool Eternal = false)
+        public void requestFromResource(string ResourceName, OnFinishAction onFinish = null, bool Eternal = false)
         {
             var Prefab = Resources.Load(ResourceName);
             request(Prefab, onFinish, Eternal);
+        }
+
+        public void requestFromCollection(string name, OnFinishAction on_finish = null, bool eternal = false)
+        {
+            lock (_Lock)
+            {
+                if (_PrefabCollection.TryGetValue(name, out var wrapper))
+                {
+                    request(wrapper.Prefab, on_finish, eternal);
+                }
+            }
+        }
+        #endregion
+
+        #region Register
+        public void regist(string name, PrefabWrapper prefab)
+        {
+            lock (_Lock)
+            {
+                _PrefabCollection[name] = prefab;
+            }
+        }
+
+        public void unregist(string name)
+        {
+            lock (_Lock)
+            {
+                _PrefabCollection.Remove(name);
+            }
         }
         #endregion
 
