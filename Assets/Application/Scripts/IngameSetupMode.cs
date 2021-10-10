@@ -116,29 +116,8 @@ namespace until.test
             session.bind(score);
             world.regist(session);
 
-            var a = new until.modules.gamemaster.GameParameterIdentifier("test");
-            var b = new until.modules.gamemaster.GameParameterIdentifier("test");
-            var c = new until.modules.gamemaster.GameParameterIdentifier("test2");
-
-            Log.info(this, $"a == b > {a == b}");
-            Log.info(this, $"a == c > {a == c}");
-            Log.info(this, $"b == c > {b == c}");
-
-            Log.info(this, $"a != b > {a != b}");
-            Log.info(this, $"a != c > {a != c}");
-            Log.info(this, $"b != c > {b != c}");
-
-            Log.info(this, $"a == null > {a == null}");
-            Log.info(this, $"a != null > {a != null}");
-
             Singleton.AstralAdministrator.regist(world);
-
-            //
             Singleton.GameMaster.set(avatar_gmid, TestGMParameterIdentifier.HP, TestGMAffairIdentifier.Initial, 100);
-            var param_global = Singleton.GameMaster.get(TestGMParameterIdentifier.HP);
-            var param_player = Singleton.GameMaster.get(avatar_gmid, TestGMParameterIdentifier.HP);
-            Log.info(this, $"{param_global.Value.DisplayText}");
-            Log.info(this, $"{param_player.Value.DisplayText}");
 
             transit(Phase.Transit);
         }
