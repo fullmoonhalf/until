@@ -33,5 +33,6 @@ namespace until.system.defines
         public const int Develop_Tail_00 = 2000;
         public const int Develop_Tail_10 = Develop_Tail_00 + 10;
 
+        public const int Undefined = 0;
     }
 }

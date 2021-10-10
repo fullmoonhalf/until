@@ -6,6 +6,7 @@ using until.system;
 
 namespace until.test
 {
+    [DefaultExecutionOrder(system.defines.ExecutionOrder.Undefined)]
     public class Substance : Behavior
     {
     }

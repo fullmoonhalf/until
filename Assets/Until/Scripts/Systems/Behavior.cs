@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace until.system
 {
+    [DefaultExecutionOrder(system.defines.ExecutionOrder.Undefined)]
     public class Behavior : MonoBehaviour
     {
     }
