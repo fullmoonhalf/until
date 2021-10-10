@@ -19,10 +19,10 @@ namespace until.test
         public static string Leader = nameof(Leader);
     }
 
-    public static class TestAstralBehaviorIdentifier
+    public static class TestAstralBehaviorOperation
     {
-        public static readonly AstralBehaviorIdentifier StatusWait = new AstralBehaviorIdentifier(TestAstralBehaviorIdentifierCategory.Status, 1);
-        public static readonly AstralBehaviorIdentifier StatusMove = new AstralBehaviorIdentifier(TestAstralBehaviorIdentifierCategory.Status, 2);
+        public static readonly AstralBehaviorOperation StatusWait = new AstralBehaviorOperation(TestAstralBehaviorIdentifierCategory.Status, 1);
+        public static readonly AstralBehaviorOperation StatusMove = new TestAstralBehaviorOperationMove(TestAstralBehaviorIdentifierCategory.Status, 2);
     }
 
     public static class TestGMParameterIdentifier

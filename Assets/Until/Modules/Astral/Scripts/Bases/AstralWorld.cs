@@ -10,7 +10,8 @@ namespace until.modules.astral
         #region Definitions
         public abstract AstralSpace getSpace(int id);
         public abstract AstralBody getBody(int id);
-        public abstract IEnumerable<AstralBody> getUpdatableBodies();
+        public abstract AstralSpace createSpace(int id, string name = "");
+        public abstract AstralBody createBody(int id, string name = "");
         #endregion
 
         #region Fields

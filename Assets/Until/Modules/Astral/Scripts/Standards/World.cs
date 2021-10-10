@@ -36,14 +36,7 @@ namespace until.modules.astral.standard
             return null;
         }
 
-        public override IEnumerable<AstralBody> getUpdatableBodies()
-        {
-            return _BodyCollection.Values;
-        }
-        #endregion
-
-        #region Factory Methods.
-        public Space createSpace(int id, string name = "")
+        public override AstralSpace createSpace(int id, string name = "")
         {
             var space = new Space(id);
             space.Name = name;
@@ -51,7 +44,7 @@ namespace until.modules.astral.standard
             return space;
         }
 
-        public Body createBody(int id, string name = "")
+        public override AstralBody createBody(int id, string name = "")
         {
             var body = new Body(id);
             body.Name = name;

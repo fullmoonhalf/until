@@ -7,10 +7,10 @@ using until.system;
 
 namespace until.modules.astral
 {
-    public class AstralBehaviorIdentifier : Identifier<AstralBehaviorIdentifier>
+    public class AstralBehaviorOperation : Identifier<AstralBehaviorOperation>
     {
         #region definition
-        public static readonly AstralBehaviorIdentifier NOP = new AstralBehaviorIdentifier(0, 0);
+        public static readonly AstralBehaviorOperation NOP = new AstralBehaviorOperation(0, 0);
         #endregion
 
         #region Properties
@@ -24,11 +24,11 @@ namespace until.modules.astral
         #endregion
 
         #region Methods
-        public AstralBehaviorIdentifier()
+        public AstralBehaviorOperation()
         {
         }
 
-        public AstralBehaviorIdentifier(int category, int action)
+        public AstralBehaviorOperation(int category, int action)
         {
             CategoryID = category;
             ActionID = action;
@@ -40,9 +40,18 @@ namespace until.modules.astral
         /// </summary>
         /// <param name="identifier"></param>
         /// <returns></returns>
-        public override bool equal(AstralBehaviorIdentifier identifier)
+        public override bool equal(AstralBehaviorOperation identifier)
         {
             return CategoryID == identifier.CategoryID && ActionID == identifier.ActionID;
+        }
+
+        /// <summary>
+        /// ê›íËópÇÃà¯êîÇÃê∂ê¨
+        /// </summary>
+        /// <returns></returns>
+        public virtual AstralBehaviorRequestArgument createArgument()
+        {
+            return null;
         }
         #endregion
     }

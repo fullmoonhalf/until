@@ -82,7 +82,7 @@ namespace until.test
 
         private void updateConstructAstral()
         {
-            var world = new World();
+            var world = new TestAstralWorld();
 
             // 部屋構成
             var space_homebase = world.createSpace(createID(1, 0, 0, 0), "拠点");
@@ -108,7 +108,7 @@ namespace until.test
 
             // うろうろするスコア
             var score = new AstralScore();
-            score.appendNote(new modules.astral.note.BeginBehavior(TestAstralRole.Leader, TestAstralBehaviorIdentifier.StatusWait), true);
+            score.appendNote(new modules.astral.note.BeginBehavior(TestAstralRole.Leader, TestAstralBehaviorOperation.StatusWait), true);
 
             // セッション
             var session = new AstralSession();

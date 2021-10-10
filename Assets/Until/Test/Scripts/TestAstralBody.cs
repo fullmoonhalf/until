@@ -1,19 +1,22 @@
+﻿#if TEST
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using until.develop;
+using until.system;
+using until.modules.astral;
+using until.modules.gamemaster;
 
-
-namespace until.modules.astral.standard
+namespace until.test
 {
-    public class Body : AstralBody
+    public class TestAstralBody : AstralBody
     {
         #region Fields.
         private HashSet<AstralBehaviorOperation> _ActiveBehavior = new HashSet<AstralBehaviorOperation>();
         #endregion
 
-
         #region Methods
-        public Body(int id)
+        public TestAstralBody(int id)
             : base(id)
         {
         }
@@ -41,3 +44,4 @@ namespace until.modules.astral.standard
         #endregion
     }
 }
+#endif

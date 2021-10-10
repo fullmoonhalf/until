@@ -7,12 +7,35 @@ using UnityEngine;
 
 namespace until.modules.astral
 {
+    public class AstralBehaviorRequestArgument
+    {
+    }
+
     public class AstralBehaviorRequest
     {
-        public AstralBehaviorIdentifier Identifier;
+        public AstralBehaviorOperation Identifier;
         public event Action onAcceptEvent;
         public event Action onRejectedEvent;
         public event Action onCompeletedEvent;
+        public AstralBehaviorRequestArgument Argument = null;
+
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        [Obsolete("Do not use default constructor.", true)]
+        public AstralBehaviorRequest()
+        {
+        }
+
+        /// <summary>
+        /// リクエスト引数付きコンストラクタ
+        /// </summary>
+        /// <param name="argument"></param>
+        public AstralBehaviorRequest(AstralBehaviorRequestArgument argument)
+        {
+            Argument = argument;
+        }
 
 
         public void notifyAccept()

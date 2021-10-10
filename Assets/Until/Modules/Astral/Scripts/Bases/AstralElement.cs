@@ -22,7 +22,7 @@ namespace until.modules.astral
 
         public abstract void requestBehaviorStart(AstralBehaviorRequest request);
         public abstract void requestBehaviorEnd(AstralBehaviorRequest request);
-        public abstract AstralBehaviorStatus checkBehavior(AstralBehaviorIdentifier identifier);
+        public abstract AstralBehaviorStatus checkBehavior(AstralBehaviorOperation identifier);
         #endregion
     }
 }
