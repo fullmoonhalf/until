@@ -162,7 +162,7 @@ namespace until.system
                 var scene = SceneManager.GetSceneByBuildIndex(scene_index);
                 var control = new SceneController(scene_index, scene);
                 _SceneCollection[scene_index] = control;
-                Log.info(this, $"[{scene_index}]{control.SceneName} is registed.");
+                Log.info(this, $"[{scene_index}] {control.SceneName} is registed.");
             }
         }
 

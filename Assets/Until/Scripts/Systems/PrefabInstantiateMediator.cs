@@ -94,6 +94,7 @@ namespace until.system
         {
             lock (_Lock)
             {
+                Log.info(this, $"regist {name}");
                 _PrefabCollection[name] = prefab;
             }
         }
@@ -102,6 +103,7 @@ namespace until.system
         {
             lock (_Lock)
             {
+                Log.info(this, $"unregist {name}");
                 _PrefabCollection.Remove(name);
             }
         }

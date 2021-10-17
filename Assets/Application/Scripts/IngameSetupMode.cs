@@ -17,6 +17,8 @@ namespace until.test
         private enum Phase
         {
             Initial,
+            LoadPermanentCollection,
+            WaitPermanentCollection,
             ConstructAstral,
             Transit,
             Exit,
@@ -42,9 +44,16 @@ namespace until.test
             switch (_CurrentPhase)
             {
                 case Phase.Initial:
-                    transit(Phase.ConstructAstral);
+                    transit(Phase.LoadPermanentCollection);
+                    break;
+                case Phase.LoadPermanentCollection:
+                    transit(Phase.WaitPermanentCollection);
+                    Singleton.SceneLoader.requestToLoad(1, () => transit(Phase.ConstructAstral));
+                    break;
+                case Phase.WaitPermanentCollection:
                     break;
                 case Phase.ConstructAstral:
+                    Singleton.PrefabInstantiateMediator.requestFromCollection("Ch01000");
                     updateConstructAstral();
                     break;
                 case Phase.Transit:
