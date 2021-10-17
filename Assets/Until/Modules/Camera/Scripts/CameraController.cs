@@ -13,6 +13,7 @@ namespace until.modules.camera
         #region Properties
         public Vector3 Position { get; private set; } = Vector3.zero;
         public Quaternion Rotation { get; private set; } = Quaternion.identity;
+        public float FoV { get; private set; } = 0.0f;
         public CameraAction CurrentAction { get => _CurrentAction; }
         #endregion
 
@@ -56,6 +57,8 @@ namespace until.modules.camera
 
             var currentCameraPosition = _CurrentAction?.Position ?? Vector3.zero;
             var currentCameraRotation = _CurrentAction?.Rotation ?? Quaternion.identity;
+            var currentCameraFov = _CurrentAction?.FoV ?? 0.0f;
+            var currentOrthographic = _CurrentAction?.Orthographic ?? false;
 
             // •âŠÔˆ—
             if (_InterpolationCount > 0.0f)
@@ -83,8 +86,11 @@ namespace until.modules.camera
             {
                 Position = currentCameraPosition;
                 Rotation = currentCameraRotation;
+                FoV = currentCameraFov;
                 _RefCameraComponent.transform.localPosition = currentCameraPosition;
                 _RefCameraComponent.transform.localRotation = currentCameraRotation;
+                _RefCameraComponent.fieldOfView = currentCameraFov;
+                _RefCameraComponent.orthographic = currentOrthographic;
             }
         }
 
