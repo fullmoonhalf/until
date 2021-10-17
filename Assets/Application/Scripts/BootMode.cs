@@ -66,6 +66,7 @@ namespace until.test
                     break;
                 case Phase.StartCameraLoad:
                     Singleton.SceneLoader.requestToLoad(SceneIndex_Camera, () => _CurrentPhase = Phase.NextMode);
+                    transit(Phase.WaitCameraLoad);
                     break;
                 case Phase.WaitCameraLoad:
                     break;
