@@ -20,6 +20,7 @@ namespace until.test
             LoadPermanentCollection,
             WaitPermanentCollection,
             ConstructAstral,
+            SetupCamera,
             Transit,
             Exit,
         }
@@ -55,6 +56,11 @@ namespace until.test
                 case Phase.ConstructAstral:
                     Singleton.PrefabInstantiateMediator.requestFromCollection("Ch01000");
                     updateConstructAstral();
+                    transit(Phase.SetupCamera);
+                    break;
+                case Phase.SetupCamera:
+                    Singleton.CameraManager.transitCamera<IngamePlayCamera>();
+                    transit(Phase.Transit);
                     break;
                 case Phase.Transit:
                     Singleton.ModeManager.enqueueNextMode<IngameMode>();
@@ -127,8 +133,6 @@ namespace until.test
 
             Singleton.AstralAdministrator.regist(world);
             Singleton.GameMaster.set(avatar_gmid, TestGMParameterIdentifier.HP, TestGMAffairIdentifier.Initial, 100);
-
-            transit(Phase.Transit);
         }
         #endregion
         #endregion
