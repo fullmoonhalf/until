@@ -20,7 +20,8 @@ namespace until.test
             LoadPermanentCollection,
             WaitPermanentCollection,
             ConstructAstral,
-            SetupCamera,
+            SetupLevel,
+            WaitLevel,
             Transit,
             Exit,
         }
@@ -54,13 +55,18 @@ namespace until.test
                 case Phase.WaitPermanentCollection:
                     break;
                 case Phase.ConstructAstral:
-                    Singleton.PrefabInstantiateMediator.requestFromCollection("Ch01000");
                     updateConstructAstral();
-                    transit(Phase.SetupCamera);
+                    transit(Phase.SetupLevel);
                     break;
-                case Phase.SetupCamera:
-                    Singleton.CameraManager.transitCamera<IngamePlayCamera>();
-                    transit(Phase.Transit);
+                case Phase.SetupLevel:
+                    Singleton.IngameField.enterLevel(createID(3, 1, 0, 0));
+                    transit(Phase.WaitLevel);
+                    break;
+                case Phase.WaitLevel:
+                    if (Singleton.IngameField.checkUnderControlLevelScene() == false)
+                    {
+                        transit(Phase.Transit);
+                    }
                     break;
                 case Phase.Transit:
                     Singleton.ModeManager.enqueueNextMode<IngameMode>();
@@ -106,10 +112,13 @@ namespace until.test
             var space_dungeon = world.createSpace(createID(2, 0, 0, 0), "迷宮");
             var space_dungeon_1f_a = world.createSpace(createID(2, 1, 1, 0), "迷宮.1F.A");
             var space_dungeon_1f_b = world.createSpace(createID(2, 1, 2, 0), "迷宮.1F.B");
+            var space_battle_field = world.createSpace(createID(3, 0, 0, 0), "戦闘フィールド");
+            var space_battle_field_1 = world.createSpace(createID(3, 1, 0, 0), "戦闘フィールド.1");
             space_homebase.regist(space_homebase_reception);
             space_homebase.regist(space_homebase_office);
             space_dungeon.regist(space_dungeon_1f_a);
             space_dungeon.regist(space_dungeon_1f_b);
+            space_battle_field.regist(space_battle_field_1);
 
             // スポット構成
             var spot_homebase_counter = world.createBody(createID(1, 1, 1, 1), "拠点.受付.カウンター");
@@ -120,6 +129,7 @@ namespace until.test
             // 何らかのアバター
             var avatar_gmid = new GameEntityIdentifier(createID(0, 0, 0, 1));
             var avatar = world.createBody(avatar_gmid.AstralID, "主人公キャラ");
+            space_battle_field_1.regist(avatar);
 
             // うろうろするスコア
             var score = new AstralScore();
