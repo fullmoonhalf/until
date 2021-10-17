@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using until.system;
 
 
@@ -13,6 +14,7 @@ namespace until.test
         #region Fields.
         private bool _LevelLoading = false;
         private bool _LevelUnloading = false;
+        private GameObject _PlayerObject = null;
         #endregion
 
         #region Singleton
@@ -30,6 +32,29 @@ namespace until.test
         #endregion
 
         #region Methods
+        #region Behavior
+        public void onStart()
+        {
+        }
+
+        public void onUpdate()
+        {
+            var stick = Singleton.InputManager.getStick(InputPad.Player1, InputStickType.L);
+            if (stick != null)
+            {
+                var position = _PlayerObject.transform.position;
+                position.x += stick.X * 0.01f;
+                position.z += stick.Y * 0.01f;
+                _PlayerObject.transform.position = position;
+            }
+        }
+
+        public void onDestroy()
+        {
+        }
+        #endregion
+
+
         #region Level
         public void enterLevel(int id)
         {
@@ -57,6 +82,8 @@ namespace until.test
             {
                 return;
             }
+
+            _PlayerObject = go as GameObject;
         }
         #endregion
         #endregion

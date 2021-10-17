@@ -19,6 +19,8 @@ namespace until.test
             Initial,
             LoadPermanentCollection,
             WaitPermanentCollection,
+            SetupSystem,
+            WaitSystem,
             ConstructAstral,
             SetupLevel,
             WaitLevel,
@@ -50,9 +52,14 @@ namespace until.test
                     break;
                 case Phase.LoadPermanentCollection:
                     transit(Phase.WaitPermanentCollection);
-                    Singleton.SceneLoader.requestToLoad(1, () => transit(Phase.ConstructAstral));
+                    Singleton.SceneLoader.requestToLoad(1, () => transit(Phase.SetupSystem));
                     break;
                 case Phase.WaitPermanentCollection:
+                    break;
+                case Phase.SetupSystem:
+                    Singleton.PrefabInstantiateMediator.requestFromCollection("AppSystem", (result, go) => transit(Phase.ConstructAstral));
+                    break;
+                case Phase.WaitSystem:
                     break;
                 case Phase.ConstructAstral:
                     updateConstructAstral();
