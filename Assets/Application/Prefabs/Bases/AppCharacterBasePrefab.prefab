@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &121352090607692802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8607666250464872449}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8607666250464872449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121352090607692802}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5211256457650085008}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &-2883102268761503162
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11,6 +42,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -121,5 +153,10 @@ PrefabInstance:
 --- !u!1 &275593918056301155 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6560207690627886769, guid: 821874a34edbde544929b70d153ed390, type: 3}
+  m_PrefabInstance: {fileID: 6402307870178159826}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5211256457650085008 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1192199586372497474, guid: 821874a34edbde544929b70d153ed390, type: 3}
   m_PrefabInstance: {fileID: 6402307870178159826}
   m_PrefabAsset: {fileID: 0}
