@@ -33,11 +33,11 @@ namespace until.system
         /// <summary>
         /// Instantiate
         /// </summary>
-        /// <param name="OnFinish"></param>
-        /// <param name="Eternal"></param>
-        public void instantiate(PrefabInstantiateMediator.OnFinishAction OnFinish = null, bool Eternal = false)
+        /// <param name="onFinish"></param>
+        /// <param name="eternal"></param>
+        public void instantiate(PrefabInstantiateMediator.OnFinishAction onFinish = null, bool eternal = false, bool immidiate = false)
         {
-            Singleton.PrefabInstantiateMediator.request(_Prefab, OnFinish, Eternal);
+            Singleton.PrefabInstantiateMediator.request(_Prefab, onFinish, eternal, immidiate);
         }
         #endregion
     }

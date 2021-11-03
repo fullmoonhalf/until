@@ -6,7 +6,7 @@ using until.system;
 
 namespace until.modules.attack
 {
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.Develop_Tail_10)]
+    [DefaultExecutionOrder(system.defines.ExecutionOrder.Develop_Tail_20)]
     public class AttackDealController : Behavior
     {
         // Start is called before the first frame update

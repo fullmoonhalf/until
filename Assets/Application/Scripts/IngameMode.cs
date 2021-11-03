@@ -4,31 +4,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using until.develop;
 using until.system;
-
+using until.modules.bullet;
+using until.modules.bullet.command;
 
 namespace until.test
 {
     public class IngameMode : Mode
     {
-        private bool _FirstUpdate = true;
+        private int _FrameCount = 0;
 
         public Mode.Control init()
         {
             TestLog.test(this, "init");
-            _FirstUpdate = true;
+            _FrameCount = 0;
             return Mode.Control.Done;
         }
 
         public Mode.Control update()
         {
-            if (_FirstUpdate)
+            if (_FrameCount == 0)
             {
                 TestLog.test(this, "update");
-                _FirstUpdate = false;
             }
 
             Singleton.AstralAdministrator.updateAstral();
 
+            if (_FrameCount % 100 == 0)
+            {
+                var specifier = new BulletEmitSpecifier();
+                specifier.Commands = new BulletEmitCommand[1] {
+                    new BulletEmitFixedLinerCommand("Bullet0001", Vector3.zero, Vector3.right, 10.0f),
+                };
+                var emiiter = new BulletEmitter(specifier);
+                emiiter.onUpdate(0.0f);
+            }
+
+            ++_FrameCount;
             return Mode.Control.Keep;
         }
 

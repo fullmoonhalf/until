@@ -39,13 +39,16 @@ namespace until.test
 
         public void onUpdate()
         {
-            var stick = Singleton.InputManager.getStick(InputPad.Player1, InputStickType.L);
-            if (stick != null)
+            if(_PlayerObject != null)
             {
-                var position = _PlayerObject.transform.position;
-                position.x += stick.X * 0.01f;
-                position.z += stick.Y * 0.01f;
-                _PlayerObject.transform.position = position;
+                var stick = Singleton.InputManager.getStick(InputPad.Player1, InputStickType.L);
+                if (stick != null)
+                {
+                    var position = _PlayerObject.transform.position;
+                    position.x += stick.X * 0.01f;
+                    position.z += stick.Y * 0.01f;
+                    _PlayerObject.transform.position = position;
+                }
             }
         }
 

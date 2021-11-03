@@ -7,6 +7,7 @@ using until.system;
 using until.modules.astral;
 using until.modules.astral.standard;
 using until.modules.gamemaster;
+using until.modules.bullet;
 
 
 namespace until.test
@@ -21,6 +22,7 @@ namespace until.test
             WaitPermanentCollection,
             SetupSystem,
             WaitSystem,
+            SetupBullet,
             ConstructAstral,
             SetupLevel,
             WaitLevel,
@@ -57,9 +59,17 @@ namespace until.test
                 case Phase.WaitPermanentCollection:
                     break;
                 case Phase.SetupSystem:
-                    Singleton.PrefabInstantiateMediator.requestFromCollection("AppSystem", (result, go) => transit(Phase.ConstructAstral));
+                    Singleton.PrefabInstantiateMediator.requestFromCollection("AppSystem", (result, go) => transit(Phase.SetupBullet));
                     break;
                 case Phase.WaitSystem:
+                    break;
+                case Phase.SetupBullet:
+                    {
+                        var bullet_01 = new BulletPoolSpecifier() { PrefabName = "Bullet0001", Count = 10 };
+                        var order = new BulletPoolOrder() { SpecifierList = new BulletPoolSpecifier[1] { bullet_01 } };
+                        Singleton.BulletManager.buildBulletPool(order);
+                        transit(Phase.ConstructAstral);
+                    }
                     break;
                 case Phase.ConstructAstral:
                     updateConstructAstral();
