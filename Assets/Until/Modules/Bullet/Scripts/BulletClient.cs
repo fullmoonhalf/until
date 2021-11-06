@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using until.system;
+using until.develop;
 
 
 namespace until.modules.bullet
@@ -56,17 +57,14 @@ namespace until.modules.bullet
         #region Trigger
         private void OnTriggerEnter(Collider other)
         {
-
         }
 
         private void OnTriggerStay(Collider other)
         {
-
         }
 
         private void OnTriggerExit(Collider other)
         {
-
         }
         #endregion
     }

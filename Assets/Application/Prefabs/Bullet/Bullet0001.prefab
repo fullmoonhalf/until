@@ -115,7 +115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3940437733999975635, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
       propertyPath: m_Radius
-      value: 0.05
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4966022746058159108, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
       propertyPath: BulletName
@@ -129,7 +129,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bullet0001
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2347804291092391979, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
 --- !u!1 &227190977653038571 stripped
 GameObject:
