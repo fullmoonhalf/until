@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: System
       objectReference: {fileID: 0}
+    - target: {fileID: 3890473019126467323, guid: f2830b5d1df8d3940ae556c6493f6415, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 9114368168758268936, guid: f2830b5d1df8d3940ae556c6493f6415, type: 3}
       propertyPath: m_RootOrder
       value: 0

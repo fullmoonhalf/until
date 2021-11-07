@@ -11,6 +11,8 @@ namespace until.modules.camera
     {
         public Vector3 Position { get; private set; } = Vector3.zero;
         public Quaternion Rotation { get; private set; } = Quaternion.identity;
+        public float FoV => 60.0f;
+        public bool Orthographic => false;
 
         public void onSwitchingStart()
         {

@@ -17,6 +17,7 @@ namespace until.system.defines
         public const int Develop_Head_00 = -2000;
         public const int Develop_Head_10 = Develop_Head_00 + 10;
 
+        public const int Static = -1500;
         public const int System_Head_00 = -1000;
         public const int System_Head_10 = System_Head_00 + 10;
         public const int System_Head_20 = System_Head_00 + 20;
@@ -32,6 +33,8 @@ namespace until.system.defines
 
         public const int Develop_Tail_00 = 2000;
         public const int Develop_Tail_10 = Develop_Tail_00 + 10;
+        public const int Develop_Tail_20 = Develop_Tail_00 + 20;
 
+        public const int Undefined = 0;
     }
 }

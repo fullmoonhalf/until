@@ -155,14 +155,14 @@ namespace until.system
         public override void onSingletonStart()
         {
             // シーンリストの生成
-            var scene_count = SceneManager.sceneCount;
+            var scene_count = SceneManager.sceneCountInBuildSettings;
             _SceneCollection = new SceneController[scene_count];
             for (int scene_index = 0; scene_index < scene_count; ++scene_index)
             {
                 var scene = SceneManager.GetSceneByBuildIndex(scene_index);
                 var control = new SceneController(scene_index, scene);
                 _SceneCollection[scene_index] = control;
-                Log.info(this, $"[{scene_index}]{control.SceneName} is registed.");
+                Log.info(this, $"[{scene_index}] {control.SceneName} is registed.");
             }
         }
 

@@ -17,7 +17,7 @@ namespace until.system
             Failure,
         }
 
-        public delegate void OnFinishAction(Result result, UnityEngine.Object generatedObject);
+        public delegate void OnFinishAction(Result result, GameObject generatedObject);
 
         private class Request
         {
@@ -29,6 +29,8 @@ namespace until.system
 
         #region Fields.
         private List<Request> _RequestList = new List<Request>();
+        private Dictionary<string, PrefabWrapper> _PrefabCollection = new Dictionary<string, PrefabWrapper>();
+        private object _Lock = new object();
         #endregion
 
         #region Singleton
@@ -54,42 +56,100 @@ namespace until.system
         #endregion
 
         #region Request
-        public void request(UnityEngine.Object prefab, OnFinishAction OnFinish = null, bool Eternal = false)
+        public GameObject request(UnityEngine.Object prefab, OnFinishAction onFinish = null, bool Eternal = false, bool immidiate = false)
         {
-            var Order = new Request();
-            Order.Prefab = prefab;
-            Order.OnFinish = OnFinish;
-            Order.Eternal = Eternal;
+            var order = new Request();
+            order.Prefab = prefab;
+            order.Eternal = Eternal;
 
-            lock (_RequestList)
+            if (immidiate)
             {
-                _RequestList.Add(Order);
+                GameObject go = null;
+                order.OnFinish = (result, cbGo) =>
+                {
+                    if (result == Result.Success)
+                    {
+                        go = cbGo;
+                    }
+                    if (onFinish != null)
+                    {
+                        onFinish.Invoke(result, go);
+                    }
+                };
+                process(order);
+                return go;
             }
-
-            Log.info(this, $"requested {prefab.name}");
+            else
+            {
+                order.OnFinish = onFinish;
+                lock (_RequestList)
+                {
+                    _RequestList.Add(order);
+                }
+                Log.info(this, $"requested {prefab.name}");
+                return null;
+            }
         }
 
-        public void request(string ResourceName, OnFinishAction onFinish = null, bool Eternal = false)
+        public GameObject requestFromResource(string name, OnFinishAction onFinish = null, bool eternal = false, bool immididate = false)
         {
-            var Prefab = Resources.Load(ResourceName);
-            request(Prefab, onFinish, Eternal);
+            var prefab = Resources.Load(name);
+            return request(prefab, onFinish, eternal, immididate);
+        }
+
+        public GameObject requestFromCollection(string name, OnFinishAction on_finish = null, bool eternal = false, bool immidiate = false)
+        {
+            lock (_Lock)
+            {
+                if (_PrefabCollection.TryGetValue(name, out var wrapper))
+                {
+                    return request(wrapper.Prefab, on_finish, eternal, immidiate);
+                }
+            }
+            return null;
+        }
+        #endregion
+
+        #region Register
+        public void regist(string name, PrefabWrapper prefab)
+        {
+            lock (_Lock)
+            {
+                Log.info(this, $"regist {name}");
+                _PrefabCollection[name] = prefab;
+            }
+        }
+
+        public void unregist(string name)
+        {
+            lock (_Lock)
+            {
+                Log.info(this, $"unregist {name}");
+                _PrefabCollection.Remove(name);
+            }
         }
         #endregion
 
         #region Execution
         private void process()
         {
-            foreach (var Request in _RequestList)
+            foreach (var request in _RequestList)
             {
-                var GeneratedObject = GameObject.Instantiate(Request.Prefab);
-                if (Request.Eternal)
-                {
-                    GameObject.DontDestroyOnLoad(GeneratedObject);
-                }
-                Request.OnFinish?.Invoke(Result.Success, GeneratedObject);
-                Log.info(this, $"generated {Request.Prefab.name}");
+                process(request);
             }
             _RequestList.Clear();
+        }
+
+        private void process(Request request)
+        {
+            var GeneratedObject = GameObject.Instantiate(request.Prefab) as GameObject;
+            if (GeneratedObject != null && request.Eternal)
+            {
+                GameObject.DontDestroyOnLoad(GeneratedObject);
+            }
+            var result = GeneratedObject != null ? Result.Success : Result.Failure;
+            request.OnFinish?.Invoke(result, GeneratedObject);
+            Log.info(this, $"generated {request.Prefab.name}");
         }
         #endregion
     }

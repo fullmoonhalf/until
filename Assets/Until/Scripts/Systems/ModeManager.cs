@@ -161,10 +161,8 @@ namespace until.system
 
         public void onIndicatorUpdate()
         {
-            var prev = PreviousMode?.GetType().Name ?? "(empty)";
             var curr = CurrentMode?.GetType().Name ?? "(empty)";
-            var next = NextMode?.GetType().Name ?? "(empty)";
-            _DevelopIndicatorText = $"[Mode] {prev}=>{curr}=>{next}";
+            _DevelopIndicatorText = $"[Mode] {curr}.{CurrentPhase}";
         }
         #endregion
 #endif

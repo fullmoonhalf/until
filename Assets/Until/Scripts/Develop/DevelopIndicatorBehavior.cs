@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using until.system;
 using until.system.defines;
 
 
 namespace until.develop
 {
     [DefaultExecutionOrder(ExecutionOrder.Develop_Tail_10)]
-    public class DevelopIndicatorBehavior : MonoBehaviour
+    public class DevelopIndicatorBehavior : Behavior
     {
         private void Update()
         {

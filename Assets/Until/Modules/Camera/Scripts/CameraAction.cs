@@ -10,6 +10,8 @@ namespace until.modules.camera
     {
         public Vector3 Position { get; }
         public Quaternion Rotation { get; }
+        public float FoV { get; }
+        public bool Orthographic { get; }
 
         public void onSwitchingStart();
         public void onSwitchingEnd();
