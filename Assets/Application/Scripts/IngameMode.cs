@@ -33,7 +33,7 @@ namespace until.test
             {
                 var specifier = new BulletEmitSpecifier();
                 specifier.Commands = new BulletEmitCommand[1] {
-                    new BulletEmitFixedLinerCommand("Bullet0001", Vector3.zero, Vector3.right, 10.0f),
+                    new BulletEmitFixedLinerCommand("Bullet0001", new Vector3(0.0f, 0.0f, 2.0f), Vector3.right, 10.0f),
                 };
                 var emiiter = new BulletEmitter(specifier);
                 emiiter.onUpdate(0.0f);
