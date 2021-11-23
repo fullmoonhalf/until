@@ -12,7 +12,7 @@ using until.modules.bullet;
 
 namespace until.test
 {
-    public class IngameSetupMode : Mode
+    public class AppmodeIngameSetup : Mode
     {
         #region Definition.
         private enum Phase
@@ -86,7 +86,7 @@ namespace until.test
                     }
                     break;
                 case Phase.Transit:
-                    Singleton.ModeManager.enqueueNextMode<IngameMode>();
+                    Singleton.ModeManager.enqueueNextMode<AppmodeIngame>();
                     transit(Phase.Exit);
                     result = Mode.Control.Done;
                     break;

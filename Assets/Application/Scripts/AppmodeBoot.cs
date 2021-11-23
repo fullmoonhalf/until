@@ -8,7 +8,7 @@ using until.modules.camera;
 
 namespace until.test
 {
-    public class BootMode : until.system.BootMode
+    public class AppmodeBoot : until.system.BootMode
     {
         private enum Phase
         {
@@ -72,7 +72,7 @@ namespace until.test
                     break;
                 case Phase.NextMode:
                     Singleton.CameraManager.transitCamera<CameraActionFree>();
-                    Singleton.ModeManager.enqueueNextMode<IngameSetupMode>();
+                    Singleton.ModeManager.enqueueNextMode<AppmodeIngameSetup>();
                     transit(Phase.Finish);
                     break;
                 default:

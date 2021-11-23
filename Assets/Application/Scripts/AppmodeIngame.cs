@@ -9,7 +9,7 @@ using until.modules.bullet.command;
 
 namespace until.test
 {
-    public class IngameMode : Mode
+    public class AppmodeIngame : Mode
     {
         private int _FrameCount = 0;
 
