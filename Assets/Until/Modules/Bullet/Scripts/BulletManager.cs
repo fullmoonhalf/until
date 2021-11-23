@@ -20,6 +20,7 @@ namespace until.modules.bullet
 
         #region Fields.
         private Dictionary<string, BulletPool> _PoolCollection = new Dictionary<string, BulletPool>();
+        private List<BulletEmitter> _EmitterList = new List<BulletEmitter>();
         #endregion
 
         #region Methods
@@ -36,9 +37,14 @@ namespace until.modules.bullet
         {
             destroyBulletPool();
         }
+
+        public void onUpdate(float elapsed)
+        {
+            onUpdateEmitter(elapsed);
+        }
         #endregion
 
-        #region Management
+        #region Pool Management
         /// <summary>
         /// ÉvÅ[Éãê∂ê¨
         /// </summary>
@@ -71,6 +77,32 @@ namespace until.modules.bullet
                 pool.release(obj => GameObject.Destroy(obj));
             }
             _PoolCollection.Clear();
+        }
+        #endregion
+
+        #region Emitter Management
+        public void regist(BulletEmitter emitter)
+        {
+            lock (_EmitterList)
+            {
+                _EmitterList.Add(emitter);
+            }
+        }
+
+        public void unregist(BulletEmitter emitter)
+        {
+            lock (_EmitterList)
+            {
+                _EmitterList.Remove(emitter);
+            }
+        }
+
+        private void onUpdateEmitter(float elapsed)
+        {
+            lock (_EmitterList)
+            {
+                _EmitterList.RemoveAll(emitter => emitter.onUpdate(elapsed) == false);
+            }
         }
         #endregion
 

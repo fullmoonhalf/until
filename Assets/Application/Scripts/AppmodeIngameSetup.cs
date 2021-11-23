@@ -65,7 +65,7 @@ namespace until.test
                     break;
                 case Phase.SetupBullet:
                     {
-                        var bullet_01 = new BulletPoolSpecifier() { PrefabName = "Bullet0001", Count = 10 };
+                        var bullet_01 = new BulletPoolSpecifier() { PrefabName = "Bullet0001", Count = 100 };
                         var order = new BulletPoolOrder() { SpecifierList = new BulletPoolSpecifier[1] { bullet_01 } };
                         Singleton.BulletManager.buildBulletPool(order);
                         transit(Phase.ConstructAstral);

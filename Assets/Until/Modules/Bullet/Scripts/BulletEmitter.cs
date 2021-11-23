@@ -21,6 +21,11 @@ namespace until.modules.bullet
         }
 
 
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="elapsed">経過時間</param>
+        /// <returns>次フレームも継続する場合は true</returns>
         public bool onUpdate(float elapsed)
         {
             var keepAlive = false;
