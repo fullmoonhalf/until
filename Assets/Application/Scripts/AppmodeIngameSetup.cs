@@ -12,7 +12,7 @@ using until.modules.bullet;
 
 namespace until.test
 {
-    public class IngameSetupMode : Mode
+    public class AppmodeIngameSetup : Mode
     {
         #region Definition.
         private enum Phase
@@ -65,7 +65,7 @@ namespace until.test
                     break;
                 case Phase.SetupBullet:
                     {
-                        var bullet_01 = new BulletPoolSpecifier() { PrefabName = "Bullet0001", Count = 10 };
+                        var bullet_01 = new BulletPoolSpecifier() { PrefabName = "Bullet0001", Count = 500 };
                         var order = new BulletPoolOrder() { SpecifierList = new BulletPoolSpecifier[1] { bullet_01 } };
                         Singleton.BulletManager.buildBulletPool(order);
                         transit(Phase.ConstructAstral);
@@ -86,7 +86,7 @@ namespace until.test
                     }
                     break;
                 case Phase.Transit:
-                    Singleton.ModeManager.enqueueNextMode<IngameMode>();
+                    Singleton.ModeManager.enqueueNextMode<AppmodeIngame>();
                     transit(Phase.Exit);
                     result = Mode.Control.Done;
                     break;
