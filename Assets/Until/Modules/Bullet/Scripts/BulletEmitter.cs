@@ -1,17 +1,28 @@
+//#define UNTIL_VERBOSE_MODULE_BULLET
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using until.develop;
 
 
 namespace until.modules.bullet
 {
     public class BulletEmitter
     {
+        #region Definitions
+        private class Context : BulletEmitContext
+        {
+            public Vector3 Position { get; set; } = Vector3.zero;
+            public Quaternion Rotation { get; set; } = Quaternion.identity;
+            public int ProgramCount { get; set; } = 0;
+            public int RepeatCount { get; set; } = 0;
+        }
+        #endregion
+
         #region Fields
         private BulletEmitSpecifier _Specifier = null;
-        private int _ProgramCounter = 0;
         private BulletEmitCommandContext _CurrentContext = null;
+        private Context _Context = new Context();
         #endregion
 
         #region Fields.
@@ -19,7 +30,6 @@ namespace until.modules.bullet
         {
             _Specifier = specifier;
         }
-
 
         /// <summary>
         /// XV
@@ -29,6 +39,9 @@ namespace until.modules.bullet
         public bool onUpdate(float elapsed)
         {
             var keepAlive = false;
+#if UNTIL_VERBOSE_MODULE_BULLET
+            Log.info(this, $"onUpdate({elapsed})");
+#endif
             while (true)
             {
                 if (_CurrentContext != null)
@@ -47,14 +60,17 @@ namespace until.modules.bullet
                 }
                 if (_CurrentContext == null)
                 {
-                    if (_ProgramCounter >= _Specifier.Commands.Length)
+                    if (_Context.ProgramCount >= _Specifier.Commands.Length)
                     {
                         keepAlive = false;
                         break;
                     }
-                    var command = _Specifier.Commands[_ProgramCounter];
-                    _CurrentContext = command.createContext();
-                    ++_ProgramCounter;
+                    var command = _Specifier.Commands[_Context.ProgramCount];
+                    _CurrentContext = command.createContext(_Context);
+#if UNTIL_VERBOSE_MODULE_BULLET
+                    Log.info(this, $"PC={_Context.ProgramCount} {_CurrentContext.GetType().FullName}");
+#endif
+                    ++_Context.ProgramCount;
                 }
             }
             return keepAlive;

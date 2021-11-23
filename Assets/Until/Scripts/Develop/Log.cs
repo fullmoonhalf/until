@@ -8,7 +8,7 @@ namespace until.develop
         [Conditional("TEST")]
         public static void fatal(object Source, string Text, params object[] Args)
         {
-            var Message = $"[{Source.GetType().Name}] " + string.Format(Text, Args);
+            var Message = $"[{Source.GetType().FullName}] " + string.Format(Text, Args);
             UnityEngine.Debug.LogAssertionFormat(Message);
         }
 
@@ -22,7 +22,7 @@ namespace until.develop
         [Conditional("TEST")]
         public static void error(object Source, string Text, params object[] Args)
         {
-            var Message = $"[{Source.GetType().Name}] " + string.Format(Text, Args);
+            var Message = $"[{Source.GetType().FullName}] " + string.Format(Text, Args);
             UnityEngine.Debug.LogErrorFormat(Message);
         }
 
@@ -36,7 +36,7 @@ namespace until.develop
         [Conditional("TEST")]
         public static void warning(object Source, string Text, params object[] Args)
         {
-            var Message = $"[{Source.GetType().Name}] " + string.Format(Text, Args);
+            var Message = $"[{Source.GetType().FullName}] " + string.Format(Text, Args);
             UnityEngine.Debug.LogWarningFormat(Message);
         }
 
@@ -50,7 +50,7 @@ namespace until.develop
         [Conditional("TEST")]
         public static void info(object Source, string Text, params object[] Args)
         {
-            var Message = $"[{Source.GetType().Name}] " + string.Format(Text, Args);
+            var Message = $"[{Source.GetType().FullName}] " + string.Format(Text, Args);
             UnityEngine.Debug.LogFormat(Message);
         }
 
@@ -64,7 +64,7 @@ namespace until.develop
         [Conditional("VERBOSE")]
         public static void verbose(object Source, string Text, params object[] Args)
         {
-            var Message = $"[{Source.GetType().Name}] " + string.Format(Text, Args);
+            var Message = $"[{Source.GetType().FullName}] " + string.Format(Text, Args);
             UnityEngine.Debug.LogFormat(Message);
         }
 
