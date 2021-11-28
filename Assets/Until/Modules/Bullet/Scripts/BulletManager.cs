@@ -20,6 +20,7 @@ namespace until.modules.bullet
 
         #region Fields.
         private Dictionary<string, BulletPool> _PoolCollection = new Dictionary<string, BulletPool>();
+        private Dictionary<string, BulletTarget> _TargetCollection = new Dictionary<string, BulletTarget>();
         private List<BulletEmitter> _EmitterList = new List<BulletEmitter>();
         #endregion
 
@@ -36,6 +37,7 @@ namespace until.modules.bullet
         public override void onSingletonDestroy()
         {
             destroyBulletPool();
+            destroyTargetCollection();
         }
 
         public void onUpdate(float elapsed)
@@ -102,6 +104,44 @@ namespace until.modules.bullet
             lock (_EmitterList)
             {
                 _EmitterList.RemoveAll(emitter => emitter.onUpdate(elapsed) == false);
+            }
+        }
+        #endregion
+
+        #region Target Management
+        public void regist(BulletTarget target)
+        {
+            lock (_TargetCollection)
+            {
+                _TargetCollection.Add(target.BulletTargetIdentifier, target);
+            }
+        }
+
+        public void unregist(BulletTarget target)
+        {
+            lock (_TargetCollection)
+            {
+                _TargetCollection.Remove(target.BulletTargetIdentifier);
+            }
+        }
+
+        public BulletTarget getTarget(string name)
+        {
+            lock (_TargetCollection)
+            {
+                if (_TargetCollection.TryGetValue(name, out var target))
+                {
+                    return target;
+                }
+            }
+            return null;
+        }
+
+        private void destroyTargetCollection()
+        {
+            lock (_TargetCollection)
+            {
+                _TargetCollection.Clear();
             }
         }
         #endregion

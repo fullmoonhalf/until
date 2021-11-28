@@ -144,8 +144,9 @@ namespace until.test
             space_dungeon_1f_a.regist(spot_dungeon_mine);
 
             // 何らかのアバター
-            var avatar_gmid = new GameEntityIdentifier(createID(0, 0, 0, 1));
-            var avatar = world.createBody(avatar_gmid.AstralID, "主人公キャラ");
+            var avatar_astral_id = createID(0, 0, 0, 1);
+            var avatar_gmid = new GameEntityIdentifier(avatar_astral_id);
+            var avatar = world.createBody(avatar_astral_id, "主人公キャラ");
             space_battle_field_1.regist(avatar);
 
             // うろうろするスコア

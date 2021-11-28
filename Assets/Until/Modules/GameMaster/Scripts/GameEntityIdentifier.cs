@@ -12,7 +12,6 @@ namespace until.modules.gamemaster
     {
         #region Properties
         public string Expression { get; private set; } = "";
-        public int AstralID { get; private set; } = 0;
         public override int Hashcode => _Hashcode;
         #endregion
 
@@ -23,7 +22,7 @@ namespace until.modules.gamemaster
         #region Methods
         public GameEntityIdentifier(object value)
         {
-            Expression = $"{value.GetType().Name}.{value}";
+            Expression = $"{value.GetType().FullName}.{value}";
             _Hashcode = Expression.GetHashCode();
         }
 
@@ -36,7 +35,6 @@ namespace until.modules.gamemaster
         {
             Expression = $"Astral.{id}";
             _Hashcode = Expression.GetHashCode();
-            AstralID = id;
         }
 
         public override bool equal(GameEntityIdentifier other)

@@ -44,10 +44,12 @@ namespace until.system
 
         public static bool operator ==(Identifier<T> lhs, T rhs)
         {
+            if (lhs is null) return rhs is null;
             return lhs.Equals(rhs);
         }
         public static bool operator !=(Identifier<T> lhs, T rhs)
         {
+            if (lhs is null) return !(rhs is null);
             return !(lhs == rhs);
         }
         #endregion

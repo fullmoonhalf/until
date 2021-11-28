@@ -10,11 +10,12 @@ namespace until.modules.bullet
     [DefaultExecutionOrder(system.defines.ExecutionOrder.Develop_Tail_00)]
     public class BulletClient : Behavior
     {
-        #region MyRegion
+        #region Properties
         public string ButtleName
         {
             get => _BulletName;
         }
+        public Vector3 BulletPosition => transform.position;
         #endregion
 
         #region Fiels.

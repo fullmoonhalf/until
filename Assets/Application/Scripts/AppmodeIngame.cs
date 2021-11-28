@@ -6,6 +6,9 @@ using until.develop;
 using until.system;
 using until.modules.bullet;
 using until.modules.bullet.command;
+using until.modules.gamemaster;
+using until.utils;
+
 
 namespace until.test
 {
@@ -46,6 +49,16 @@ namespace until.test
                         new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", Vector3.right, 10.0f),
                         new BulletEmitCommandControlSleep(0.1f),
                         new BulletEmitCommandControlRepeat(10, 1),
+                    };
+                    Singleton.BulletManager.regist(new BulletEmitter(specifier));
+                }
+                {
+                    var attribute = GameEntityIdentifiable.until_test_CharacterID_Ch1000.getAttrubute<GameEntityIdentifierValueAttribute>();
+                    var identifier = attribute.createGameEntityIdentifier();
+                    var specifier = new BulletEmitSpecifier();
+                    specifier.Commands = new BulletEmitCommand[] {
+                        new BulletEmitCommandEmitSetTransform(new Vector3(0.0f, 0.0f, -3.0f), Quaternion.identity),
+                        new BulletEmitCommandBulletEmitRelativeHomingMotion("Bullet0001", identifier.Expression, 1.0f, 10.0f ),
                     };
                     Singleton.BulletManager.regist(new BulletEmitter(specifier));
                 }
