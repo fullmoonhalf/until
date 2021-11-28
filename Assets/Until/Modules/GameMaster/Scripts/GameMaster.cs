@@ -32,9 +32,9 @@ namespace until.modules.gamemaster
         /// <summary>
         /// パラメータ設定
         /// </summary>
-        /// <param name="parameter"></param>
-        /// <param name="affair"></param>
-        /// <param name="value"></param>
+        /// <param name="parameter">パラメータ種別</param>
+        /// <param name="affair">パラメータ実装事象</param>
+        /// <param name="value">パラメータ値</param>
         public void set(GameParameterIdentifier parameter, GameAffairIdentifier affair, int value = 0)
         {
             var entry = get(parameter, true);
@@ -47,10 +47,10 @@ namespace until.modules.gamemaster
         /// <summary>
         /// パラメータ設定
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="parameter"></param>
-        /// <param name="affair"></param>
-        /// <param name="value"></param>
+        /// <param name="source">主体</param>
+        /// <param name="parameter">パラメータ種別</param>
+        /// <param name="affair">パラメータ実装事象</param>
+        /// <param name="value">パラメータ値</param>
         public void set(GameEntityIdentifier source, GameParameterIdentifier parameter, GameAffairIdentifier affair, int value = 0)
         {
             var entry = get(parameter, true);
@@ -63,11 +63,11 @@ namespace until.modules.gamemaster
         /// <summary>
         /// パラメータ設定
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
-        /// <param name="parameter"></param>
-        /// <param name="affair"></param>
-        /// <param name="value"></param>
+        /// <param name="source">主体</param>
+        /// <param name="target">対象</param>
+        /// <param name="parameter">パラメータ種別</param>
+        /// <param name="affair">パラメータ実装事象</param>
+        /// <param name="value">パラメータ値</param>
         public void set(GameEntityIdentifier source, GameEntityIdentifier target, GameParameterIdentifier parameter, GameAffairIdentifier affair, int value = 0)
         {
             var entry = get(parameter, true);

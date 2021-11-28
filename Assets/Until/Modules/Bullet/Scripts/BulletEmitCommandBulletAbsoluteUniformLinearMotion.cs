@@ -28,8 +28,6 @@ namespace until.modules.bullet.command
         #endregion
 
         #region BulletEmitCommand
-        public BulletEmidCommandMnemonic Mnemonic => BulletEmidCommandMnemonic.BulletAbsoluteUniformLinearMotion;
-
         public BulletEmitCommandContext createContext(BulletEmitContext context)
         {
             return new Context(this);

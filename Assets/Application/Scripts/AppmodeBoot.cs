@@ -47,6 +47,7 @@ namespace until.test
                     Singleton.DevelopIndicator.regist(Singleton.InputManager, DevelopIndicatorAnchor.LeftBottom);
                     Singleton.DevelopIndicator.regist(Singleton.ModeManager, DevelopIndicatorAnchor.RightTop);
                     Singleton.DevelopIndicator.regist(Singleton.CameraManager, DevelopIndicatorAnchor.RightTop);
+                    Singleton.DevelopIndicator.regist(Singleton.BulletManager, DevelopIndicatorAnchor.RightTop);
                     Singleton.DevelopIndicator.regist(Singleton.SceneLoader, DevelopIndicatorAnchor.RightBottom);
                     Singleton.DevelopCommandManager.addPage("test");
                     Singleton.DevelopCommandManager.addCommand("test", new DevelopCommandBool("t1", "t1", false));

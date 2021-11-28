@@ -23,8 +23,6 @@ namespace until.modules.bullet.command
 
 
         #region BulletEmitCommand
-        public BulletEmidCommandMnemonic Mnemonic => BulletEmidCommandMnemonic.ControlSleep;
-
         public BulletEmitCommandContext createContext(BulletEmitContext context)
         {
             return new Context(this);

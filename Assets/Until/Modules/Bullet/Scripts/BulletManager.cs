@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using until.system;
 using until.utils;
+using until.develop;
 
 
 namespace until.modules.bullet
 {
     public class BulletManager : Singleton<BulletManager>
+#if TEST
+        , DevelopIndicatorElement
+#endif
     {
         #region Defines
         private class BulletPool : Pool<BulletClient>
@@ -20,7 +24,9 @@ namespace until.modules.bullet
 
         #region Fields.
         private Dictionary<string, BulletPool> _PoolCollection = new Dictionary<string, BulletPool>();
+        private Dictionary<string, BulletTarget> _TargetCollection = new Dictionary<string, BulletTarget>();
         private List<BulletEmitter> _EmitterList = new List<BulletEmitter>();
+        private int _CurrentBulletCount = 0;
         #endregion
 
         #region Methods
@@ -36,6 +42,7 @@ namespace until.modules.bullet
         public override void onSingletonDestroy()
         {
             destroyBulletPool();
+            destroyTargetCollection();
         }
 
         public void onUpdate(float elapsed)
@@ -106,6 +113,44 @@ namespace until.modules.bullet
         }
         #endregion
 
+        #region Target Management
+        public void regist(BulletTarget target)
+        {
+            lock (_TargetCollection)
+            {
+                _TargetCollection.Add(target.BulletTargetIdentifier, target);
+            }
+        }
+
+        public void unregist(BulletTarget target)
+        {
+            lock (_TargetCollection)
+            {
+                _TargetCollection.Remove(target.BulletTargetIdentifier);
+            }
+        }
+
+        public BulletTarget getTarget(string name)
+        {
+            lock (_TargetCollection)
+            {
+                if (_TargetCollection.TryGetValue(name, out var target))
+                {
+                    return target;
+                }
+            }
+            return null;
+        }
+
+        private void destroyTargetCollection()
+        {
+            lock (_TargetCollection)
+            {
+                _TargetCollection.Clear();
+            }
+        }
+        #endregion
+
         #region Request
         public BulletClient rent(string name)
         {
@@ -115,6 +160,7 @@ namespace until.modules.bullet
                 if (client != null)
                 {
                     Singleton.GameObjectControlMediator.requestSetEnable(client.gameObject, true);
+                    ++_CurrentBulletCount;
                 }
                 return client;
             }
@@ -128,10 +174,25 @@ namespace until.modules.bullet
             {
                 Singleton.GameObjectControlMediator.requestSetEnable(client.gameObject, false);
                 pool.back(client);
+                --_CurrentBulletCount;
             }
         }
         #endregion
         #endregion
+
+#if TEST
+        #region Indicator
+        public string DevelopIndicatorText => _DevelopIndicatorText;
+        public int DevelopIndicatorWidth => 300;
+        public int DevelopIndicatorHeight => 40;
+        private string _DevelopIndicatorText = "";
+
+        public void onIndicatorUpdate()
+        {
+            _DevelopIndicatorText = $"[Bullet] bullet={_CurrentBulletCount}";
+        }
+        #endregion
+#endif
     }
 }
 

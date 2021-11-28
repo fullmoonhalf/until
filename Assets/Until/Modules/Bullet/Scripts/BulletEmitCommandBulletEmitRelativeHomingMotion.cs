@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +8,20 @@ using until.develop;
 namespace until.modules.bullet.command
 {
     [Serializable]
-    public class BulletEmitCommandBulletEmitRelativeUniformLinearMotion : BulletEmitCommand
+    public class BulletEmitCommandBulletEmitRelativeHomingMotion : BulletEmitCommand
     {
         #region Parameters
         public string BulletName = "";
-        public Vector3 Speed = Vector3.zero;
+        public string TargetName = "";
+        public float Speed = 0.0f;
         public float Life = float.MaxValue;
         #endregion
 
         #region Constructor
-        public BulletEmitCommandBulletEmitRelativeUniformLinearMotion(string name, Vector3 speed, float life)
+        public BulletEmitCommandBulletEmitRelativeHomingMotion(string bullet_name, string target_name, float speed, float life)
         {
-            BulletName = name;
+            BulletName = bullet_name;
+            TargetName = target_name;
             Speed = speed;
             Life = life;
         }
@@ -35,10 +37,10 @@ namespace until.modules.bullet.command
         #region Context
         private class Context : BulletEmitCommandContext
         {
-            private BulletEmitCommandBulletEmitRelativeUniformLinearMotion _Command = null;
+            private BulletEmitCommandBulletEmitRelativeHomingMotion _Command = null;
             private BulletEmitContext _Context = null;
 
-            public Context(BulletEmitCommandBulletEmitRelativeUniformLinearMotion command, BulletEmitContext context)
+            public Context(BulletEmitCommandBulletEmitRelativeHomingMotion command, BulletEmitContext context)
             {
                 _Command = command;
                 _Context = context;
@@ -51,9 +53,13 @@ namespace until.modules.bullet.command
                 {
                     return true;
                 }
+                var target = Singleton.BulletManager.getTarget(_Command.TargetName);
+                if (target == null)
+                {
+                    return true;
+                }
 
-                var speed = _Context.Rotation * _Command.Speed;
-                var animator = new BulletAnimatorUniformLinearMotion(speed, _Command.Life);
+                var animator = new BulletAnimatorHomingMotion(bullet, target, _Command.Speed, _Command.Life);
                 bullet.startBullet(animator, _Context.Position);
                 return true;
             }

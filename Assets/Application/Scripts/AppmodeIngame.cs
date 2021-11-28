@@ -6,6 +6,9 @@ using until.develop;
 using until.system;
 using until.modules.bullet;
 using until.modules.bullet.command;
+using until.modules.gamemaster;
+using until.utils;
+
 
 namespace until.test
 {
@@ -29,10 +32,32 @@ namespace until.test
                 {
                     var specifier = new BulletEmitSpecifier();
                     specifier.Commands = new BulletEmitCommand[] {
-                        new BulletEmitCommandEmitSetTransform(new Vector3(0.0f, 0.0f, 1.0f), Quaternion.identity),
-                        new BulletEmitCommandBulletAbsoluteUniformLinearMotion("Bullet0001", new Vector3(0.0f, 0.0f, 2.0f), Vector3.right, 10.0f),
+                        new BulletEmitCommandEmitSetTransform(new Vector3(-2.0f, 0.0f, 2.0f), Quaternion.identity),
                         new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", Vector3.right, 10.0f),
                         new BulletEmitCommandEmitRotate(Quaternion.Euler(0.0f, 60.0f, 0.0f), 0.1f),
+                        new BulletEmitCommandControlRepeat(15, 1),
+                    };
+                    Singleton.BulletManager.regist(new BulletEmitter(specifier));
+                }
+                {
+                    var specifier = new BulletEmitSpecifier();
+                    specifier.Commands = new BulletEmitCommand[] {
+                        new BulletEmitCommandEmitSetTransform(new Vector3(2.0f, 0.0f, -2.0f), Quaternion.identity),
+                        new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", Vector3.right, 10.0f),
+                        new BulletEmitCommandEmitRotate(Quaternion.Euler(0.0f, -60.0f, 0.0f), 0.1f),
+                        new BulletEmitCommandControlRepeat(15, 1),
+                    };
+                    Singleton.BulletManager.regist(new BulletEmitter(specifier));
+                }
+
+                {
+                    var specifier = new BulletEmitSpecifier();
+                    specifier.Commands = new BulletEmitCommand[] {
+                        new BulletEmitCommandEmitSetTransform(new Vector3(-3.0f, 0.0f, 1.0f), Quaternion.identity),
+                        new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", Vector3.right, 10.0f),
+                        new BulletEmitCommandEmitTranslate(Vector3.forward*0.3f, 0.2f),
+                        new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", Vector3.right, 10.0f),
+                        new BulletEmitCommandControlSleep(0.1f),
                         new BulletEmitCommandControlRepeat(10, 1),
                     };
                     Singleton.BulletManager.regist(new BulletEmitter(specifier));
@@ -40,12 +65,33 @@ namespace until.test
                 {
                     var specifier = new BulletEmitSpecifier();
                     specifier.Commands = new BulletEmitCommand[] {
-                        new BulletEmitCommandEmitSetTransform(new Vector3(0.0f, 0.0f, 1.0f), Quaternion.identity),
-                        new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", Vector3.right, 10.0f),
-                        new BulletEmitCommandEmitTranslate(Vector3.forward*0.3f, 0.2f),
-                        new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", Vector3.right, 10.0f),
+                        new BulletEmitCommandEmitSetTransform(new Vector3(3.0f, 0.0f, -1.0f), Quaternion.identity),
+                        new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", Vector3.left, 10.0f),
+                        new BulletEmitCommandEmitTranslate(Vector3.back*0.3f, 0.2f),
+                        new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", Vector3.left, 10.0f),
                         new BulletEmitCommandControlSleep(0.1f),
                         new BulletEmitCommandControlRepeat(10, 1),
+                    };
+                    Singleton.BulletManager.regist(new BulletEmitter(specifier));
+                }
+
+                {
+                    var attribute = GameEntityIdentifiable.until_test_CharacterID_Ch1000.getAttrubute<GameEntityIdentifierValueAttribute>();
+                    var identifier = attribute.createGameEntityIdentifier();
+                    var specifier = new BulletEmitSpecifier();
+                    specifier.Commands = new BulletEmitCommand[] {
+                        new BulletEmitCommandEmitSetTransform(new Vector3(2.0f, 0.0f, 2.0f), Quaternion.identity),
+                        new BulletEmitCommandBulletEmitRelativeHomingMotion("Bullet0001", identifier.Expression, 1.0f, 10.0f ),
+                    };
+                    Singleton.BulletManager.regist(new BulletEmitter(specifier));
+                }
+                {
+                    var attribute = GameEntityIdentifiable.until_test_CharacterID_Ch1000.getAttrubute<GameEntityIdentifierValueAttribute>();
+                    var identifier = attribute.createGameEntityIdentifier();
+                    var specifier = new BulletEmitSpecifier();
+                    specifier.Commands = new BulletEmitCommand[] {
+                        new BulletEmitCommandEmitSetTransform(new Vector3(-2.0f, 0.0f, -2.0f), Quaternion.identity),
+                        new BulletEmitCommandBulletEmitRelativeHomingMotion("Bullet0001", identifier.Expression, 1.0f, 10.0f ),
                     };
                     Singleton.BulletManager.regist(new BulletEmitter(specifier));
                 }
