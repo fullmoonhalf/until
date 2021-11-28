@@ -12,9 +12,14 @@ namespace until.test
         #region Inspector
         [SerializeField]
         private GameEntityIdentifiable _Identifier = GameEntityIdentifiable.Invalid;
+        [SerializeField]
+        private CharacterID _CharacterId = CharacterID.Invalid;
         #endregion
 
         #region Fields.
+        /// <summary>
+        /// GameEntiryIdentifier のスクリプト側からの参照
+        /// </summary>
         public GameEntityIdentifier GameIdentifier
         {
             get
@@ -31,6 +36,11 @@ namespace until.test
             }
         }
         private GameEntityIdentifier _GameIdentifier = null;
+
+        /// <summary>
+        /// CharacterID のスクリプト側からの参照
+        /// </summary>
+        public CharacterID CharacterID => _CharacterId;
         #endregion
 
 
