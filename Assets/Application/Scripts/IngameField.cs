@@ -39,7 +39,7 @@ namespace until.test
 
         public void onUpdate()
         {
-            if(_PlayerObject != null)
+            if (_PlayerObject != null)
             {
                 var stick = Singleton.InputManager.getStick(InputPad.Player1, InputStickType.L);
                 if (stick != null)
@@ -64,6 +64,7 @@ namespace until.test
             _LevelLoading = true;
             Singleton.SceneLoader.requestToLoad(2, () => _LevelLoading = false);
             Singleton.PrefabInstantiateMediator.requestFromCollection("Ch01000", onCharacterInstantiated);
+            Singleton.PrefabInstantiateMediator.requestFromCollection("Ch01001", onCharacterInstantiated);
             Singleton.CameraManager.transitCamera<IngamePlayCamera>();
         }
 
@@ -86,7 +87,25 @@ namespace until.test
                 return;
             }
 
-            _PlayerObject = go as GameObject;
+            var gameobj = go as GameObject;
+            if (gameobj == null)
+            {
+                return;
+            }
+            var character = gameobj.GetComponent<SubstanceCharacter>();
+            if (character == null)
+            {
+                return;
+            }
+            switch (character.CharacterID)
+            {
+                case CharacterID.Ch1000:
+                    _PlayerObject = go as GameObject;
+                    break;
+                case CharacterID.Ch1001:
+                    _PlayerObject.transform.position = Vector3.one;
+                    break;
+            }
         }
         #endregion
         #endregion
