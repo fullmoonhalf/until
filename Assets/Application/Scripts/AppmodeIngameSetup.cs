@@ -66,6 +66,7 @@ namespace until.test
                         transit(Phase.StageWait);
                         var builder = new StageSetupOrderBuilder();
                         builder.add(new AppStageIdentifier(StageID.lv_003_001_00), StageSceneStatus.Active);
+                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch01000);
                         var order = builder.build();
                         Singleton.StageSetupper.request(order, () => transit(Phase.Transit));
                     }

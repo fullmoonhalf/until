@@ -15,10 +15,14 @@ namespace until.modules.gamefield
         private enum Phase
         {
             Standby,
+            Destroy_Start,
+            Destroy_Wait,
             Unload_Start,
             Unload_Wait,
             Load_Start,
             Load_Wait,
+            Create_Start,
+            Create_Wait,
             Finish,
         }
         private class Context
@@ -61,6 +65,12 @@ namespace until.modules.gamefield
                 case Phase.Standby:
                     onUpdateStandby();
                     break;
+                case Phase.Destroy_Start:
+                    onUpdateDestroyStart();
+                    break;
+                case Phase.Destroy_Wait:
+                    onUpdateDestroyWait();
+                    break;
                 case Phase.Unload_Start:
                     onUpdateUnloadStart();
                     break;
@@ -72,6 +82,12 @@ namespace until.modules.gamefield
                     break;
                 case Phase.Load_Wait:
                     onUpdateLoadWait();
+                    break;
+                case Phase.Create_Start:
+                    onUpdateCreateStart();
+                    break;
+                case Phase.Create_Wait:
+                    onUpdateCreateWait();
                     break;
                 case Phase.Finish:
                     onUpdateFinish();
@@ -93,6 +109,12 @@ namespace until.modules.gamefield
                 case Phase.Standby:
                     onTransitStandby();
                     break;
+                case Phase.Destroy_Start:
+                    onTransitDestroyStart();
+                    break;
+                case Phase.Destroy_Wait:
+                    onTransitDestroyWait();
+                    break;
                 case Phase.Unload_Start:
                     onTransitUnloadStart();
                     break;
@@ -104,6 +126,12 @@ namespace until.modules.gamefield
                     break;
                 case Phase.Load_Wait:
                     onTransitLoadWait();
+                    break;
+                case Phase.Create_Start:
+                    onTransitCreateStart();
+                    break;
+                case Phase.Create_Wait:
+                    onTransitCreateWait();
                     break;
                 case Phase.Finish:
                     onTransitFinish();
@@ -122,8 +150,28 @@ namespace until.modules.gamefield
             {
                 _CurrentContext = _RequestedContext;
                 _RequestedContext = null;
-                transit(Phase.Unload_Start);
+                transit(Phase.Destroy_Start);
             }
+        }
+        #endregion
+
+        #region Destroy_Start
+        private void onTransitDestroyStart()
+        {
+            Singleton.SubstanceManager.requestToDestroyAll(() => transit(Phase.Unload_Start));
+        }
+        private void onUpdateDestroyStart()
+        {
+            transit(Phase.Destroy_Wait);
+        }
+        #endregion
+
+        #region Destroy_Wait
+        private void onTransitDestroyWait()
+        {
+        }
+        private void onUpdateDestroyWait()
+        {
         }
         #endregion
 
@@ -154,9 +202,9 @@ namespace until.modules.gamefield
         #region Load_Start
         private void onTransitLoadStart()
         {
-            if (_CurrentContext.Order.StageOrder != null)
+            if (_CurrentContext.Order.StageOrders != null)
             {
-                foreach (var stage in _CurrentContext.Order.StageOrder)
+                foreach (var stage in _CurrentContext.Order.StageOrders)
                 {
                     Singleton.StageSceneManager.request(stage.Stage, stage.Target);
                 }
@@ -164,7 +212,7 @@ namespace until.modules.gamefield
             }
             else
             {
-                transit(Phase.Finish);
+                transitCreateOrFinish();
             }
         }
         private void onUpdateLoadStart()
@@ -180,6 +228,44 @@ namespace until.modules.gamefield
         private void onUpdateLoadWait()
         {
             if (Singleton.StageSceneManager.IsProcessing)
+            {
+                transitCreateOrFinish();
+            }
+        }
+        #endregion
+
+        #region Create_Start
+        private void onTransitCreateStart()
+        {
+        }
+        private void onUpdateCreateStart()
+        {
+            transit(Phase.Create_Wait);
+        }
+        private void transitCreateOrFinish()
+        {
+            if (_CurrentContext.Order.SubstanceOrders != null && _CurrentContext.Order.SubstanceOrders.Length > 0)
+            {
+                transit(Phase.Create_Start);
+            }
+            else
+            {
+                transit(Phase.Finish);
+            }
+        }
+        #endregion
+
+        #region Create_Wait
+        private void onTransitCreateWait()
+        {
+            foreach (var order in _CurrentContext.Order.SubstanceOrders)
+            {
+                Singleton.SubstanceManager.requestToCreate(order.Identifier);
+            }
+        }
+        private void onUpdateCreateWait()
+        {
+            if (Singleton.PrefabInstantiateMediator.IsBusy == false)
             {
                 transit(Phase.Finish);
             }

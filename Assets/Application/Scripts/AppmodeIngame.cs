@@ -76,7 +76,7 @@ namespace until.test
                 }
 
                 {
-                    var attribute = GameEntityIdentifiable.until_test_CharacterID_Ch1000.getAttrubute<GameEntityIdentifierValueAttribute>();
+                    var attribute = GameEntityIdentifiable.until_test_CharacterID_Ch01000.getAttrubute<GameEntityIdentifierValueAttribute>();
                     var identifier = attribute.createGameEntityIdentifier();
                     var specifier = new BulletEmitSpecifier();
                     specifier.Commands = new BulletEmitCommand[] {
@@ -86,7 +86,7 @@ namespace until.test
                     Singleton.BulletManager.regist(new BulletEmitter(specifier));
                 }
                 {
-                    var attribute = GameEntityIdentifiable.until_test_CharacterID_Ch1000.getAttrubute<GameEntityIdentifierValueAttribute>();
+                    var attribute = GameEntityIdentifiable.until_test_CharacterID_Ch01000.getAttrubute<GameEntityIdentifierValueAttribute>();
                     var identifier = attribute.createGameEntityIdentifier();
                     var specifier = new BulletEmitSpecifier();
                     specifier.Commands = new BulletEmitCommand[] {

@@ -9,7 +9,7 @@ namespace until.test
     public enum CharacterID
     {
         Invalid = 0,
-        Ch1000 = 0x00001000,
-        Ch1001 = 0x00001001,
+        Ch01000 = 0x00001000,
+        Ch01001 = 0x00001001,
     }
 }

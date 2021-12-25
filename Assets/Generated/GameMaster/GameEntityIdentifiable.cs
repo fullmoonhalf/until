@@ -3,15 +3,22 @@ using until.modules.gamemaster;
 using until.test;
 
 
+namespace until.modules.gamemaster
+{
 public enum GameEntityIdentifiable
 {
 Invalid,
 [GameEntityIdentifierValue(CharacterID.Invalid)]
 until_test_CharacterID_Invalid,
-[GameEntityIdentifierValue(CharacterID.Ch1000)]
-until_test_CharacterID_Ch1000,
-[GameEntityIdentifierValue(CharacterID.Ch1001)]
-until_test_CharacterID_Ch1001,
+[GameEntityIdentifierValue(CharacterID.Ch01000)]
+until_test_CharacterID_Ch01000,
+[GameEntityIdentifierValue(CharacterID.Ch01001)]
+until_test_CharacterID_Ch01001,
+[GameEntityIdentifierValue(StageID.lv_003_001_00)]
+until_test_StageID_lv_003_001_00,
+[GameEntityIdentifierValue(StageID.Invalid)]
+until_test_StageID_Invalid,
 
+}
 }
 #endif

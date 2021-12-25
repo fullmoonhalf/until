@@ -15,6 +15,7 @@ namespace until.modules.gamefield
         private void Start()
         {
             Singleton.IngameField.onStart();
+            Singleton.SubstanceManager.onStart();
             Singleton.StageSetupper.onStart();
             Singleton.StageSceneManager.onStart();
         }
@@ -22,6 +23,7 @@ namespace until.modules.gamefield
         private void Update()
         {
             Singleton.StageSetupper.onUpdate();
+            Singleton.SubstanceManager.onUpdate();
             Singleton.IngameField.onUpdate();
             Singleton.StageSceneManager.onUpdate();
         }
@@ -30,6 +32,7 @@ namespace until.modules.gamefield
         {
             Singleton.StageSceneManager.onDestroy();
             Singleton.StageSetupper.onDestroy();
+            Singleton.SubstanceManager.onDestroy();
             Singleton.IngameField.onDestroy();
         }
     }
