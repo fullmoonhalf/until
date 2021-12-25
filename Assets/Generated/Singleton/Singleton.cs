@@ -15,7 +15,6 @@ public static until.modules.gamefield.StageSetupper StageSetupper = until.module
 public static until.modules.gamefield.SubstanceManager SubstanceManager = until.modules.gamefield.SubstanceManager.Instance;
 public static until.modules.camera.CameraManager CameraManager = until.modules.camera.CameraManager.Instance;
 public static until.modules.bullet.BulletManager BulletManager = until.modules.bullet.BulletManager.Instance;
-public static until.modules.attack.AttackDealManager AttackDealManager = until.modules.attack.AttackDealManager.Instance;
 public static until.modules.gamemaster.GameMaster GameMaster = until.modules.gamemaster.GameMaster.Instance;
 
 }
