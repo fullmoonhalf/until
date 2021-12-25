@@ -28,11 +28,21 @@ namespace until.modules.astral
         }
         #endregion
 
-        #region registration.
+        #region management.
         public void regist(AstralWorld world)
         {
             _World = world;
 
+        }
+
+        public AstralSpace getSpace(int id)
+        {
+            return _World.getSpace(id);
+        }
+
+        public AstralBody getBody(int id)
+        {
+            return _World.getBody(id);
         }
         #endregion
 

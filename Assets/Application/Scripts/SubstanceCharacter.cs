@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using until.modules.gamemaster;
+using until.modules.astral;
 using until.utils;
 
 namespace until.test
@@ -17,9 +18,7 @@ namespace until.test
         #endregion
 
         #region Fields.
-        /// <summary>
-        /// GameEntiryIdentifier のスクリプト側からの参照
-        /// </summary>
+        /// <summary>GameEntiryIdentifier のスクリプト側からの参照</summary>
         public GameEntityIdentifier GameIdentifier
         {
             get
@@ -37,10 +36,18 @@ namespace until.test
         }
         private GameEntityIdentifier _GameIdentifier = null;
 
-        /// <summary>
-        /// CharacterID のスクリプト側からの参照
-        /// </summary>
+        /// <summary>CharacterID のスクリプト側からの参照</summary>
         public CharacterID CharacterID => _CharacterId;
+
+        /// <summary>AstralBody への参照</summary>
+        private AstralBody _RefAstralBody = null;
+        #endregion
+
+        #region Astral との接合
+        public void bind(AstralBody body)
+        {
+            _RefAstralBody = body;
+        }
         #endregion
 
 

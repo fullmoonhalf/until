@@ -101,9 +101,11 @@ namespace until.test
             {
                 case CharacterID.Ch1000:
                     _PlayerObject = go as GameObject;
+                    character.bind(Singleton.AstralAdministrator.getBody(0));
                     break;
                 case CharacterID.Ch1001:
                     _PlayerObject.transform.position = Vector3.one;
+                    character.bind(Singleton.AstralAdministrator.getBody(1));
                     break;
             }
         }

@@ -144,10 +144,8 @@ namespace until.test
             space_dungeon_1f_a.regist(spot_dungeon_mine);
 
             // 何らかのアバター
-            var avatar_astral_id = createID(0, 0, 0, 1);
-            var avatar_gmid = new GameEntityIdentifier(avatar_astral_id);
-            var avatar = world.createBody(avatar_astral_id, "主人公キャラ");
-            space_battle_field_1.regist(avatar);
+            var avatar = createAvatar(createID(0, 0, 0, 0), world, space_battle_field_1, "主人公キャラ");
+            createAvatar(createID(0, 0, 0, 1), world, space_battle_field_1, "NPCキャラ");
 
             // うろうろするスコア
             var score = new AstralScore();
@@ -160,8 +158,18 @@ namespace until.test
             world.regist(session);
 
             Singleton.AstralAdministrator.regist(world);
-            Singleton.GameMaster.set(avatar_gmid, TestGMParameterIdentifier.HP, TestGMAffairIdentifier.Initial, 100);
         }
+
+        private AstralBody createAvatar(int id, AstralWorld world, AstralSpace space, string name)
+        {
+            var avatar_gmid = new GameEntityIdentifier(id);
+            var avatar = world.createBody(id, name);
+            space.regist(avatar);
+            Singleton.GameMaster.set(avatar_gmid, TestGMParameterIdentifier.HP, TestGMAffairIdentifier.Initial, 100);
+            return avatar;
+        }
+
+
         #endregion
         #endregion
     }
