@@ -62,6 +62,7 @@ namespace until.test
                     };
                     Singleton.BulletManager.regist(new BulletEmitter(specifier));
                 }
+
                 {
                     var specifier = new BulletEmitSpecifier();
                     specifier.Commands = new BulletEmitCommand[] {

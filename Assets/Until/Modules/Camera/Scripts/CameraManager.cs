@@ -52,9 +52,16 @@ namespace until.modules.camera
         {
             if (RefCameraController != null)
             {
+                Log.info(this, $"{nameof(transitCamera)} {typeof(T).FullName}");
                 var nextAction = new T(); //TODO: ‚»‚Ì‚¤‚¿  cache ‚ðŽg‚¤Œ`‚É’¼‚·
                 RefCameraController.transitCamera(nextAction, interpolation);
             }
+#if TEST
+            else
+            {
+                Log.error(this, $"{nameof(transitCamera)} {typeof(T).FullName} switch failure (CameraController is not found.)");
+            }
+#endif
         }
         #endregion
 
