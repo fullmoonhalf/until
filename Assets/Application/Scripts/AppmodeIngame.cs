@@ -25,8 +25,6 @@ namespace until.test
 
         public Mode.Control update()
         {
-            Singleton.AstralAdministrator.updateAstral();
-
             if (_Age >= 3.0f)
             {
                 {
