@@ -7,6 +7,7 @@ using until.system;
 using until.modules.astral;
 using until.modules.astral.standard;
 using until.modules.gamemaster;
+using until.modules.gamefield;
 using until.modules.bullet;
 
 
@@ -18,14 +19,10 @@ namespace until.test
         private enum Phase
         {
             Initial,
-            LoadPermanentCollection,
-            WaitPermanentCollection,
-            SetupSystem,
-            WaitSystem,
             SetupBullet,
             ConstructAstral,
-            SetupLevel,
-            WaitLevel,
+            StageSetup,
+            StageWait,
             Transit,
             Exit,
         }
@@ -50,18 +47,7 @@ namespace until.test
             switch (_CurrentPhase)
             {
                 case Phase.Initial:
-                    transit(Phase.LoadPermanentCollection);
-                    break;
-                case Phase.LoadPermanentCollection:
-                    transit(Phase.WaitPermanentCollection);
-                    Singleton.SceneLoader.requestToLoad(1, () => transit(Phase.SetupSystem));
-                    break;
-                case Phase.WaitPermanentCollection:
-                    break;
-                case Phase.SetupSystem:
-                    Singleton.PrefabInstantiateMediator.requestFromCollection("AppSystem", (result, go) => transit(Phase.SetupBullet));
-                    break;
-                case Phase.WaitSystem:
+                    transit(Phase.SetupBullet);
                     break;
                 case Phase.SetupBullet:
                     {
@@ -73,17 +59,18 @@ namespace until.test
                     break;
                 case Phase.ConstructAstral:
                     updateConstructAstral();
-                    transit(Phase.SetupLevel);
+                    transit(Phase.StageSetup);
                     break;
-                case Phase.SetupLevel:
-                    Singleton.IngameField.enterLevel(createID(3, 1, 0, 0));
-                    transit(Phase.WaitLevel);
-                    break;
-                case Phase.WaitLevel:
-                    if (Singleton.IngameField.checkUnderControlLevelScene() == false)
+                case Phase.StageSetup:
                     {
-                        transit(Phase.Transit);
+                        transit(Phase.StageWait);
+                        var builder = new StageSetupOrderBuilder();
+                        builder.add(new AppStageIdentifier(StageID.lv_003_001_00), StageSceneStatus.Active);
+                        var order = builder.build();
+                        Singleton.StageSetupper.request(order, () => transit(Phase.Transit));
                     }
+                    break;
+                case Phase.StageWait:
                     break;
                 case Phase.Transit:
                     Singleton.ModeManager.enqueueNextMode<AppmodeIngame>();

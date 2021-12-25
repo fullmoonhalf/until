@@ -7,7 +7,7 @@ using UnityEngine;
 using until.system;
 
 
-namespace until.test
+namespace until.modules.gamefield
 {
     [DefaultExecutionOrder(until.system.defines.ExecutionOrder.ApplicationStart)]
     public class IngameFieldBehavior : Behavior
@@ -15,15 +15,21 @@ namespace until.test
         private void Start()
         {
             Singleton.IngameField.onStart();
+            Singleton.StageSetupper.onStart();
+            Singleton.StageSceneManager.onStart();
         }
 
         private void Update()
         {
+            Singleton.StageSetupper.onUpdate();
             Singleton.IngameField.onUpdate();
+            Singleton.StageSceneManager.onUpdate();
         }
 
         private void OnDestroy()
         {
+            Singleton.StageSceneManager.onDestroy();
+            Singleton.StageSetupper.onDestroy();
             Singleton.IngameField.onDestroy();
         }
     }
