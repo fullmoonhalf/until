@@ -12,8 +12,8 @@ Invalid,
 until_test_CharacterID_Invalid,
 [GameEntityIdentifierValue(CharacterID.Ch01000)]
 until_test_CharacterID_Ch01000,
-[GameEntityIdentifierValue(CharacterID.Ch01001)]
-until_test_CharacterID_Ch01001,
+[GameEntityIdentifierValue(CharacterID.Ch12000)]
+until_test_CharacterID_Ch12000,
 [GameEntityIdentifierValue(PropsID.prop_80_000)]
 until_test_PropsID_prop_80_000,
 [GameEntityIdentifierValue(PropsID.Invalid)]

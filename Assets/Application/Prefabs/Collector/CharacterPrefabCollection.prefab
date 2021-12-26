@@ -65,15 +65,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8693827896113531910, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}
       propertyPath: _Collection.Array.data[1]._Name
-      value: Ch01001
+      value: Ch12000
       objectReference: {fileID: 0}
     - target: {fileID: 8693827896113531910, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}
       propertyPath: _Collection.Array.data[0]._Prefab
       value: 
-      objectReference: {fileID: 3074131651538412037, guid: af54506309355ee46a973d0df483b037, type: 3}
+      objectReference: {fileID: 6896770167188468514, guid: bebfb1b2c6d709f4e9d8162fe5f8ba7b, type: 3}
     - target: {fileID: 8693827896113531910, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}
       propertyPath: _Collection.Array.data[1]._Prefab
       value: 
-      objectReference: {fileID: 7633624047783325946, guid: b554899628570e648ab71f2871fadc52, type: 3}
+      objectReference: {fileID: 978094471309584981, guid: b2cc73915719d15419654f632df24e56, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}

@@ -10,6 +10,6 @@ namespace until.test
     {
         Invalid = 0,
         Ch01000 = 0x00001000,
-        Ch01001 = 0x00001001,
+        Ch12000 = 0x00012000,
     }
 }

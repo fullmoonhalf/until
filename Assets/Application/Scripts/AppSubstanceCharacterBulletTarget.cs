@@ -10,11 +10,11 @@ using until.utils;
 
 namespace until.test
 {
-    public class SubstanceCharacterBulletTarget : BulletTarget
+    public class AppSubstanceCharacterBulletTarget : BulletTarget
     {
         #region Serialized.
         [SerializeField]
-        private SubstanceCharacter _RefCharacter = null;
+        private AppSubstanceCharacter _RefCharacter = null;
         #endregion
 
         #region Methods

@@ -7,7 +7,7 @@ using until.modules.gamefield;
 namespace until.test
 {
     [DefaultExecutionOrder(system.defines.ExecutionOrder.Undefined)]
-    public class SubstanceCharacter : Substance
+    public class AppSubstanceCharacter : Substance
     {
         #region Inspector
         [SerializeField]
