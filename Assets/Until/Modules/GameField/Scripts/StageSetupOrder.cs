@@ -27,13 +27,15 @@ namespace until.modules.gamefield
     public class StageSetupSubstanceOrder
     {
         public GameEntityIdentifiable Identifier = GameEntityIdentifiable.Invalid;
+        public Vector3 Position = Vector3.zero;
 
         public StageSetupSubstanceOrder()
         {
         }
-        public StageSetupSubstanceOrder(GameEntityIdentifiable identifier)
+        public StageSetupSubstanceOrder(GameEntityIdentifiable identifier, Vector3 position)
         {
             Identifier = identifier;
+            Position = position;
         }
     }
 
@@ -58,9 +60,9 @@ namespace until.modules.gamefield
             _StageOrderList.Add(new StageSetupStageOrder(stage, target));
         }
 
-        public void add(GameEntityIdentifiable identifier)
+        public void add(GameEntityIdentifiable identifier, Vector3 position)
         {
-            _SubstanceOrderList.Add(new StageSetupSubstanceOrder(identifier));
+            _SubstanceOrderList.Add(new StageSetupSubstanceOrder(identifier, position));
         }
 
         public StageSetupOrder build()

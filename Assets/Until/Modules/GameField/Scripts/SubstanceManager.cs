@@ -54,7 +54,7 @@ namespace until.modules.gamefield
 
 
         #region Request
-        public bool requestToCreate(GameEntityIdentifiable identifier)
+        public bool requestToCreate(GameEntityIdentifiable identifier, Vector3 position)
         {
             var attribute = identifier.getAttrubute<GameEntityIdentifierValueAttribute>();
             if (attribute == null)
@@ -64,26 +64,27 @@ namespace until.modules.gamefield
             }
 
             var name = attribute.Value.ToString();
-            Singleton.PrefabInstantiateMediator.requestFromCollection(name, onInstantiateSubstance, true);
-            return true;
-        }
-
-        private void onInstantiateSubstance(PrefabInstantiateMediator.Result result, UnityEngine.Object obj)
-        {
-            if (result != PrefabInstantiateMediator.Result.Success)
-            {
-                Log.error(this, $"{nameof(onInstantiateSubstance)} is failed: instantiate error {result}");
-                return;
-            }
-
-            if (obj is GameObject go)
-            {
-                var substance = go.GetComponent<Substance>();
-                if (substance != null)
+            Singleton.PrefabInstantiateMediator.requestFromCollection(name,
+                (result, obj) =>
                 {
-                    regist(substance);
+                    if (result != PrefabInstantiateMediator.Result.Success)
+                    {
+                        Log.error(this, $"{nameof(requestToCreate)} is failed: instantiate error {result}");
+                        return;
+                    }
+
+                    if (obj is GameObject go)
+                    {
+                        go.transform.position = position;
+                        var substance = go.GetComponent<Substance>();
+                        if (substance != null)
+                        {
+                            regist(substance);
+                        }
+                    }
                 }
-            }
+                , true);
+            return true;
         }
 
         /// <summary>
