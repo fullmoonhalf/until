@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using until.modules.astral;
 
 
 namespace until.test
@@ -8,10 +9,13 @@ namespace until.test
     [DefaultExecutionOrder(system.defines.ExecutionOrder.Undefined)]
     public class AppSubstanceEnemy : AppSubstanceCharacter
     {
-        #region Inspector
-        #endregion
-
         #region Fields.
+        #region AppSubstanceCharacter
+        protected override AstralAction getCogitationOrigin()
+        {
+            return null;
+        }
+        #endregion
         #endregion
     }
 }

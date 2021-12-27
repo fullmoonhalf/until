@@ -35,11 +35,11 @@ namespace until.modules.astral
         {
         }
 
-        public void onUpdate()
+        public void onUpdate(float delta_time)
         {
             foreach (var element in _ElementsCollection)
             {
-                element.onAstralUpdate();
+                element.onAstralUpdate(delta_time);
             }
         }
 

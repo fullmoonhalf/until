@@ -13,6 +13,23 @@ namespace until.modules.camera
 #endif
     {
         #region Field.
+        /// <summary>Œ»İˆÊ’uæ“¾</summary>
+        public Vector3 Position
+        {
+            get
+            {
+                return (RefCameraController != null) ? RefCameraController.Position : Vector3.zero;
+            }
+        }
+        /// <summary>Œ»İŒü‚«æ“¾</summary>
+        public Quaternion Rotation
+        {
+            get
+            {
+                return (RefCameraController != null) ? RefCameraController.Rotation : Quaternion.identity;
+            }
+        }
+
         private CameraController RefCameraController = null;
         #endregion
 
@@ -62,26 +79,6 @@ namespace until.modules.camera
                 Log.error(this, $"{nameof(transitCamera)} {typeof(T).FullName} switch failure (CameraController is not found.)");
             }
 #endif
-        }
-        #endregion
-
-        #region Status
-        /// <summary>
-        /// Œ»İˆÊ’uæ“¾
-        /// </summary>
-        /// <returns></returns>
-        public Vector3 getPosition()
-        {
-            return (RefCameraController != null) ? RefCameraController.Position : Vector3.zero;
-        }
-
-        /// <summary>
-        /// Œ»İŒü‚«æ“¾
-        /// </summary>
-        /// <returns></returns>
-        public Quaternion getRotation()
-        {
-            return (RefCameraController != null) ? RefCameraController.Rotation : Quaternion.identity;
         }
         #endregion
 

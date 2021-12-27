@@ -17,8 +17,8 @@ namespace until.modules.camera
 
         public void onSwitchingStart()
         {
-            Position = Singleton.CameraManager.getPosition();
-            Rotation = Singleton.CameraManager.getRotation();
+            Position = Singleton.CameraManager.Position;
+            Rotation = Singleton.CameraManager.Rotation;
         }
         public void onSwitchingEnd()
         {

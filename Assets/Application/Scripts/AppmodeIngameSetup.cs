@@ -20,6 +20,7 @@ namespace until.test
             SetupBullet,
             StageSetup,
             StageWait,
+            CameraSetup,
             Transit,
             Exit,
         }
@@ -62,10 +63,14 @@ namespace until.test
                         builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch01000, Vector3.zero);
                         builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, Vector3.one);
                         var order = builder.build();
-                        Singleton.StageSetupper.request(order, () => transit(Phase.Transit));
+                        Singleton.StageSetupper.request(order, () => transit(Phase.CameraSetup));
                     }
                     break;
                 case Phase.StageWait:
+                    break;
+                case Phase.CameraSetup:
+                    Singleton.CameraManager.transitCamera<IngamePlayCamera>();
+                    transit(Phase.Transit);
                     break;
                 case Phase.Transit:
                     Singleton.ModeManager.enqueueNextMode<AppmodeIngame>();
