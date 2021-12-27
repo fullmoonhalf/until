@@ -61,7 +61,10 @@ namespace until.test
                         var builder = new StageSetupOrderBuilder();
                         builder.add(new AppStageIdentifier(StageID.lv_003_001_00), StageSceneStatus.Active);
                         builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch01000, Vector3.zero);
-                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(1.0f, 0.0f, 1.0f));
+                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(3.0f, 0.0f, -3.0f));
+                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(-3.0f, 0.0f, -3.0f));
+                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(3.0f, 0.0f, 3.0f));
+                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(-3.0f, 0.0f, 3.0f));
                         var order = builder.build();
                         Singleton.StageSetupper.request(order, () => transit(Phase.CameraSetup));
                     }
