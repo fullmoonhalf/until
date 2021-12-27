@@ -13,7 +13,7 @@ namespace until.test
         #region AppSubstanceCharacter
         protected override AstralAction getCogitationOrigin()
         {
-            return null;
+            return new AppAstralActionNpcCogitation(this);
         }
         #endregion
         #endregion
