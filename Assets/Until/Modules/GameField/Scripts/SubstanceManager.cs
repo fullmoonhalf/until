@@ -20,6 +20,7 @@ namespace until.modules.gamefield
         private Action _OnFinishToDestroyAll = null;
         #endregion
 
+        #region Methods
         #region Singleton
         public override void onSingletonAwake()
         {
@@ -36,7 +37,6 @@ namespace until.modules.gamefield
         }
         #endregion
 
-        #region Methods
         #region Behavior
         public void onStart()
         {
@@ -51,7 +51,6 @@ namespace until.modules.gamefield
         {
         }
         #endregion
-
 
         #region Request
         public bool requestToCreate(GameEntityIdentifiable identifier, Vector3 position)
@@ -129,7 +128,6 @@ namespace until.modules.gamefield
         }
         #endregion
 
-
         #region Management
         /// <summary>
         /// 登録まわり
@@ -155,6 +153,40 @@ namespace until.modules.gamefield
             {
                 list.Remove(substance);
             }
+        }
+
+        /// <summary>
+        /// 該当識別子の Substance を取得する
+        /// </summary>
+        /// <param name="identifier"></param>
+        /// <returns></returns>
+        public Substance get(GameEntityIdentifier identifier)
+        {
+            if (_SubstanceCollection.TryGetValue(identifier, out var list))
+            {
+                if (list.Count > 0)
+                {
+                    return list[0];
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 該当識別子の Substance を全て取得する
+        /// </summary>
+        /// <param name="identifier"></param>
+        /// <returns></returns>
+        public Substance[] getAll(GameEntityIdentifier identifier)
+        {
+            if (_SubstanceCollection.TryGetValue(identifier, out var list))
+            {
+                if (list.Count > 0)
+                {
+                    return list.ToArray();
+                }
+            }
+            return null;
         }
         #endregion
         #endregion

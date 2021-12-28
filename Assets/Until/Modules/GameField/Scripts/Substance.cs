@@ -9,8 +9,12 @@ using until.utils;
 namespace until.modules.gamefield
 {
     [DefaultExecutionOrder(system.defines.ExecutionOrder.Undefined)]
-    public class Substance : Behavior
+    public abstract class Substance : Behavior
     {
+        #region Definition
+        public abstract Vector3 Position { get; set; }
+        #endregion
+
         #region Inspector
         [SerializeField]
         private GameEntityIdentifiable _Identifier = GameEntityIdentifiable.Invalid;

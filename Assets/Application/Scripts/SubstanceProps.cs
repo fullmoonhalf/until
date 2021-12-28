@@ -17,6 +17,22 @@ namespace until.test
         #region Fields.
         /// <summary>CharacterID のスクリプト側からの参照</summary>
         public PropsID PropsID => _PropsID;
+        /// <summary>位置</summary>
+        private Vector3 _Position = Vector3.zero;
+        #endregion
+
+        #region Methods.
+        #region Substance
+        public override Vector3 Position
+        {
+            get => _Position;
+            set
+            {
+                _Position = value;
+                gameObject.transform.position = _Position;
+            }
+        }
+        #endregion
         #endregion
     }
 }

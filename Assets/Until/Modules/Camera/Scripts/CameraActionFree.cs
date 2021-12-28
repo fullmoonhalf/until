@@ -15,7 +15,7 @@ namespace until.modules.camera
         public float FoV => 60.0f;
         public bool Orthographic => false;
 
-        public void onSwitchingStart()
+        public void onSwitchingStart(CameraActionArgument argument)
         {
             Position = Singleton.CameraManager.Position;
             Rotation = Singleton.CameraManager.Rotation;

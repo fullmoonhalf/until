@@ -75,7 +75,7 @@ namespace until.test
                 case Phase.StageWait:
                     break;
                 case Phase.CameraSetup:
-                    Singleton.CameraManager.transitCamera<IngamePlayCamera>();
+                    Singleton.CameraManager.transitCamera<AppCameraActoinPlayerFollow>();
                     transit(Phase.Transit);
                     break;
                 case Phase.Transit:

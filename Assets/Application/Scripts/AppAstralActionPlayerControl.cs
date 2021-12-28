@@ -29,8 +29,11 @@ namespace until.test
 
         public override bool onAstralActionUpdate(float delta_time)
         {
+            var forward = RefPlayer.Position - Singleton.CameraManager.Position;
+            forward.y = 0.0f;
+            var right = new Vector3(forward.z, 0.0f, -forward.x);
             var stickL = Singleton.InputManager.getStick(InputPad.Player1, InputStickType.L);
-            var direction = Vector3.right * stickL.X + Vector3.forward * stickL.Y;
+            var direction = right * stickL.X + forward * stickL.Y;
             var speed = 1.0f * delta_time;
             RefPlayer.Position += direction * speed;
             return true;

@@ -53,7 +53,7 @@ namespace until.test
         #endregion
 
         #region ISA
-        public Vector3 Position
+        public override Vector3 Position
         {
             get => _Position;
             set

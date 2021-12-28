@@ -18,17 +18,18 @@ namespace until.utils
         /// </summary>
         /// <param name="degree"></param>
         /// <returns></returns>
-        public static float getDegreeArgument(float degree)
+        public static float getDegreeArgument(float x)
         {
-            if (degree < 0.0f)
+            var y = x % 360.0f;
+            if (y >= 180.0f)
             {
-                degree += 360.0f;
+                y -= 360.0f;
             }
-            else if (degree > 360.0f)
+            else if (y <= -180.0f)
             {
-                degree -= 360.0f;
+                y += 360.0f;
             }
-            return degree;
+            return y;
         }
 
         /// <summary>

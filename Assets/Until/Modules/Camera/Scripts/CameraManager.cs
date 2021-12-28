@@ -65,13 +65,13 @@ namespace until.modules.camera
         /// </summary>
         /// <param name="nextAction"></param>
         /// <param name="interpolation"></param>
-        public void transitCamera<T>(float interpolation = 0.0f) where T : CameraAction, new()
+        public void transitCamera<T>(float interpolation = 0.0f, CameraActionArgument argument = null) where T : CameraAction, new()
         {
             if (RefCameraController != null)
             {
                 Log.info(this, $"{nameof(transitCamera)} {typeof(T).FullName}");
-                var nextAction = new T(); //TODO: ‚»‚Ì‚¤‚¿  cache ‚ðŽg‚¤Œ`‚É’¼‚·
-                RefCameraController.transitCamera(nextAction, interpolation);
+                var nextAction = new T();
+                RefCameraController.transitCamera(nextAction, interpolation, argument);
             }
 #if TEST
             else
