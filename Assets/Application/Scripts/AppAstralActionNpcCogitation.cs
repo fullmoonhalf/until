@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 using until.modules.astral;
 using until.utils;
 
@@ -25,9 +26,16 @@ namespace until.test
         #region AstralAction
         public AstralAction getNextAstralAction()
         {
-            var x = math.getRandomRange(-5.0f, 5.0f);
-            var z = math.getRandomRange(-5.0f, 5.0f);
+            var x = math.getRandomRange(-3.0f, 3.0f);
+            var z = math.getRandomRange(-3.0f, 3.0f);
             var pos = new Vector3(x, 0.0f, z);
+            var db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
+            if(db != null && db.Waypoints != null && db.Waypoints.Waypoints.Length > 0)
+            {
+                var index = math.getRandomIndex(db.Waypoints.Waypoints.Length);
+                pos += db.Waypoints.Waypoints[index].Position;
+            }
+
             var action = new AppAstralActionNpcMove(RefSubstance, this, pos);
             return action;
         }

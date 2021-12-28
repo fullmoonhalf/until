@@ -18,9 +18,9 @@ until_test_CharacterID_Ch12000,
 until_test_PropsID_prop_80_000,
 [GameEntityIdentifierValue(PropsID.Invalid)]
 until_test_PropsID_Invalid,
-[GameEntityIdentifierValue(StageID.lv_003_001_00)]
+[GameEntityIdentifierValue(LevelID.lv_003_001_00)]
 until_test_StageID_lv_003_001_00,
-[GameEntityIdentifierValue(StageID.Invalid)]
+[GameEntityIdentifierValue(LevelID.Invalid)]
 until_test_StageID_Invalid,
 
 }

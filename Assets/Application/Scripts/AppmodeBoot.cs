@@ -92,7 +92,7 @@ namespace until.test
                         {
                             var path = BuildinSceneIndex.Paths[stage];
                             var symbol = Path.GetFileNameWithoutExtension(path);
-                            if (Enum.TryParse<StageID>(symbol, out var id))
+                            if (Enum.TryParse<LevelID>(symbol, out var id))
                             {
                                 var controller = new StageSceneController(new AppStageIdentifier(id), stage);
                                 Singleton.StageSceneManager.regist(controller);

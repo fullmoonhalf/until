@@ -7,6 +7,7 @@ using until.system;
 using until.modules.gamemaster;
 using until.modules.gamefield;
 using until.modules.bullet;
+using until.utils;
 
 
 namespace until.test
@@ -59,12 +60,14 @@ namespace until.test
                     {
                         transit(Phase.StageWait);
                         var builder = new StageSetupOrderBuilder();
-                        builder.add(new AppStageIdentifier(StageID.lv_003_001_00), StageSceneStatus.Active);
+                        builder.add(new AppStageIdentifier(LevelID.lv_003_001_00), StageSceneStatus.Active);
                         builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch01000, Vector3.zero);
-                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(3.0f, 0.0f, -3.0f));
-                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(-3.0f, 0.0f, -3.0f));
-                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(3.0f, 0.0f, 3.0f));
-                        builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(-3.0f, 0.0f, 3.0f));
+                        for(var index=0; index<30; ++index)
+                        {
+                            var x = math.getRandomRange(-3.0f, 3.0f);
+                            var z = math.getRandomRange(-3.0f, 3.0f);
+                            builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch12000, new Vector3(x, 0, z));
+                        }
                         var order = builder.build();
                         Singleton.StageSetupper.request(order, () => transit(Phase.CameraSetup));
                     }

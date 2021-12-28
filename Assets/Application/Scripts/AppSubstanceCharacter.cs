@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using until.modules.gamefield;
 using until.modules.astral;
 
@@ -19,19 +20,28 @@ namespace until.test
         #endregion
 
         #region Fields.
-        /// <summary>CharacterID ‚ÌƒXƒNƒŠƒvƒg‘¤‚©‚ç‚ÌQÆ</summary>
+        /// <summary>CharacterID ã¸ã®å‚ç…§</summary>
         public CharacterID CharacterID => _CharacterId;
         /// <summary>AstralElement</summary>
         private AstralElement _AstralElement = null;
-        /// <summary>ˆÊ’u</summary>
+        /// <summary>ä½ç½®</summary>
         private Vector3 _Position = Vector3.zero;
+        /// <summary>ãƒŠãƒ“ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¸ã®å‚ç…§</summary>
+        public NavMeshAgent RefNavMeshAgent { get; private set; } = null;
         #endregion
 
         #region Methods
         #region Behavior
         protected virtual void Start()
         {
-            _AstralElement = new AstralElement(getCogitationOrigin()); // æXŠO•”‚©‚ç‚Ì‹Ÿ‹‹‚ÉØ‚è‘Ö‚¦B
+            RefNavMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+            if(RefNavMeshAgent != null)
+            {
+                RefNavMeshAgent.updatePosition = false;
+                RefNavMeshAgent.updateRotation = false;
+            }
+
+            _AstralElement = new AstralElement(getCogitationOrigin()); // â€»ä¾›çµ¦æºã‚’å¤‰æ›´ã®äºˆå®š
             Singleton.AstralManager.regist(_AstralElement);
         }
 

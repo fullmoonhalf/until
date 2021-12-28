@@ -24,7 +24,7 @@ namespace until.test
 
         public void onSwitchingStart()
         {
-            _Position = new Vector3(0.0f, 10.0f, 0.0f);
+            _Position = new Vector3(0.0f, 100.0f, 0.0f);
             _Rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
         }
 

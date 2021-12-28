@@ -10,7 +10,7 @@ namespace until.test
     public class AppStageIdentifier : StageIdentifier
     {
         #region プロパティ
-        public StageID Stage { get; private set; } = StageID.Invalid;
+        public LevelID Stage { get; private set; } = LevelID.Invalid;
         #endregion
 
         #region コンストラクタ
@@ -23,18 +23,27 @@ namespace until.test
         /// コンストラクタ
         /// </summary>
         /// <param name="stage"></param>
-        public AppStageIdentifier(StageID stage)
+        public AppStageIdentifier(LevelID stage)
         {
             Stage = stage;
         }
 
+        /// <summary>
+        /// コピーコンストラクタ
+        /// </summary>
+        /// <param name="source"></param>
+        public AppStageIdentifier(AppStageIdentifier source)
+        {
+            Stage = source.Stage;
+        }
+        #endregion
+
+        #region object
         public override string ToString()
         {
             return $"{base.ToString()}({Stage})";
         }
-
         #endregion
-
 
         #region StageIdentifier
         /// <summary>
