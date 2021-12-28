@@ -19,7 +19,6 @@ namespace until.modules.bullet
         protected virtual void Start()
         {
             Singleton.BulletManager.regist(this);
-
         }
 
         protected virtual void OnDestroy()
