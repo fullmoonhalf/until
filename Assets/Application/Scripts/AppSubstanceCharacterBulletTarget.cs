@@ -24,7 +24,10 @@ namespace until.test
 
         public override void onContactBullet(BulletClient bullet)
         {
-            bullet.requestToFinish();
+            if (_RefCharacter != null)
+            {
+                _RefCharacter.interfere(new AppAstralInterfererBullet(bullet));
+            }
         }
         #endregion
         #endregion

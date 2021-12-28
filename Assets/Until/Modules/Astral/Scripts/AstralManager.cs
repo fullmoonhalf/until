@@ -65,6 +65,13 @@ namespace until.modules.astral
             }
         }
         #endregion
+
+        #region Interfere
+        public void interfere(AstralInterfereable interferer, AstralElement target)
+        {
+            interferer.onAcceptInterference();
+        }
+        #endregion
         #endregion
     }
 }

@@ -35,7 +35,7 @@ namespace until.test
         protected virtual void Start()
         {
             RefNavMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-            if(RefNavMeshAgent != null)
+            if (RefNavMeshAgent != null)
             {
                 RefNavMeshAgent.updatePosition = false;
                 RefNavMeshAgent.updateRotation = false;
@@ -60,6 +60,16 @@ namespace until.test
             {
                 _Position = value;
                 gameObject.transform.position = _Position;
+            }
+        }
+        #endregion
+
+        #region Interfere
+        public void interfere(AstralInterfereable interferer)
+        {
+            if (_AstralElement != null)
+            {
+                Singleton.AstralManager.interfere(interferer, _AstralElement);
             }
         }
         #endregion
