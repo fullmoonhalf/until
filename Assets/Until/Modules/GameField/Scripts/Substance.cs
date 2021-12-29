@@ -17,27 +17,21 @@ namespace until.modules.gamefield
 
         #region Inspector
         [SerializeField]
-        private GameEntityIdentifiable _Identifier = GameEntityIdentifiable.Invalid;
+        private GameEntityIdentifiable _Classification = GameEntityIdentifiable.Invalid;
+        [SerializeField]
+        private GameEntityIdentifier _Individual = null;
         #endregion
 
-        #region Properties
-        /// <summary>GameEntiryIdentifier のスクリプト側からの参照</summary>
-        public GameEntityIdentifier GameIdentifier
+        #region Fields
+        public GameEntityIdentifiable ClassificationIdentifier => _Classification;
+        public GameEntityIdentifier IndividualIdentifier => _Individual;
+        #endregion
+
+        #region Methods
+        public void setIndividualIdentifier(GameEntityIdentifier individual)
         {
-            get
-            {
-                if (_GameIdentifier == null)
-                {
-                    var attribute = _Identifier.getAttrubute<GameEntityIdentifierValueAttribute>();
-                    if (attribute != null)
-                    {
-                        _GameIdentifier = attribute.createGameEntityIdentifier();
-                    }
-                }
-                return _GameIdentifier;
-            }
+            _Individual = individual;
         }
-        private GameEntityIdentifier _GameIdentifier = null;
         #endregion
     }
 }

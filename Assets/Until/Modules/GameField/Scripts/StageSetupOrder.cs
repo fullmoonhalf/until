@@ -26,15 +26,17 @@ namespace until.modules.gamefield
     [Serializable]
     public class StageSetupSubstanceOrder
     {
-        public GameEntityIdentifiable Identifier = GameEntityIdentifiable.Invalid;
+        public GameEntityIdentifiable ClassificationIdentifier = GameEntityIdentifiable.Invalid;
+        public GameEntityIdentifier IndividualIdentifier = null;
         public Vector3 Position = Vector3.zero;
 
         public StageSetupSubstanceOrder()
         {
         }
-        public StageSetupSubstanceOrder(GameEntityIdentifiable identifier, Vector3 position)
+        public StageSetupSubstanceOrder(GameEntityIdentifiable classification, GameEntityIdentifier individual, Vector3 position)
         {
-            Identifier = identifier;
+            ClassificationIdentifier = classification;
+            IndividualIdentifier = individual;
             Position = position;
         }
     }
@@ -60,9 +62,9 @@ namespace until.modules.gamefield
             _StageOrderList.Add(new StageSetupStageOrder(stage, target));
         }
 
-        public void add(GameEntityIdentifiable identifier, Vector3 position)
+        public void add(GameEntityIdentifiable classification, GameEntityIdentifier individual, Vector3 position)
         {
-            _SubstanceOrderList.Add(new StageSetupSubstanceOrder(identifier, position));
+            _SubstanceOrderList.Add(new StageSetupSubstanceOrder(classification, individual, position));
         }
 
         public StageSetupOrder build()

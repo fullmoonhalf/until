@@ -189,6 +189,14 @@ PrefabInstance:
       propertyPath: _CharacterId
       value: 73728
       objectReference: {fileID: 0}
+    - target: {fileID: 8730829128954528583, guid: cc97946c3a9bd8d44a629cfed0a8036c, type: 3}
+      propertyPath: _Classification
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730829128954528583, guid: cc97946c3a9bd8d44a629cfed0a8036c, type: 3}
+      propertyPath: _Individual._Serialized
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc97946c3a9bd8d44a629cfed0a8036c, type: 3}
 --- !u!4 &5049628832833664166 stripped

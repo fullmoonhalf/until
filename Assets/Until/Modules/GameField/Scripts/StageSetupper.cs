@@ -260,7 +260,7 @@ namespace until.modules.gamefield
         {
             foreach (var order in _CurrentContext.Order.SubstanceOrders)
             {
-                Singleton.SubstanceManager.requestToCreate(order.Identifier, order.Position);
+                Singleton.SubstanceManager.requestToCreate(order.ClassificationIdentifier, order.IndividualIdentifier, order.Position);
             }
         }
         private void onUpdateCreateWait()

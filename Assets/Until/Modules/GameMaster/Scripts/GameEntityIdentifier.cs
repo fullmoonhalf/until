@@ -11,7 +11,7 @@ namespace until.modules.gamemaster
     public class GameEntityIdentifier : Identifier<GameEntityIdentifier>
     {
         #region Properties
-        public string Expression { get; private set; } = "";
+        public virtual string Expression { get; } = "";
         public override int Hashcode => _Hashcode;
         #endregion
 
@@ -20,20 +20,13 @@ namespace until.modules.gamemaster
         #endregion
 
         #region Methods
+        protected GameEntityIdentifier()
+        {
+        }
+
         public GameEntityIdentifier(object value)
         {
             Expression = $"{value.GetType().FullName}.{value}";
-            _Hashcode = Expression.GetHashCode();
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        public GameEntityIdentifier(int id)
-        {
-            Expression = $"Astral.{id}";
             _Hashcode = Expression.GetHashCode();
         }
 

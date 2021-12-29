@@ -20,7 +20,7 @@ namespace until.test
         #region Methods
         #region BulletTarget
         public override Vector3 BulletTargetPosotion => _RefCharacter.transform.position;
-        public override string BulletTargetIdentifier => _RefCharacter.GameIdentifier.Expression;
+        public override string BulletTargetIdentifier => _RefCharacter.IndividualIdentifier.Expression;
 
         public override void onContactBullet(BulletClient bullet)
         {

@@ -51,7 +51,7 @@ namespace until.test
 
         public void onSwitchingStart(CameraActionArgument argument)
         {
-            _TargetSubstance = Singleton.SubstanceManager.get(new GameEntityIdentifier(CharacterID.Ch01000));
+            _TargetSubstance = Singleton.SubstanceManager.get(new GameEntitySerializableIdentifier("0"));
             if (_TargetSubstance != null)
             {
                 _CameraPosition = calcCameraPosition(_TargetSubstance.Position, _TargetOffset, _Distance, _YawDegree, _PitchDegree);

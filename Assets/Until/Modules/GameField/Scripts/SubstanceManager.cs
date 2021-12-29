@@ -53,12 +53,12 @@ namespace until.modules.gamefield
         #endregion
 
         #region Request
-        public bool requestToCreate(GameEntityIdentifiable identifier, Vector3 position)
+        public bool requestToCreate(GameEntityIdentifiable classification, GameEntityIdentifier individual, Vector3 position)
         {
-            var attribute = identifier.getAttrubute<GameEntityIdentifierValueAttribute>();
+            var attribute = classification.getAttrubute<GameEntityIdentifierValueAttribute>();
             if (attribute == null)
             {
-                Log.error(this, $"{nameof(requestToCreate)} is failed: {identifier}'s GameEntityIdentifierValueAttribute is not found.");
+                Log.error(this, $"{nameof(requestToCreate)} is failed: {classification}'s GameEntityIdentifierValueAttribute is not found.");
                 return false;
             }
 
@@ -78,7 +78,11 @@ namespace until.modules.gamefield
                         var substance = go.GetComponent<Substance>();
                         if (substance != null)
                         {
-                            regist(substance);
+                            if (individual != null)
+                            {
+                                substance.setIndividualIdentifier(individual);
+                            }
+                            regist(substance.IndividualIdentifier, substance);
                         }
                     }
                 }
@@ -133,12 +137,12 @@ namespace until.modules.gamefield
         /// 登録まわり
         /// </summary>
         /// <param name="substance"></param>
-        public void regist(Substance substance)
+        public void regist(GameEntityIdentifier identifier, Substance substance)
         {
-            if (_SubstanceCollection.TryGetValue(substance.GameIdentifier, out var list) == false)
+            if (_SubstanceCollection.TryGetValue(identifier, out var list) == false)
             {
                 list = new List<Substance>();
-                _SubstanceCollection.Add(substance.GameIdentifier, list);
+                _SubstanceCollection.Add(identifier, list);
             }
             list.Add(substance);
         }
@@ -147,12 +151,9 @@ namespace until.modules.gamefield
         /// 登録削除
         /// </summary>
         /// <param name="substance"></param>
-        public void unregist(Substance substance)
+        public void unregist(GameEntityIdentifier identifier)
         {
-            if (_SubstanceCollection.TryGetValue(substance.GameIdentifier, out var list))
-            {
-                list.Remove(substance);
-            }
+            _SubstanceCollection.Remove(identifier);
         }
 
         /// <summary>
