@@ -26,8 +26,12 @@ namespace until.test
         {
             _Bullet.requestToFinish();
         }
-        #endregion
 
+        public void onRejectInterference()
+        {
+            _Bullet.requestToFinish();
+        }
+        #endregion
         #endregion
 
 

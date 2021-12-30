@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using until.develop;
+using until.modules.astral;
 using until.utils;
 
 
@@ -28,7 +29,7 @@ namespace until.test
                 RefSubstance.RefNavMeshAgent.speed = _Speed;
             }
         }
-        public override bool onAstralActionUpdate(float delta_time)
+        public override bool onAstralNpcActionUpdate(float delta_time)
         {
             if (RefSubstance.RefNavMeshAgent != null)
             {
@@ -40,6 +41,17 @@ namespace until.test
             }
         }
 
+        public override void onAstralActionEnd()
+        {
+        }
+
+        public override void onAstralInterceptEstablished(AstralInterfereable interferer)
+        {
+        }
+        #endregion
+
+
+        #region Action
         private bool navimove(float delta_time)
         {
             var distance = _Speed * delta_time;
@@ -48,9 +60,9 @@ namespace until.test
                 RefSubstance.Position = _TargetPosition;
                 return false;
             }
-            
+
             // 移動できなくていったんあきらめる(仮)
-            if(math.checkNearlyEqual(RefSubstance.RefNavMeshAgent.velocity.magnitude, 0.0f))
+            if (math.checkNearlyEqual(RefSubstance.RefNavMeshAgent.velocity.magnitude, 0.0f))
             {
                 return false;
             }
@@ -74,11 +86,6 @@ namespace until.test
             var direction = gap.normalized;
             RefSubstance.Position += direction * speed;
             return true;
-        }
-
-
-        public override void onAstralActionEnd()
-        {
         }
         #endregion
         #endregion

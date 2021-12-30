@@ -13,7 +13,7 @@ namespace until.test
     {
         #region Fields
         protected AppSubstanceCharacter RefSubstance { get; private set; } = null;
-        private AppAstralActionNpcCogitation RefCogitation = null;
+        protected AppAstralActionNpcCogitation RefCogitation { get; private set; } = null;
         #endregion
 
         #region Methods
@@ -29,9 +29,20 @@ namespace until.test
             return RefCogitation;
         }
 
+        public bool onAstralInterceptTry(AstralInterfereable interferer)
+        {
+            return RefCogitation.onAstralInterceptTry(interferer);
+        }
+
+        public bool onAstralActionUpdate(float delta_time)
+        {
+            return onAstralNpcActionUpdate(delta_time);
+        }
+
         public abstract void onAstralActionStart();
-        public abstract bool onAstralActionUpdate(float delta_time);
+        public abstract bool onAstralNpcActionUpdate(float delta_time);
         public abstract void onAstralActionEnd();
+        public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
         #endregion
         #endregion
     }

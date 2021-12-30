@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using until.system;
 
 
 
 
 namespace until.modules.astral
 {
-    public class AstralManagerBehavior : MonoBehaviour
+    public class AstralManagerBehavior : Behavior
     {
         // Start is called before the first frame update
         void Start()

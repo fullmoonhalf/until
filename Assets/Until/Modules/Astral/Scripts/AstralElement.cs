@@ -6,7 +6,7 @@ using until.develop;
 
 namespace until.modules.astral
 {
-    public class AstralElement
+    public class AstralElement : AstralInterceptedable
     {
         #region Fields.
         private AstralAction _CurrentAction = null;
@@ -18,7 +18,6 @@ namespace until.modules.astral
         {
             _NextAction = action;
         }
-
 
         public void onAstralUpdate(float delta_time)
         {
@@ -49,6 +48,26 @@ namespace until.modules.astral
             _NextAction = _CurrentAction.getNextAstralAction();
             _CurrentAction = null;
         }
+
+        #region AstralInterceptable
+        public bool onAstralInterceptTry(AstralInterfereable interferer)
+        {
+            if (_CurrentAction != null)
+            {
+                return _CurrentAction.onAstralInterceptTry(interferer);
+            }
+            return false;
+        }
+
+        public void onAstralInterceptEstablished(AstralInterfereable interferer)
+        {
+            if (_CurrentAction != null)
+            {
+                _CurrentAction.onAstralInterceptEstablished(interferer);
+                _CurrentAction = null;
+            }
+        }
+        #endregion
         #endregion
     }
 }

@@ -8,10 +8,27 @@ namespace until.modules.astral
 {
     public class AstralManager : Singleton<AstralManager>
     {
+        #region Definition
+        private class InterfereContext
+        {
+            public AstralInterfereable Source { get; private set; }
+            public AstralElement Target { get; private set; }
+
+            public InterfereContext(AstralInterfereable source, AstralElement target)
+            {
+                Source = source;
+                Target = target;
+            }
+        }
+        #endregion
+
         #region Fields
+        /// <summary>排他制御オブジェ</summary>
+        private Object _LockObject = new Object();
         /// <summary>Element の集合</summary>
         private List<AstralElement> _ElementsCollection = new List<AstralElement>();
-        private Object _LockObject = new Object();
+        /// <summaryインターフェアリスト</summary>
+        private List<InterfereContext> _InterfereList = new List<InterfereContext>();
         #endregion
 
         #region Methods
@@ -27,6 +44,7 @@ namespace until.modules.astral
         public override void onSingletonDestroy()
         {
             _ElementsCollection.Clear();
+            _InterfereList.Clear();
         }
         #endregion
 
@@ -37,6 +55,22 @@ namespace until.modules.astral
 
         public void onUpdate(float delta_time)
         {
+            // interfere の処理
+            foreach (var context in _InterfereList)
+            {
+                if (context.Target.onAstralInterceptTry(context.Source))
+                {
+                    context.Target.onAstralInterceptEstablished(context.Source);
+                    context.Source.onAcceptInterference();
+                }
+                else
+                {
+                    context.Source.onRejectInterference();
+                }
+            }
+            _InterfereList.Clear();
+
+            // アップデートの更新
             foreach (var element in _ElementsCollection)
             {
                 element.onAstralUpdate(delta_time);
@@ -69,7 +103,10 @@ namespace until.modules.astral
         #region Interfere
         public void interfere(AstralInterfereable interferer, AstralElement target)
         {
-            interferer.onAcceptInterference();
+            lock (_LockObject)
+            {
+                _InterfereList.Add(new InterfereContext(interferer, target));
+            }
         }
         #endregion
         #endregion

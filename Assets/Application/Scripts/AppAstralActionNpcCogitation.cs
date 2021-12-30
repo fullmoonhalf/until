@@ -15,6 +15,7 @@ namespace until.test
     {
         #region Fields
         protected AppSubstanceCharacter RefSubstance { get; private set; } = null;
+        private AstralAction _NextAction = null;
         #endregion
 
         #region Methods
@@ -36,8 +37,8 @@ namespace until.test
                 pos += db.Waypoints.Waypoints[index].Position;
             }
 
-            var action = new AppAstralActionNpcMove(RefSubstance, this, pos);
-            return action;
+            _NextAction = new AppAstralActionNpcMove(RefSubstance, this, pos);
+            return _NextAction;
         }
 
         public void onAstralActionStart()
@@ -48,6 +49,20 @@ namespace until.test
             return false;
         }
         public void onAstralActionEnd()
+        {
+        }
+        
+        public bool onAstralInterceptTry(AstralInterfereable interferer)
+        {
+            if(interferer is AppAstralInterfererBullet)
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        public void onAstralInterceptEstablished(AstralInterfereable interferer)
         {
         }
         #endregion

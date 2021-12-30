@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace until.modules.astral
 {
-    public interface AstralAction
+    public interface AstralAction : AstralInterceptedable
     {
         /// <summary>アクション開始時</summary>
         public void onAstralActionStart();
@@ -17,15 +17,5 @@ namespace until.modules.astral
         public void onAstralActionEnd();
         /// <summary>次のアクションを取得する</summary>
         public AstralAction getNextAstralAction();
-#if false
-        /// <summary>アクション中割り込みが可能かどうか</summary>
-        public bool isAstralActionTrapable();
-        /// <summary>アクション中割り込みが発生した場合の処理</summary>
-        public void onAstralActionTrapped();
-        /// <summary>アクション後割り込みが可能かどうか</summary>
-        public void onAstralActionInterrupted();
-        /// <summary>アクション後割り込みが発生した場合の処理</summary>
-        public bool isAstralActionInterruptable();
-#endif
     }
 }

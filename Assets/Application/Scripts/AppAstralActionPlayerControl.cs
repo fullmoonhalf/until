@@ -9,8 +9,7 @@ using until.modules.bullet;
 using until.modules.bullet.command;
 using until.modules.gamemaster;
 using until.utils;
-
-
+using until.modules.astral;
 
 namespace until.test
 {
@@ -41,6 +40,15 @@ namespace until.test
         }
 
         public override void onAstralActionEnd()
+        {
+        }
+
+        public override bool onAstralInterceptTry(AstralInterfereable interferer)
+        {
+            return true;
+        }
+
+        public override void onAstralInterceptEstablished(AstralInterfereable interferer)
         {
         }
         #endregion

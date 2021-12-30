@@ -30,6 +30,8 @@ namespace until.test
         public abstract void onAstralActionStart();
         public abstract bool onAstralActionUpdate(float delta_time);
         public abstract void onAstralActionEnd();
+        public abstract bool onAstralInterceptTry(AstralInterfereable interferer);
+        public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
         #endregion
         #endregion
     }
