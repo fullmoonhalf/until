@@ -28,6 +28,17 @@ namespace until.system
         #endregion
 
         #region Fields.
+        public bool IsBusy
+        {
+            get
+            {
+                lock (_Lock)
+                {
+                    return _RequestList.Count > 0;
+                }
+            }
+        }
+
         private List<Request> _RequestList = new List<Request>();
         private Dictionary<string, PrefabWrapper> _PrefabCollection = new Dictionary<string, PrefabWrapper>();
         private object _Lock = new object();

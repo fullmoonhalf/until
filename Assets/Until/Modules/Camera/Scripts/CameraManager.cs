@@ -13,6 +13,23 @@ namespace until.modules.camera
 #endif
     {
         #region Field.
+        /// <summary>現在位置取得</summary>
+        public Vector3 Position
+        {
+            get
+            {
+                return (RefCameraController != null) ? RefCameraController.Position : Vector3.zero;
+            }
+        }
+        /// <summary>現在向き取得</summary>
+        public Quaternion Rotation
+        {
+            get
+            {
+                return (RefCameraController != null) ? RefCameraController.Rotation : Quaternion.identity;
+            }
+        }
+
         private CameraController RefCameraController = null;
         #endregion
 
@@ -48,33 +65,20 @@ namespace until.modules.camera
         /// </summary>
         /// <param name="nextAction"></param>
         /// <param name="interpolation"></param>
-        public void transitCamera<T>(float interpolation = 0.0f) where T : CameraAction, new()
+        public void transitCamera<T>(float interpolation = 0.0f, CameraActionArgument argument = null) where T : CameraAction, new()
         {
             if (RefCameraController != null)
             {
-                var nextAction = new T(); //TODO: そのうち  cache を使う形に直す
-                RefCameraController.transitCamera(nextAction, interpolation);
+                Log.info(this, $"{nameof(transitCamera)} {typeof(T).FullName}");
+                var nextAction = new T();
+                RefCameraController.transitCamera(nextAction, interpolation, argument);
             }
-        }
-        #endregion
-
-        #region Status
-        /// <summary>
-        /// 現在位置取得
-        /// </summary>
-        /// <returns></returns>
-        public Vector3 getPosition()
-        {
-            return (RefCameraController != null) ? RefCameraController.Position : Vector3.zero;
-        }
-
-        /// <summary>
-        /// 現在向き取得
-        /// </summary>
-        /// <returns></returns>
-        public Quaternion getRotation()
-        {
-            return (RefCameraController != null) ? RefCameraController.Rotation : Quaternion.identity;
+#if TEST
+            else
+            {
+                Log.error(this, $"{nameof(transitCamera)} {typeof(T).FullName} switch failure (CameraController is not found.)");
+            }
+#endif
         }
         #endregion
 

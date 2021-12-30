@@ -13,10 +13,15 @@ namespace until.modules.camera
         public float FoV { get; }
         public bool Orthographic { get; }
 
-        public void onSwitchingStart();
+        public void onSwitchingStart(CameraActionArgument argument);
         public void onSwitchingEnd();
         public void onReplacedStart();
         public void onReplacedEnd();
         public void onUpdate(float deltaTime);
+    }
+
+
+    public interface CameraActionArgument
+    {
     }
 }

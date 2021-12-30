@@ -6,7 +6,7 @@ using until.system;
 
 namespace until.modules.bullet
 {
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.Develop_Tail_10)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.Bullet_BulletController)]
     public class BulletController : Behavior
     {
         #region Behavior

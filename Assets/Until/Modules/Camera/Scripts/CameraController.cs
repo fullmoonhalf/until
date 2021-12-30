@@ -7,7 +7,7 @@ using until.utils;
 
 namespace until.modules.camera
 {
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.System_Head_50)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.Camera_CameraController)]
     public class CameraController : Behavior
     {
         #region Properties
@@ -22,6 +22,7 @@ namespace until.modules.camera
         private CameraAction _CurrentAction = null;
         private CameraAction _PreviousAction = null;
         private CameraAction _NextAction = null;
+        private CameraActionArgument _NextActionArgument = null;
         private float _InterpolationTime = 0.0f;
         private float _InterpolationCount = 0.0f;
         #endregion
@@ -47,7 +48,8 @@ namespace until.modules.camera
                 _InterpolationCount = math.EPSILON;
 
                 _PreviousAction?.onReplacedStart();
-                _CurrentAction?.onSwitchingStart();
+                _CurrentAction?.onSwitchingStart(_NextActionArgument);
+                _NextActionArgument = null;
             }
 
             // それぞれの処理の更新
@@ -106,10 +108,11 @@ namespace until.modules.camera
         /// </summary>
         /// <param name="nextAction"></param>
         /// <param name="interpolation"></param>
-        public void transitCamera(CameraAction nextAction, float interpolation = 0.0f)
+        public void transitCamera(CameraAction nextAction, float interpolation = 0.0f, CameraActionArgument argument = null)
         {
             Log.info(this, $"transitCamera requested {nextAction} interpolation={interpolation}");
             _NextAction = nextAction;
+            _NextActionArgument = argument;
             _InterpolationTime = Mathf.Max(interpolation, 0.0f) + math.EPSILON; // 0 とかが面倒なので微小値を足してる。
         }
         #endregion

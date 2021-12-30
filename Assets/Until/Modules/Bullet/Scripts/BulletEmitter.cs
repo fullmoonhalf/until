@@ -16,6 +16,7 @@ namespace until.modules.bullet
             public Quaternion Rotation { get; set; } = Quaternion.identity;
             public int ProgramCount { get; set; } = 0;
             public int RepeatCount { get; set; } = 0;
+            public BulletParameter Parameter { get; set; } = null;
         }
         #endregion
 

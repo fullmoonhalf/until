@@ -53,7 +53,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6560207690627886769, guid: 821874a34edbde544929b70d153ed390, type: 3}
       propertyPath: m_Name
-      value: AppVisibleBasePrefab
+      value: TerrainRoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560207690627886769, guid: 821874a34edbde544929b70d153ed390, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 821874a34edbde544929b70d153ed390, type: 3}

@@ -54,7 +54,7 @@ namespace until.modules.bullet.command
 
                 var speed = _Context.Rotation * _Command.Speed;
                 var animator = new BulletAnimatorUniformLinearMotion(speed, _Command.Life);
-                bullet.startBullet(animator, _Context.Position);
+                bullet.startBullet(animator, _Context.Position, _Context.Parameter);
                 return true;
             }
         }

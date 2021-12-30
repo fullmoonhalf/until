@@ -9,6 +9,7 @@ using until.system;
 
 namespace until.modules.bullet
 {
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.Bullet_BulletTarget)]
     public abstract class BulletTarget : Behavior
     {
         public abstract void onContactBullet(BulletClient bullet);
@@ -19,7 +20,6 @@ namespace until.modules.bullet
         protected virtual void Start()
         {
             Singleton.BulletManager.regist(this);
-
         }
 
         protected virtual void OnDestroy()

@@ -7,7 +7,7 @@ using until.system.defines;
 
 namespace until.develop
 {
-    [DefaultExecutionOrder(ExecutionOrder.Develop_Tail_10)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.Develop_DevelopCommandBehavior)]
     public class DevelopCommandBehavior : Behavior
     {
         // Update is called once per frame

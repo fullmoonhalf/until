@@ -30,7 +30,7 @@ namespace until.modules.bullet.command
         #region BulletEmitCommand
         public BulletEmitCommandContext createContext(BulletEmitContext context)
         {
-            return new Context(this);
+            return new Context(this, context);
         }
         #endregion
 
@@ -38,10 +38,12 @@ namespace until.modules.bullet.command
         private class Context : BulletEmitCommandContext
         {
             private BulletEmitCommandBulletAbsoluteUniformLinearMotion _Command = null;
+            private BulletEmitContext _Context = null;
 
-            public Context(BulletEmitCommandBulletAbsoluteUniformLinearMotion command)
+            public Context(BulletEmitCommandBulletAbsoluteUniformLinearMotion command, BulletEmitContext context)
             {
                 _Command = command;
+                _Context = context;
             }
 
             public bool execute(float elapsed)
@@ -53,7 +55,7 @@ namespace until.modules.bullet.command
                 }
 
                 var animator = new BulletAnimatorUniformLinearMotion(_Command.Speed, _Command.Life);
-                bullet.startBullet(animator, _Command.StartPosition);
+                bullet.startBullet(animator, _Command.StartPosition, _Context.Parameter);
                 return true;
             }
         }

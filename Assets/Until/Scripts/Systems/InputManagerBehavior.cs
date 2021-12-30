@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace until.system
 {
-    [DefaultExecutionOrder(defines.ExecutionOrder.System_Head_10)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.System_InputManagerBehavior)]
     public class InputManagerBehavior : Behavior
     {
         // Update is called once per frame

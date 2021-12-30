@@ -9,7 +9,6 @@ using UnityEngine;
 namespace until.system
 {
     [Serializable]
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.Static)]
     public class PrefabNamedWrapper : PrefabWrapper
     {
         public string Name

@@ -1,10 +1,13 @@
 #if TEST
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using until.system;
 using until.develop;
 using until.modules.camera;
+using until.modules.gamefield;
 
 namespace until.test
 {
@@ -14,16 +17,17 @@ namespace until.test
         {
             Start,
             StartDevelop,
-            StartCameraLoad,
-            WaitCameraLoad,
+            Camera_Start,
+            Camera_Wait,
+            PermanentCollection_Start,
+            PermanentCollection_Wait,
+            System_Start,
+            System_Wait,
+            IngameField_Setup,
             NextMode,
             Finish,
         }
         private Phase _CurrentPhase = Phase.Start;
-
-        private const int SceneIndex_Camera = 0;
-
-
 
         public Mode.Control init()
         {
@@ -63,13 +67,39 @@ namespace until.test
                     Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandInt("t3", "t3", 0));
                     Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandInt("t7", "t7", 0, -10));
                     Singleton.DevelopCommandManager.addCommand("test2", new DevelopCommandInt("t8", "t8", 0, -10, 10));
-                    transit(Phase.StartCameraLoad);
+                    transit(Phase.Camera_Start);
                     break;
-                case Phase.StartCameraLoad:
-                    Singleton.SceneLoader.requestToLoad(SceneIndex_Camera, () => _CurrentPhase = Phase.NextMode);
-                    transit(Phase.WaitCameraLoad);
+                case Phase.Camera_Start:
+                    Singleton.SceneLoader.requestToLoad(BuildinSceneIndex.CameraModule_CameraModule, () => _CurrentPhase = Phase.PermanentCollection_Start);
+                    transit(Phase.Camera_Wait);
                     break;
-                case Phase.WaitCameraLoad:
+                case Phase.Camera_Wait:
+                    break;
+                case Phase.PermanentCollection_Start:
+                    transit(Phase.PermanentCollection_Wait);
+                    Singleton.SceneLoader.requestToLoad(1, () => transit(Phase.System_Start));
+                    break;
+                case Phase.PermanentCollection_Wait:
+                    break;
+                case Phase.System_Start:
+                    Singleton.PrefabInstantiateMediator.requestFromCollection("AppSystem", (result, go) => transit(Phase.IngameField_Setup));
+                    break;
+                case Phase.System_Wait:
+                    break;
+                case Phase.IngameField_Setup:
+                    {
+                        foreach (var stage in BuildinSceneIndex.Category_AppStage)
+                        {
+                            var path = BuildinSceneIndex.Paths[stage];
+                            var symbol = Path.GetFileNameWithoutExtension(path);
+                            if (Enum.TryParse<LevelID>(symbol, out var id))
+                            {
+                                var controller = new StageSceneController(new AppStageIdentifier(id), stage);
+                                Singleton.StageSceneManager.regist(controller);
+                            }
+                        }
+                        transit(Phase.NextMode);
+                    }
                     break;
                 case Phase.NextMode:
                     Singleton.CameraManager.transitCamera<CameraActionFree>();

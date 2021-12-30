@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using until.system;
 using until.utils;
+using until.develop;
 
 
 namespace until.modules.camera
@@ -14,10 +15,10 @@ namespace until.modules.camera
         public float FoV => 60.0f;
         public bool Orthographic => false;
 
-        public void onSwitchingStart()
+        public void onSwitchingStart(CameraActionArgument argument)
         {
-            Position = Singleton.CameraManager.getPosition();
-            Rotation = Singleton.CameraManager.getRotation();
+            Position = Singleton.CameraManager.Position;
+            Rotation = Singleton.CameraManager.Rotation;
         }
         public void onSwitchingEnd()
         {
