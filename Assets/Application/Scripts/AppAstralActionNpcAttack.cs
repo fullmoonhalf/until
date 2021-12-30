@@ -70,7 +70,7 @@ namespace until.test
             specifier.Commands = new BulletEmitCommand[] {
                 new BulletEmitCommandSystemSetParameter(new AppBulletParameter(RefSubstance)),
                 new BulletEmitCommandEmitSetTransform(RefSubstance.Position+forward*0.5f+Vector3.up*0.5f, Quaternion.identity),
-                new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", forward * 10.0f, 3.0f),
+                new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0002", forward * 10.0f, 3.0f),
                 new BulletEmitCommandControlSleep(0.1f),
                 new BulletEmitCommandControlRepeat(3, 2),
             };

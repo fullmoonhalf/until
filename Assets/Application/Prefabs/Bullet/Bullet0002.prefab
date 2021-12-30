@@ -1,20 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!33 &5905716648329749073
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227190977653038571}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6962619895725359171
+--- !u!23 &1235823528281328643
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227190977653038571}
+  m_GameObject: {fileID: 2175229485440052066}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -28,7 +20,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5a02fa8865951c14c9bb02fe4cdba91d, type: 2}
+  - {fileID: 2100000, guid: 80d2548b19d850c47b69f746f1775e41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -50,7 +42,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &6256646834736028663
+--- !u!33 &5017781629849717063
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2175229485440052066}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &5466455605364501886
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -117,31 +117,22 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 3940437733999975635, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4966022746058159108, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
-      propertyPath: BulletName
-      value: Bullet0001
-      objectReference: {fileID: 0}
     - target: {fileID: 4966022746058159108, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
       propertyPath: _BulletName
-      value: Bullet0001
+      value: Bullet0002
       objectReference: {fileID: 0}
     - target: {fileID: 6193355314133042716, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
       propertyPath: m_Name
-      value: Bullet0001
+      value: Bullet0002
       objectReference: {fileID: 0}
     - target: {fileID: 6193355314133042716, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2347804291092391979, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
---- !u!1 &227190977653038571 stripped
+--- !u!1 &2175229485440052066 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6193355314133042716, guid: 88bc26912830f0e4d97a458e4a02a795, type: 3}
-  m_PrefabInstance: {fileID: 6256646834736028663}
+  m_PrefabInstance: {fileID: 5466455605364501886}
   m_PrefabAsset: {fileID: 0}

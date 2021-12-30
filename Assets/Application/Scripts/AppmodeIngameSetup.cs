@@ -50,8 +50,9 @@ namespace until.test
                     break;
                 case Phase.SetupBullet:
                     {
-                        var bullet_01 = new BulletPoolSpecifier() { PrefabName = "Bullet0001", Count = 500 };
-                        var order = new BulletPoolOrder() { SpecifierList = new BulletPoolSpecifier[1] { bullet_01 } };
+                        var bullet_01 = new BulletPoolSpecifier() { PrefabName = "Bullet0001", Count = 50 };
+                        var bullet_02 = new BulletPoolSpecifier() { PrefabName = "Bullet0002", Count = 500 };
+                        var order = new BulletPoolOrder() { SpecifierList = new BulletPoolSpecifier[] { bullet_01, bullet_02, } };
                         Singleton.BulletManager.buildBulletPool(order);
                         transit(Phase.StageSetup);
                     }

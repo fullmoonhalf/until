@@ -57,15 +57,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8693827896113531910, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}
       propertyPath: _Collection.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8693827896113531910, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}
       propertyPath: _Collection.Array.data[0]._Name
       value: Bullet0001
       objectReference: {fileID: 0}
     - target: {fileID: 8693827896113531910, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}
+      propertyPath: _Collection.Array.data[1]._Name
+      value: Bullet0002
+      objectReference: {fileID: 0}
+    - target: {fileID: 8693827896113531910, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}
       propertyPath: _Collection.Array.data[0]._Prefab
       value: 
       objectReference: {fileID: 227190977653038571, guid: 813de7c1022979742a72f4214ed4afd9, type: 3}
+    - target: {fileID: 8693827896113531910, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}
+      propertyPath: _Collection.Array.data[1]._Prefab
+      value: 
+      objectReference: {fileID: 2175229485440052066, guid: 39480e3f5396e514fb2b2f38e2817f7b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2858388f78e5ebf4491151cd721c0c49, type: 3}
