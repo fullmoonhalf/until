@@ -16,6 +16,8 @@ namespace until.modules.bullet
             get => _BulletName;
         }
         public Vector3 BulletPosition => transform.position;
+        /// <summary>ëÆê´</summary>
+        public BulletParameter _Attribute { get; private set; } = null;
         #endregion
 
         #region Fiels.
@@ -29,8 +31,9 @@ namespace until.modules.bullet
         #endregion
 
         #region Setup
-        public void startBullet(BulletAnimator animator, Vector3 position)
+        public void startBullet(BulletAnimator animator, Vector3 position, BulletParameter attribute)
         {
+            _Attribute = attribute;
             _RequestToFinish = false;
             _RefAnimator = animator;
             _RefAnimator.onBulletStart();

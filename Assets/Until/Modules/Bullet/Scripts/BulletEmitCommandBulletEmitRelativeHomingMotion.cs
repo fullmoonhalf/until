@@ -60,7 +60,7 @@ namespace until.modules.bullet.command
                 }
 
                 var animator = new BulletAnimatorHomingMotion(bullet, target, _Command.Speed, _Command.Life);
-                bullet.startBullet(animator, _Context.Position);
+                bullet.startBullet(animator, _Context.Position, _Context.Parameter);
                 return true;
             }
         }

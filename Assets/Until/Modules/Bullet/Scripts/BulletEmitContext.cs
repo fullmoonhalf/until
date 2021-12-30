@@ -11,5 +11,6 @@ namespace until.modules.bullet
         public Quaternion Rotation { get; set; }
         public int ProgramCount { get; set; }
         public int RepeatCount { get; set; }
+        public BulletParameter Parameter { get; set; }
     }
 }

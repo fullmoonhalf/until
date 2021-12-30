@@ -12,24 +12,24 @@ namespace until.test
     public class AppAstralInterfererBullet : AstralInterfereable
     {
         #region Fields
-        private BulletClient _Bullet = null;
+        public BulletClient Bullet { get; private set; } = null;
         #endregion
 
         #region Metho\ds
         public AppAstralInterfererBullet(BulletClient bullet)
         {
-            _Bullet = bullet;
+            Bullet = bullet;
         }
 
         #region AstralInterfereable
         public void onAcceptInterference()
         {
-            _Bullet.requestToFinish();
+            Bullet.requestToFinish();
         }
 
         public void onRejectInterference()
         {
-            _Bullet.requestToFinish();
+            Bullet.requestToFinish();
         }
         #endregion
         #endregion
