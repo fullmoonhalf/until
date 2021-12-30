@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace until.system
 {
-    [DefaultExecutionOrder(defines.ExecutionOrder.System_Head_50)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.System_ModeManagerBehavior)]
     public class ModeManagerBehavior : Behavior
     {
         // Update is called once per frame

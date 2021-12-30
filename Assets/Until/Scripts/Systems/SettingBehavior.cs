@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace until.system
 {
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.Undefined)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.System_SettingBehavior)]
     public class SettingBehavior : Behavior
     {
     }

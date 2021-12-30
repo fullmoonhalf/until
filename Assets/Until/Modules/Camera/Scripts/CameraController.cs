@@ -7,7 +7,7 @@ using until.utils;
 
 namespace until.modules.camera
 {
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.System_Head_50)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.Camera_CameraController)]
     public class CameraController : Behavior
     {
         #region Properties

@@ -9,6 +9,7 @@ using until.system;
 
 namespace until.modules.bullet
 {
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.Bullet_BulletTarget)]
     public abstract class BulletTarget : Behavior
     {
         public abstract void onContactBullet(BulletClient bullet);

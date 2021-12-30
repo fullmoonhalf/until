@@ -8,7 +8,7 @@ using until.system.defines;
 
 namespace until.develop
 {
-    [DefaultExecutionOrder(ExecutionOrder.Develop_Tail_10)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.Develop_DevelopIndicatorBehavior)]
     public class DevelopIndicatorBehavior : Behavior
     {
         private void Update()

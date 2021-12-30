@@ -6,7 +6,7 @@ using until.modules.astral;
 
 namespace until.test
 {
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.Undefined)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.GameField_Substance)]
     public class AppSubstancePlayer : AppSubstanceCharacter
     {
         #region Fields.

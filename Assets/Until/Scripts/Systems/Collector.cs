@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace until.system
 {
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.Static)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.System_Collector)]
     public abstract class Collector : Behavior
     {
         #region Defines

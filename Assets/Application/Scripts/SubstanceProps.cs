@@ -6,7 +6,7 @@ using until.modules.gamefield;
 
 namespace until.test
 {
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.Undefined)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.GameField_Substance)]
     public class SubstanceProps : Substance
     {
         #region Inspector

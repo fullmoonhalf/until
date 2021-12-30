@@ -9,7 +9,7 @@ using until.system;
 
 namespace until.modules.gamefield
 {
-    [DefaultExecutionOrder(until.system.defines.ExecutionOrder.ApplicationStart)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.GameField_IngameFieldBehavior)]
     public class IngameFieldBehavior : Behavior
     {
         private void Start()

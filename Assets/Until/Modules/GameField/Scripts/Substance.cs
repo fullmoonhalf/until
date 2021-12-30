@@ -8,7 +8,7 @@ using until.utils;
 
 namespace until.modules.gamefield
 {
-    [DefaultExecutionOrder(system.defines.ExecutionOrder.Undefined)]
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.GameField_Substance)]
     public abstract class Substance : Behavior
     {
         #region Definition

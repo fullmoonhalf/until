@@ -8,6 +8,7 @@ using until.system;
 
 namespace until.modules.astral
 {
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.Astral_AstralManagerBehavior)]
     public class AstralManagerBehavior : Behavior
     {
         // Start is called before the first frame update
