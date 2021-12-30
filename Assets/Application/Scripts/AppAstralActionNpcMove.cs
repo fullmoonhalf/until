@@ -20,14 +20,15 @@ namespace until.test
             _TargetPosition = target;
         }
 
+        public override string ToString()
+        {
+            return $"{base.ToString()}{_TargetPosition}";
+        }
+
         #region AstralAction
         public override void onAstralActionStart()
         {
-            if (RefSubstance.RefNavMeshAgent != null)
-            {
-                RefSubstance.RefNavMeshAgent.destination = _TargetPosition;
-                RefSubstance.RefNavMeshAgent.speed = _Speed;
-            }
+            setNavMeshUpdate(_TargetPosition);
         }
         public override bool onAstralNpcActionUpdate(float delta_time)
         {
@@ -43,27 +44,39 @@ namespace until.test
 
         public override void onAstralActionEnd()
         {
+            setNavMeshUpdate(null);
         }
 
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
         {
+            setNavMeshUpdate(null);
         }
         #endregion
 
-
         #region Action
+        private void setNavMeshUpdate(Vector3? target)
+        {
+            if (RefSubstance.RefNavMeshAgent == null)
+            {
+                return;
+            }
+            if (target == null)
+            {
+                RefSubstance.RefNavMeshAgent.isStopped = true;
+            }
+            else
+            {
+                RefSubstance.RefNavMeshAgent.isStopped = false;
+                RefSubstance.RefNavMeshAgent.SetDestination(target.Value);
+                RefSubstance.RefNavMeshAgent.speed = _Speed;
+            }
+        }
+
         private bool navimove(float delta_time)
         {
-            var distance = _Speed * delta_time;
-            if (RefSubstance.RefNavMeshAgent.remainingDistance < distance)
+            if (math.checkNearlyEqual(RefSubstance.RefNavMeshAgent.remainingDistance, 0.0f, 0.1f))
             {
                 RefSubstance.Position = _TargetPosition;
-                return false;
-            }
-
-            // 移動できなくていったんあきらめる(仮)
-            if (math.checkNearlyEqual(RefSubstance.RefNavMeshAgent.velocity.magnitude, 0.0f))
-            {
                 return false;
             }
 
@@ -80,6 +93,8 @@ namespace until.test
             if (speed >= distance)
             {
                 RefSubstance.Position = _TargetPosition;
+                RefSubstance.RefNavMeshAgent.destination = _TargetPosition;
+                RefSubstance.RefNavMeshAgent.speed = _Speed;
                 return false;
             }
 

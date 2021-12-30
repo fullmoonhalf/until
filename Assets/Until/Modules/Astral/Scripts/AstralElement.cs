@@ -28,7 +28,7 @@ namespace until.modules.astral
                 _NextAction = null;
                 if (_CurrentAction != null)
                 {
-                    Log.info(this, $"{nameof(onAstralUpdate)} change action {_CurrentAction.GetType().Name}");
+                    Log.info(this, $"{nameof(onAstralUpdate)} change action {_CurrentAction}");
                     _CurrentAction.onAstralActionStart();
                     return;
                 }

@@ -45,7 +45,7 @@ namespace until.test
 
         public override bool onAstralInterceptTry(AstralInterfereable interferer)
         {
-            return true;
+            return false;
         }
 
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
@@ -70,10 +70,10 @@ namespace until.test
             {
                 var forward = RefPlayer.Position - Singleton.CameraManager.Position;
                 forward.y = 0.0f;
-                forward.Normalize();
+                forward = forward.normalized;
                 var specifier = new BulletEmitSpecifier();
                 specifier.Commands = new BulletEmitCommand[] {
-                    new BulletEmitCommandEmitSetTransform(RefPlayer.Position+forward, Quaternion.identity),
+                    new BulletEmitCommandEmitSetTransform(RefPlayer.Position+forward*0.5f+Vector3.up*0.5f, Quaternion.identity),
                     new BulletEmitCommandBulletEmitRelativeUniformLinearMotion("Bullet0001", forward * 10.0f, 3.0f),
                     new BulletEmitCommandControlSleep(0.1f),
                     new BulletEmitCommandControlRepeat(3, 1),
