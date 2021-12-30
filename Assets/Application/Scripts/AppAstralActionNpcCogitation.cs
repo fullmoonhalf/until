@@ -14,6 +14,7 @@ namespace until.test
     public class AppAstralActionNpcCogitation : AstralAction
     {
         #region Fields
+        public bool Trapped => _NextAction != null;
         protected AppSubstanceCharacter RefSubstance { get; private set; } = null;
         private AstralAction _NextAction = null;
         #endregion
@@ -27,18 +28,24 @@ namespace until.test
         #region AstralAction
         public AstralAction getNextAstralAction()
         {
-            var x = math.getRandomRange(-3.0f, 3.0f);
-            var z = math.getRandomRange(-3.0f, 3.0f);
-            var pos = new Vector3(x, 0.0f, z);
-            var db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
-            if(db != null && db.Waypoints != null && db.Waypoints.Waypoints.Length > 0)
+            var next_action = _NextAction;
+            if (next_action == null)
             {
-                var index = math.getRandomIndex(db.Waypoints.Waypoints.Length);
-                pos += db.Waypoints.Waypoints[index].Position;
+                var x = math.getRandomRange(-3.0f, 3.0f);
+                var z = math.getRandomRange(-3.0f, 3.0f);
+                var pos = new Vector3(x, 0.0f, z);
+                var db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
+                if (db != null && db.Waypoints != null && db.Waypoints.Waypoints.Length > 0)
+                {
+                    var index = math.getRandomIndex(db.Waypoints.Waypoints.Length);
+                    pos += db.Waypoints.Waypoints[index].Position;
+                }
+
+                next_action = new AppAstralActionNpcMove(RefSubstance, this, pos);
             }
 
-            _NextAction = new AppAstralActionNpcMove(RefSubstance, this, pos);
-            return _NextAction;
+            _NextAction = null;
+            return next_action;
         }
 
         public void onAstralActionStart()
@@ -51,11 +58,12 @@ namespace until.test
         public void onAstralActionEnd()
         {
         }
-        
+
         public bool onAstralInterceptTry(AstralInterfereable interferer)
         {
-            if(interferer is AppAstralInterfererBullet)
+            if (interferer is AppAstralInterfererBullet)
             {
+                _NextAction = new AppAstralActionNpcDamage(RefSubstance, this);
                 return false;
             }
 

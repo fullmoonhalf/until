@@ -29,14 +29,19 @@ namespace until.test
             return RefCogitation;
         }
 
-        public bool onAstralInterceptTry(AstralInterfereable interferer)
+        public virtual bool onAstralInterceptTry(AstralInterfereable interferer)
         {
             return RefCogitation.onAstralInterceptTry(interferer);
         }
 
         public bool onAstralActionUpdate(float delta_time)
         {
-            return onAstralNpcActionUpdate(delta_time);
+            var keep_alive = onAstralNpcActionUpdate(delta_time);
+            if (RefCogitation.Trapped)
+            {
+                keep_alive = false;
+            }
+            return keep_alive;
         }
 
         public abstract void onAstralActionStart();
