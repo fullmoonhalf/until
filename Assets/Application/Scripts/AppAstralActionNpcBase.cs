@@ -24,7 +24,7 @@ namespace until.test
         }
 
         #region AstralAction
-        public AstralAction getNextAstralAction()
+        public virtual AstralAction getNextAstralAction()
         {
             return RefCogitation;
         }

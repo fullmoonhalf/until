@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using until.develop;
 using until.modules.astral;
+using until.modules.gamemaster;
+using until.modules.gamefield;
 using until.utils;
 
 
@@ -11,6 +13,8 @@ namespace until.test
         #region Fields
         private Vector3 _TargetPosition = Vector3.zero;
         private float _Speed = 3.0f;
+        private Substance _AttackTarget = null;
+        private bool TryToAttack = false;
         #endregion
 
         #region Methods
@@ -18,6 +22,7 @@ namespace until.test
              : base(substance, cogitation)
         {
             _TargetPosition = target;
+            _AttackTarget = Singleton.SubstanceManager.get(new GameEntitySerializableIdentifier("0"));
         }
 
         public override string ToString()
@@ -32,6 +37,20 @@ namespace until.test
         }
         public override bool onAstralNpcActionUpdate(float delta_time)
         {
+            if(_AttackTarget != null)
+            {
+                var gap = _AttackTarget.Position - RefSubstance.Position;
+                var distance = gap.magnitude;
+                if (distance > 3.0f && distance < 6.0f)
+                {
+                    if (math.getRandomIndex(500) == 0)
+                    {
+                        TryToAttack = true;
+                        return false;
+                    }
+                }
+            }
+
             if (RefSubstance.RefNavMeshAgent != null)
             {
                 return navimove(delta_time);
@@ -45,6 +64,16 @@ namespace until.test
         public override void onAstralActionEnd()
         {
             setNavMeshUpdate(null);
+        }
+
+        public override AstralAction getNextAstralAction()
+        {
+            if (TryToAttack)
+            {
+                return new AppAstralActionNpcAttack(RefSubstance, RefCogitation, _AttackTarget);
+            }
+
+            return base.getNextAstralAction();
         }
 
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
