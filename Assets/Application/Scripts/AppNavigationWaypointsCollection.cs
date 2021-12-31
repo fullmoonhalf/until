@@ -10,37 +10,31 @@ using until.develop;
 
 namespace until.test
 {
-    [Serializable]
-    public class AppNavigaitonWaypoint
-    {
-        /// <summary>
-        /// 位置
-        /// </summary>
-        public Vector3 Position => _Position;
-        [SerializeField]
-        private Vector3 _Position = Vector3.zero;
-    }
-
-
-    public class AppNavigationWaypoints : SettingBehavior
+    [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.System_SettingBehavior)]
+    public class AppNavigationWaypointsCollection : SettingBehavior
     {
         #region Inspector
         [SerializeField]
         private LevelID _Level = LevelID.Invalid;
-        [SerializeField]
-        private AppNavigaitonWaypoint[] _Waypoints = null;
         #endregion
 
         #region Properties
-        public AppNavigaitonWaypoint[] Waypoints => _Waypoints;
+        public AppNavigaitonWaypointEntry[] Waypoints => _Waypoints;
         #endregion
 
         #region Fields
         private AppAstralLevelDatabase _RefLevelDatabase = null;
+        private AppNavigaitonWaypointEntry[] _Waypoints = null;
         #endregion
 
+        #region Methods
         private void Awake()
         {
+        }
+
+        private void Start()
+        {
+            _Waypoints = gameObject.GetComponentsInChildren<AppNavigaitonWaypointEntry>();
             _RefLevelDatabase = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(_Level));
             _RefLevelDatabase.Waypoints = this;
         }
@@ -49,5 +43,6 @@ namespace until.test
         {
             _RefLevelDatabase.Waypoints = null;
         }
+        #endregion
     }
 }

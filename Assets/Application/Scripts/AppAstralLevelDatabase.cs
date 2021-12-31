@@ -11,7 +11,7 @@ namespace until.test
     public class AppAstralLevelDatabase
     {
         public AppStageIdentifier Stage { get; set; } = null;
-        public AppNavigationWaypoints Waypoints { get; set; } = null;
+        public AppNavigationWaypointsCollection Waypoints { get; set; } = null;
 
         public AppAstralLevelDatabase()
         {
