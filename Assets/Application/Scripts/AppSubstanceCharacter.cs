@@ -37,11 +37,12 @@ namespace until.test
             RefNavMeshAgent = gameObject.GetComponent<NavMeshAgent>();
             if (RefNavMeshAgent != null)
             {
+                RefNavMeshAgent.isStopped = true;
                 RefNavMeshAgent.updatePosition = false;
                 RefNavMeshAgent.updateRotation = false;
             }
 
-            _AstralElement = new AstralElement(getCogitationOrigin()); // ※供給源を変更の予定
+            _AstralElement = new AstralElement(getCogitationOrigin());
             Singleton.AstralManager.regist(_AstralElement);
         }
 
@@ -59,8 +60,13 @@ namespace until.test
             set
             {
                 _Position = value;
-                gameObject.transform.position = _Position;
+                gameObject.transform.position = value;
             }
+        }
+
+        protected override void onWarp(Vector3 position)
+        {
+            _AstralElement.onWarp(position);
         }
         #endregion
 

@@ -9,7 +9,7 @@ namespace until.modules.astral
     public class AstralElement : AstralInterceptedable
     {
         #region Fields.
-        private AstralAction _CurrentAction = null;
+        public AstralAction _CurrentAction { get; private set; } = null;
         private AstralAction _NextAction = null;
         #endregion
 
@@ -47,6 +47,14 @@ namespace until.modules.astral
             _CurrentAction.onAstralActionEnd();
             _NextAction = _CurrentAction.getNextAstralAction();
             _CurrentAction = null;
+        }
+
+        public void onWarp(Vector3 position)
+        {
+            if (_CurrentAction != null)
+            {
+                _CurrentAction.onAstralWarp(position);
+            }
         }
 
         #region AstralInterceptable

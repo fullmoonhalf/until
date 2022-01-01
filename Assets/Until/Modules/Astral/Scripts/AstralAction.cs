@@ -17,5 +17,7 @@ namespace until.modules.astral
         public void onAstralActionEnd();
         /// <summary>次のアクションを取得する</summary>
         public AstralAction getNextAstralAction();
+        /// <summary>ワープ移動が発生した場合</summary>
+        public void onAstralWarp(Vector3 position);
     }
 }

@@ -32,6 +32,10 @@ namespace until.test
                 gameObject.transform.position = _Position;
             }
         }
+
+        protected override void onWarp(Vector3 position)
+        {
+        }
         #endregion
         #endregion
     }

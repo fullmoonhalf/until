@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using until.modules.astral;
 
 
@@ -44,10 +45,17 @@ namespace until.test
             return keep_alive;
         }
 
+        public virtual void onAstralWarp(Vector3 position)
+        {
+        }
+
         public abstract void onAstralActionStart();
-        public abstract bool onAstralNpcActionUpdate(float delta_time);
         public abstract void onAstralActionEnd();
         public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
+        #endregion
+
+        #region AstralNpcAction
+        public abstract bool onAstralNpcActionUpdate(float delta_time);
         #endregion
         #endregion
     }

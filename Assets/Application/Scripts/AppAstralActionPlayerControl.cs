@@ -51,6 +51,10 @@ namespace until.test
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
         {
         }
+
+        public override void onAstralWarp(Vector3 position)
+        {
+        }
         #endregion
 
 

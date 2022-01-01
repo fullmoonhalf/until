@@ -37,7 +37,7 @@ namespace until.test
         }
         public override bool onAstralNpcActionUpdate(float delta_time)
         {
-            if(_AttackTarget != null)
+            if (_AttackTarget != null)
             {
                 var gap = _AttackTarget.Position - RefSubstance.Position;
                 var distance = gap.magnitude;
@@ -80,6 +80,12 @@ namespace until.test
         {
             setNavMeshUpdate(null);
         }
+
+        public override void onAstralWarp(Vector3 position)
+        {
+            RefSubstance.Position = position;
+            setNavMeshUpdate(_TargetPosition);
+        }
         #endregion
 
         #region Action
@@ -95,9 +101,10 @@ namespace until.test
             }
             else
             {
+                RefSubstance.RefNavMeshAgent.Warp(RefSubstance.Position);
                 RefSubstance.RefNavMeshAgent.isStopped = false;
-                RefSubstance.RefNavMeshAgent.SetDestination(target.Value);
                 RefSubstance.RefNavMeshAgent.speed = _Speed;
+                RefSubstance.RefNavMeshAgent.SetDestination(target.Value);
             }
         }
 
