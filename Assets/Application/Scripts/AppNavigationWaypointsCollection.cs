@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEditor;
 using until.system;
 using until.develop;
+using until.utils.algorithm;
 
 
 namespace until.test
@@ -13,9 +15,71 @@ namespace until.test
     [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.System_SettingBehavior)]
     public class AppNavigationWaypointsCollection : SettingBehavior
     {
+        #region Defines
+        public class DijkstraInfo : DijkstraCondition
+        {
+            public DijkstraInfo(AppNavigaitonWaypointEntry[] waypoints)
+            {
+                _Waypoints = waypoints;
+                buildNeighborIndex();
+            }
+
+            public DijkstraInfo(DijkstraInfo template, int start, int goal)
+            {
+                _Waypoints = template._Waypoints;
+                _NeighbourIndecies = template._NeighbourIndecies;
+                Start = start;
+                Goal = goal;
+            }
+
+            private AppNavigaitonWaypointEntry[] _Waypoints;
+            private int[][] _NeighbourIndecies;
+
+            public int Start { get; private set; }
+            public int Goal { get; private set; }
+            public int EntityCount => _Waypoints.Length;
+
+
+            public float getLinkCost(int start, int end)
+            {
+                return 1.0f;
+            }
+            public int[] getNeighbours(int start)
+            {
+                return _NeighbourIndecies[start];
+            }
+
+            private void buildNeighborIndex()
+            {
+                var wayindecies = new Dictionary<AppNavigaitonWaypointEntry, int>();
+                for (int index = 0; index < _Waypoints.Length; ++index)
+                {
+                    var waypoint = _Waypoints[index];
+                    wayindecies.Add(waypoint, index);
+                }
+
+                _NeighbourIndecies = new int[_Waypoints.Length][];
+                for (int myself_index = 0; myself_index < _Waypoints.Length; ++myself_index)
+                {
+                    var neighbour = new List<int>();
+                    var myself_waypoint = _Waypoints[myself_index];
+                    for (int subidx = 0; subidx < myself_waypoint.NextPoint.Length; ++subidx)
+                    {
+                        var next_waypoint = myself_waypoint.NextPoint[subidx];
+                        var next_index = wayindecies[next_waypoint];
+                        neighbour.Add(next_index);
+                    }
+                    _NeighbourIndecies[myself_index] = neighbour.ToArray();
+                }
+            }
+        }
+        #endregion
+
         #region Inspector
         [SerializeField]
         private LevelID _Level = LevelID.Invalid;
+        [SerializeField]
+        private AppNavigaitonWaypointEntry[] _Waypoints = null;
         #endregion
 
         #region Properties
@@ -24,17 +88,17 @@ namespace until.test
 
         #region Fields
         private AppAstralLevelDatabase _RefLevelDatabase = null;
-        private AppNavigaitonWaypointEntry[] _Waypoints = null;
+        private DijkstraInfo _DijkstraFilterTemplate = null;
         #endregion
 
         #region Methods
         private void Awake()
         {
+            _DijkstraFilterTemplate = new DijkstraInfo(_Waypoints);
         }
 
         private void Start()
         {
-            _Waypoints = gameObject.GetComponentsInChildren<AppNavigaitonWaypointEntry>();
             _RefLevelDatabase = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(_Level));
             _RefLevelDatabase.Waypoints = this;
         }
@@ -47,17 +111,45 @@ namespace until.test
 
         #region Develop
 #if TEST
+
+        [SerializeField]
+        private int TestStart;
+        [SerializeField]
+        private int TestGoal;
+
+        [ContextMenu(nameof(test))]
+        private void test()
+        {
+            var filter = new DijkstraInfo(new DijkstraInfo(_Waypoints), TestStart, TestGoal);
+            var route = DijkstraResolver.resolve(filter);
+            if (route != null)
+            {
+                foreach (var node in route)
+                {
+                    Log.info(this, nameof(test), _Waypoints[node].gameObject.name);
+                }
+            }
+            else
+            {
+                Log.error(this, nameof(test), "Not Found");
+            }
+        }
+
         [ContextMenu(nameof(fixupLink))]
         private void fixupLink()
         {
-            // インデックスを決める
+            // undo buffer に積んでおく + インデックスを決める
             var waypoints = gameObject.GetComponentsInChildren<AppNavigaitonWaypointEntry>();
             var wayindecies = new Dictionary<AppNavigaitonWaypointEntry, int>();
-            foreach (var waypoint in waypoints)
+            var edit_targets = new UnityEngine.Object[waypoints.Length + 1];
+            for (int index = 0; index < waypoints.Length; ++index)
             {
-                var index = wayindecies.Count;
+                var waypoint = waypoints[index];
+                edit_targets[index] = waypoint;
                 wayindecies.Add(waypoint, index);
             }
+            edit_targets[waypoints.Length] = this;
+            Undo.RecordObjects(edit_targets, nameof(fixupLink));
 
             // リンク構造を決める
             var linkdb = new bool[waypoints.Length, waypoints.Length];
@@ -89,6 +181,13 @@ namespace until.test
 
                 var myself_waypoint = waypoints[myself];
                 myself_waypoint.NextPoint = neighbours.ToArray();
+            }
+
+            // 更新
+            _Waypoints = waypoints;
+            foreach (var edit_target in edit_targets)
+            {
+                EditorUtility.SetDirty(edit_target);
             }
         }
 #endif
