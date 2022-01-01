@@ -14,9 +14,9 @@ namespace until.modules.astral
         #endregion
 
         #region Methods.
-        public AstralElement(AstralAction action)
+        public AstralElement(AstralAction start_action)
         {
-            _NextAction = action;
+            _NextAction = start_action;
         }
 
         public void onAstralUpdate(float delta_time)

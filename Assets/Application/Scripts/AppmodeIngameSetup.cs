@@ -28,7 +28,7 @@ namespace until.test
         }
 
         private const int EnemyCount = 30;
-        private const int SquadCapacity = 4;
+        private const int SquadCapacity = 3;
         #endregion
 
         #region Fields.
@@ -87,23 +87,28 @@ namespace until.test
                     {
                         var local_db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
                         var waypoint_index = math.getRandomIndex(local_db.Waypoints.Waypoints.Length);
-                        var squad = new AppAstralOrganizationSquad(SquadCapacity);
+                        var squad = new AppAstralSquad(SquadCapacity);
                         Singleton.AstralOrganizationManager.regist(squad);
                         for (var index = 0; index < EnemyCount; ++index)
                         {
                             if (squad.Population >= squad.Capacity)
                             {
-                                squad = new AppAstralOrganizationSquad(SquadCapacity);
+                                squad = new AppAstralSquad(SquadCapacity);
                                 Singleton.AstralOrganizationManager.regist(squad);
                                 waypoint_index = math.getRandomIndex(local_db.Waypoints.Waypoints.Length);
                             }
                             var identifier = new GameEntitySerializableIdentifier($"{1 + index}");
-                            var substance = Singleton.SubstanceManager.get(identifier);
-                            squad.regist(substance);
-                            var pos = local_db.Waypoints.Waypoints[waypoint_index].Position;
-                            pos.x += math.getRandomRange(-3.0f, 3.0f);
-                            pos.z += math.getRandomRange(-3.0f, 3.0f);
-                            substance.warp(pos);
+                            var substance = Singleton.SubstanceManager.get(identifier) as AppSubstanceEnemy;
+                            if (substance != null)
+                            {
+                                var pos = local_db.Waypoints.Waypoints[waypoint_index].Position;
+                                pos.x += math.getRandomRange(-3.0f, 3.0f);
+                                pos.z += math.getRandomRange(-3.0f, 3.0f);
+                                substance.warp(pos);
+
+                                substance.bind(squad);
+                                squad.regist(substance);
+                            }
                         }
                         transit(Phase.Transit);
                     }

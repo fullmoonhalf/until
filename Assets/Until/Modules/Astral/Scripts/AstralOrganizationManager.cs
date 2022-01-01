@@ -11,7 +11,7 @@ namespace until.modules.astral
     public class AstralOrganizationManager : Singleton<AstralOrganizationManager>
     {
         #region Fields
-        private List<AstralOrganizationGroup> _GroupCollection = new List<AstralOrganizationGroup>();
+        private Dictionary<AstralOrganizationGroup, AstralElement> _GroupCollection = new Dictionary<AstralOrganizationGroup, AstralElement>();
         #endregion
 
         #region Methods
@@ -37,6 +37,10 @@ namespace until.modules.astral
 
         public void onUpdate(float delta_time)
         {
+            foreach (var element in _GroupCollection.Values)
+            {
+                element.onAstralUpdate(delta_time);
+            }
         }
 
         public void onDestroy()
@@ -47,7 +51,8 @@ namespace until.modules.astral
         #region Management
         public void regist(AstralOrganizationGroup group)
         {
-            _GroupCollection.Add(group);
+            var element = new AstralElement(group);
+            _GroupCollection.Add(group, element);
         }
 
         public void unregist(AstralOrganizationGroup group)

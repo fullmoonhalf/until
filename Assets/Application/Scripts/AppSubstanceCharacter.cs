@@ -11,7 +11,7 @@ namespace until.test
     public abstract class AppSubstanceCharacter : Substance
     {
         #region Definition
-        protected abstract AstralAction getCogitationOrigin();
+        public abstract AppAstralActionCogitation OriginCongitation { get; }
         #endregion
 
         #region Inspector
@@ -28,6 +28,8 @@ namespace until.test
         private Vector3 _Position = Vector3.zero;
         /// <summary>ナビエージェントへの参照</summary>
         public NavMeshAgent RefNavMeshAgent { get; private set; } = null;
+        /// <summary>所属グループ</summary>
+        private AppAstralSquad _BelongGroup = null;
         #endregion
 
         #region Methods
@@ -42,7 +44,7 @@ namespace until.test
                 RefNavMeshAgent.updateRotation = false;
             }
 
-            _AstralElement = new AstralElement(getCogitationOrigin());
+            _AstralElement = new AstralElement(OriginCongitation);
             Singleton.AstralManager.regist(_AstralElement);
         }
 
@@ -53,7 +55,7 @@ namespace until.test
         }
         #endregion
 
-        #region ISA
+        #region Control
         public override Vector3 Position
         {
             get => _Position;
@@ -67,6 +69,12 @@ namespace until.test
         protected override void onWarp(Vector3 position)
         {
             _AstralElement.onWarp(position);
+        }
+
+        public void bind(AppAstralSquad group)
+        {
+            _BelongGroup = group;
+            OriginCongitation.bind(group);
         }
         #endregion
 

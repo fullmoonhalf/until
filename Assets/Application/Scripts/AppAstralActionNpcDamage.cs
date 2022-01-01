@@ -13,8 +13,8 @@ namespace until.test
         #endregion
 
         #region Methods
-        public AppAstralActionNpcDamage(AppSubstanceCharacter substance, AppAstralActionNpcCogitation cogitation)
-             : base(substance, cogitation)
+        public AppAstralActionNpcDamage(AppSubstanceCharacter substance)
+             : base(substance)
         {
         }
 

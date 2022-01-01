@@ -18,8 +18,8 @@ namespace until.test
         #endregion
 
         #region Methods
-        public AppAstralActionNpcMove(AppSubstanceCharacter substance, AppAstralActionNpcCogitation cogitation, Vector3 target)
-             : base(substance, cogitation)
+        public AppAstralActionNpcMove(AppSubstanceCharacter substance, Vector3 target)
+             : base(substance)
         {
             _TargetPosition = target;
             _AttackTarget = Singleton.SubstanceManager.get(new GameEntitySerializableIdentifier("0"));
@@ -70,7 +70,7 @@ namespace until.test
         {
             if (TryToAttack)
             {
-                return new AppAstralActionNpcAttack(RefSubstance, RefCogitation, _AttackTarget);
+                return new AppAstralActionNpcAttack(RefSubstance, _AttackTarget);
             }
 
             return base.getNextAstralAction();
@@ -140,5 +140,14 @@ namespace until.test
         }
         #endregion
         #endregion
+    }
+
+
+    public class AppAstralActionNpcSquadMove : AppAstralActionNpcMove
+    {
+        public AppAstralActionNpcSquadMove(AppSubstanceCharacter substance, Vector3 target)
+            : base(substance, target)
+        {
+        }
     }
 }

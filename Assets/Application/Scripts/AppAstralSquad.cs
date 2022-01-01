@@ -10,47 +10,43 @@ using until.modules.gamefield;
 
 namespace until.test
 {
-    public class AppAstralOrganizationSquad : AstralOrganizationGroup
+    public class AppAstralSquad : AstralOrganizationGroup
     {
         #region Fields
-        private Substance[] _MemberList = null;
+        public Substance[] MemberList { get; private set; } = null;
         public int Capacity { get; private set; } = 0;
-        public int Population { get; private set; } = 0;
+        public int Population => _MemberCollection?.Count ?? 0;
+        private AppAstralSquadActionBase _CurrentAction = null;
+        private List<Substance> _MemberCollection = null;
         #endregion
 
-
         #region Methods
-        public AppAstralOrganizationSquad(int capacity)
+        public AppAstralSquad(int capacity)
         {
-            _MemberList = new Substance[capacity];
+            _MemberCollection = new List<Substance>(capacity);
+            MemberList = _MemberCollection.ToArray();
             Capacity = capacity;
         }
 
         #region Management
         public bool regist(Substance substance)
         {
-            for (int index = 0; index < Capacity; ++index)
+            if (_MemberCollection.Count >= Capacity)
             {
-                if (_MemberList[index] == null)
-                {
-                    _MemberList[index] = substance;
-                    ++Population;
-                    return true;
-                }
+                return false;
             }
-            return false;
+
+            _MemberCollection.Add(substance);
+            MemberList = _MemberCollection.ToArray();
+
+            return true;
         }
 
         public void unregist(Substance substance)
         {
-            for (int index = 0; index < Capacity; ++index)
+            if (_MemberCollection.Remove(substance))
             {
-                if (_MemberList[index] == substance)
-                {
-                    _MemberList[index] = null;
-                    --Population;
-                    break;
-                }
+                MemberList = _MemberCollection.ToArray();
             }
         }
         #endregion
@@ -71,7 +67,8 @@ namespace until.test
 
         public override AstralAction getNextAstralAction()
         {
-            return null;
+            _CurrentAction = new AppAstralSquadMove(this);
+            return _CurrentAction;
         }
 
         public override bool onAstralInterceptTry(AstralInterfereable interferer)
@@ -85,6 +82,17 @@ namespace until.test
 
         public override void onAstralWarp(Vector3 position)
         {
+        }
+        #endregion
+
+        #region AstralOrganizationGroup
+        public AstralAction getMemberAstralAction(AppSubstanceCharacter substance)
+        {
+            if (_CurrentAction != null)
+            {
+                return _CurrentAction.getMemberAstralAction(substance);
+            }
+            return null;
         }
         #endregion
         #endregion

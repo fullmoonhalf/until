@@ -14,31 +14,29 @@ namespace until.test
     {
         #region Fields
         protected AppSubstanceCharacter RefSubstance { get; private set; } = null;
-        protected AppAstralActionNpcCogitation RefCogitation { get; private set; } = null;
         #endregion
 
         #region Methods
-        public AppAstralActionNpcBase(AppSubstanceCharacter substance, AppAstralActionNpcCogitation cogitation)
+        public AppAstralActionNpcBase(AppSubstanceCharacter substance)
         {
             RefSubstance = substance;
-            RefCogitation = cogitation;
         }
 
         #region AstralAction
         public virtual AstralAction getNextAstralAction()
         {
-            return RefCogitation;
+            return RefSubstance.OriginCongitation;
         }
 
         public virtual bool onAstralInterceptTry(AstralInterfereable interferer)
         {
-            return RefCogitation.onAstralInterceptTry(interferer);
+            return RefSubstance.OriginCongitation.onAstralInterceptTry(interferer);
         }
 
         public bool onAstralActionUpdate(float delta_time)
         {
             var keep_alive = onAstralNpcActionUpdate(delta_time);
-            if (RefCogitation.Trapped)
+            if (RefSubstance.OriginCongitation.Trapped)
             {
                 keep_alive = false;
             }

@@ -18,8 +18,8 @@ namespace until.test
         #endregion
 
         #region Methods
-        public AppAstralActionNpcAttack(AppSubstanceCharacter substance, AppAstralActionNpcCogitation cogitation, Substance target)
-             : base(substance, cogitation)
+        public AppAstralActionNpcAttack(AppSubstanceCharacter substance, Substance target)
+             : base(substance)
         {
             _Target = target;
         }

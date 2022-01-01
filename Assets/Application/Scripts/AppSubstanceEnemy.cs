@@ -10,17 +10,18 @@ namespace until.test
     public class AppSubstanceEnemy : AppSubstanceCharacter
     {
         #region Fields.
-        private AppAstralActionNpcCogitation _OriginalCognition = null;
-        #endregion
-
-        #region Methods
-        #region AppSubstanceCharacter
-        protected override AstralAction getCogitationOrigin()
+        public override AppAstralActionCogitation OriginCongitation
         {
-            _OriginalCognition = new AppAstralActionNpcCogitation(this);
-            return _OriginalCognition;
+            get
+            {
+                if (_OriginCongitation == null)
+                {
+                    _OriginCongitation = new AppAstralActionNpcCogitation(this);
+                }
+                return _OriginCongitation;
+            }
         }
-        #endregion
+        private AppAstralActionNpcCogitation _OriginCongitation;
         #endregion
     }
 }

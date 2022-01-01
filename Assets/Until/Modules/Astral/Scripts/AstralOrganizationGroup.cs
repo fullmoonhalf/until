@@ -11,9 +11,6 @@ namespace until.modules.astral
 {
     public abstract class AstralOrganizationGroup : AstralAction
     {
-        #region Fiels
-        #endregion
-
         #region Methods
         #region AstralAction
         public abstract void onAstralActionEnd();
