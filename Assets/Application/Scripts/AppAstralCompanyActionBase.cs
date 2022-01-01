@@ -9,22 +9,22 @@ using until.modules.astral;
 
 namespace until.test
 {
-    public abstract class AppAstralSquadActionBase : AstralAction
+    public abstract class AppAstralCompanyActionBase : AstralAction
     {
         #region Fields
-        public AppAstralOrganizationSquad RefSquad { get; private set; } = null;
+        public AppAstralOrganizationCompany RefCompany { get; private set; } = null;
         #endregion
 
         #region Methods
-        public AppAstralSquadActionBase(AppAstralOrganizationSquad squad)
+        public AppAstralCompanyActionBase(AppAstralOrganizationCompany company)
         {
-            RefSquad = squad;
+            RefCompany = company;
         }
 
         #region AstralAction
         public AstralAction getNextAstralAction()
         {
-            return RefSquad.getNextAstralAction();
+            return RefCompany.getNextAstralAction();
         }
 
         public void onAstralWarp(Vector3 position)
@@ -39,7 +39,7 @@ namespace until.test
         #endregion
 
         #region Squad
-        public abstract AstralAction getMemberAstralAction(AppSubstanceCharacter substance);
+        public abstract AstralAction getSquadAstralAction(AppAstralOrganizationSquad squad);
         #endregion
         #endregion
     }

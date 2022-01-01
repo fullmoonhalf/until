@@ -11,7 +11,16 @@ namespace until.modules.astral
 {
     public abstract class AstralOrganizationGroup : AstralAction
     {
+        #region Properties
+        public AstralElement Element { get; private set; }
+        #endregion
+
         #region Methods
+        public void bind(AstralElement element)
+        {
+            Element = element;
+        }
+
         #region AstralAction
         public abstract void onAstralActionEnd();
         public abstract bool onAstralActionUpdate(float delta_time);

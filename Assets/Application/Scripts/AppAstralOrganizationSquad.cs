@@ -10,7 +10,7 @@ using until.modules.gamefield;
 
 namespace until.test
 {
-    public class AppAstralSquad : AstralOrganizationGroup
+    public class AppAstralOrganizationSquad : AstralOrganizationGroup
     {
         #region Fields
         public Substance[] MemberList { get; private set; } = null;
@@ -21,7 +21,7 @@ namespace until.test
         #endregion
 
         #region Methods
-        public AppAstralSquad(int capacity)
+        public AppAstralOrganizationSquad(int capacity)
         {
             _MemberCollection = new List<Substance>(capacity);
             MemberList = _MemberCollection.ToArray();

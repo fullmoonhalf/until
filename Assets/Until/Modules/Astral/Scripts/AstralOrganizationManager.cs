@@ -53,6 +53,7 @@ namespace until.modules.astral
         {
             var element = new AstralElement(group);
             _GroupCollection.Add(group, element);
+            group.bind(element);
         }
 
         public void unregist(AstralOrganizationGroup group)

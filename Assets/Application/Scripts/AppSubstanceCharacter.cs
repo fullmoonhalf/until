@@ -29,7 +29,7 @@ namespace until.test
         /// <summary>ナビエージェントへの参照</summary>
         public NavMeshAgent RefNavMeshAgent { get; private set; } = null;
         /// <summary>所属グループ</summary>
-        private AppAstralSquad _BelongGroup = null;
+        private AppAstralOrganizationSquad _BelongGroup = null;
         #endregion
 
         #region Methods
@@ -71,7 +71,7 @@ namespace until.test
             _AstralElement.onWarp(position);
         }
 
-        public void bind(AppAstralSquad group)
+        public void bind(AppAstralOrganizationSquad group)
         {
             _BelongGroup = group;
             OriginCongitation.bind(group);

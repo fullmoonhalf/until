@@ -18,11 +18,11 @@ namespace until.test
     {
         #region Fields
         public abstract bool Trapped { get; }
-        protected AppAstralSquad BelongGroup { get; private set; } = null;
+        protected AppAstralOrganizationSquad BelongGroup { get; private set; } = null;
         #endregion
 
         #region Methods
-        public void bind(AppAstralSquad group)
+        public void bind(AppAstralOrganizationSquad group)
         {
             BelongGroup = group;
         }

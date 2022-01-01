@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using until.modules.astral;
 using until.utils;
+using until.develop;
 
 
 namespace until.test
@@ -19,7 +20,7 @@ namespace until.test
         #endregion
 
         #region Methods
-        public AppAstralSquadMove(AppAstralSquad squad)
+        public AppAstralSquadMove(AppAstralOrganizationSquad squad)
             : base(squad)
         {
         }
@@ -57,6 +58,7 @@ namespace until.test
 
         public override bool onAstralInterceptTry(AstralInterfereable interferer)
         {
+            Log.info(this, nameof(onAstralInterceptTry));
             return false;
         }
 
@@ -75,7 +77,6 @@ namespace until.test
             return new AppAstralActionNpcSquadMove(substance, target);
         }
         #endregion
-
         #endregion
     }
 }

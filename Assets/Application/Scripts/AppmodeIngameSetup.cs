@@ -87,16 +87,26 @@ namespace until.test
                     {
                         var local_db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
                         var waypoint_index = math.getRandomIndex(local_db.Waypoints.Waypoints.Length);
-                        var squad = new AppAstralSquad(SquadCapacity);
-                        Singleton.AstralOrganizationManager.regist(squad);
+                        var company = new AppAstralOrganizationCompany();
+                        Singleton.AstralOrganizationManager.regist(company);
+                        AppAstralOrganizationSquad squad = null;
                         for (var index = 0; index < EnemyCount; ++index)
                         {
-                            if (squad.Population >= squad.Capacity)
+                            if (squad != null)
                             {
-                                squad = new AppAstralSquad(SquadCapacity);
+                                if (squad.Population >= squad.Capacity)
+                                {
+                                    squad = null;
+                                }
+                            }
+                            if (squad == null)
+                            {
+                                squad = new AppAstralOrganizationSquad(SquadCapacity);
+                                company.regist(squad);
                                 Singleton.AstralOrganizationManager.regist(squad);
                                 waypoint_index = math.getRandomIndex(local_db.Waypoints.Waypoints.Length);
                             }
+
                             var identifier = new GameEntitySerializableIdentifier($"{1 + index}");
                             var substance = Singleton.SubstanceManager.get(identifier) as AppSubstanceEnemy;
                             if (substance != null)
