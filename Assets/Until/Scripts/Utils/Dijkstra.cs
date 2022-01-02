@@ -21,6 +21,11 @@ namespace until.utils.algorithm
             {
                 Index = index;
             }
+
+            public override string ToString()
+            {
+                return $"{base.ToString()} ({Index}, {Cost})";
+            }
         }
 
         private class Context
@@ -85,26 +90,26 @@ namespace until.utils.algorithm
         }
 
         #region Methods
-        public static int[] resolve(DijkstraCondition filter)
+        public static int[] resolvePath(DijkstraCondition condition)
         {
             // 探査
-            var context = new Context(filter.EntityCount);
-            var start_node = context.enqueue(filter.Goal);
+            var context = new Context(condition.EntityCount);
+            var start_node = context.enqueue(condition.Goal);
             var found = false;
             start_node.Cost = 0.0f;
             while (context.hasSearchNode)
             {
                 var search_node = context.dequeue();
-                if (search_node.Index == filter.Start)
+                if (search_node.Index == condition.Start)
                 {
                     found = true;
                     break;
                 }
-                var neighbours = filter.getNeighbours(search_node.Index);
+                var neighbours = condition.getNeighbours(search_node.Index);
                 foreach (var neighbour_index in neighbours)
                 {
                     var neighbour_node = context.enqueue(neighbour_index);
-                    var neighbour_cost = search_node.Cost + filter.getLinkCost(search_node.Index, neighbour_index);
+                    var neighbour_cost = search_node.Cost + condition.getLinkCost(search_node.Index, neighbour_index);
                     if (neighbour_node.Cost > neighbour_cost)
                     {
                         neighbour_node.Cost = neighbour_cost;
@@ -119,12 +124,12 @@ namespace until.utils.algorithm
             }
 
             var answer = new List<int>();
-            var node = context.Nodes[filter.Start];
+            var node = context.Nodes[condition.Start];
             while (node != null)
             {
                 answer.Add(node.Index);
                 var cost_min = node.Cost;
-                var neighbours = filter.getNeighbours(node.Index);
+                var neighbours = condition.getNeighbours(node.Index);
                 node = null;
                 if (neighbours != null)
                 {
@@ -141,6 +146,57 @@ namespace until.utils.algorithm
             }
 
             return answer.ToArray();
+        }
+
+
+        private static Context resolveAllCostSearch(DijkstraCondition condition)
+        {
+            // 探査
+            var context = new Context(condition.EntityCount);
+            var start_node = context.enqueue(condition.Start);
+            start_node.Cost = 0.0f;
+            while (context.hasSearchNode)
+            {
+                var search_node = context.dequeue();
+                var neighbours = condition.getNeighbours(search_node.Index);
+                foreach (var neighbour_index in neighbours)
+                {
+                    var neighbour_node = context.enqueue(neighbour_index);
+                    var neighbour_cost = search_node.Cost + condition.getLinkCost(search_node.Index, neighbour_index);
+                    if (neighbour_node.Cost > neighbour_cost)
+                    {
+                        neighbour_node.Cost = neighbour_cost;
+                    }
+                }
+            }
+            return context;
+        }
+
+
+        public static float[] resolveAllCost(DijkstraCondition condition)
+        {
+            var context = resolveAllCostSearch(condition);
+            var cost_list = new float[condition.EntityCount];
+            for (int index = 0; index < condition.EntityCount; ++index)
+            {
+                cost_list[index] = context.Nodes[index].Cost;
+            }
+            return cost_list;
+        }
+
+
+        public static int[] resolveNearestIndexList(DijkstraCondition condition)
+        {
+            var context = resolveAllCostSearch(condition);
+            var list = new List<Node>(context.Nodes);
+            list.Sort((a, b) => Math.Sign(a.Cost - b.Cost));
+
+            var indecies = new int[list.Count];
+            for (int index = 0; index < list.Count; ++index)
+            {
+                indecies[index] = list[index].Index;
+            }
+            return indecies;
         }
         #endregion
     }

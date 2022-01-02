@@ -28,7 +28,7 @@ namespace until.test
             return RefSubstance.OriginCongitation;
         }
 
-        public virtual bool onAstralInterceptTry(AstralInterfereable interferer)
+        public virtual AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
             return RefSubstance.OriginCongitation.onAstralInterceptTry(interferer);
         }

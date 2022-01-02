@@ -71,15 +71,23 @@ namespace until.test
         {
         }
 
-        public override bool onAstralInterceptTry(AstralInterfereable interferer)
+        public override AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
-            if (interferer is AppAstralInterfererBullet)
+            switch (interferer)
             {
-                _NextAction = new AppAstralActionNpcDamage(RefSubstance);
-                return false;
+                case AppAstralInterfererBullet bullet:
+                    {
+                        _NextAction = new AppAstralActionNpcDamage(RefSubstance);
+                        return AstralInterceptResult.Cancel_Through;
+                    }
+                case AppAstralInterfererOnCombatSectorUpdate onCombatSectorUpdate:
+                    {
+                        _NextAction = getNextAstralAction();
+                        return AstralInterceptResult.Cancel_Through;
+                    }
             }
 
-            return false;
+            return AstralInterceptResult.Cancel_Through;
         }
 
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)

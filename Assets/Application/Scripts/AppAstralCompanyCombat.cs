@@ -3,15 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using until.modules.astral;
 using until.modules.gamefield;
 using until.modules.gamemaster;
+using until.develop;
 
 
 namespace until.test
 {
     public class AppAstralCompanyCombat : AppAstralCompanyActionBase
     {
+        #region Definition
+        private class BattleOrder
+        {
+            public AppAstralOrganizationSquad Squad;
+            public Vector3 PositionZero;
+            public int TargetSector = -1;
+
+            public BattleOrder(AppAstralOrganizationSquad squad)
+            {
+                Squad = squad;
+            }
+        }
+        private class BattleOrderSolver
+        {
+            public BattleOrder[] BattleOrderList = null;
+
+            public BattleOrderSolver(AppAstralOrganizationSquad[] squad_list, Vector3 position)
+            {
+                var list = new List<BattleOrder>(squad_list.Length);
+                for (int index = 0; index < squad_list.Length; ++index)
+                {
+                    var order = new BattleOrder(squad_list[index]);
+                    order.PositionZero = order.Squad.getPositionZero();
+                    list.Add(order);
+                }
+                BattleOrderList = list.ToArray();
+            }
+        }
+        #endregion
+
         #region Fields
         private AppAstralLevelDatabase _LevelDatabase = null;
         private Substance _RefPlayer = null;
@@ -35,10 +67,39 @@ namespace until.test
         {
             if (updatePlayerSectorInfo())
             {
-                var interferer = new AppAstralInterfererOnCombatSectorUpdate();
-                foreach (var squad in RefCompany.SquadList)
+                var waypoints = _LevelDatabase.Waypoints.getWaypointsNearestList(_PlayerSector);
+                var solver = new BattleOrderSolver(RefCompany.SquadList, _RefPlayer.Position);
+
+                for (int waypoints_order = 0; waypoints_order < waypoints.Length; ++waypoints_order)
                 {
-                    Singleton.AstralManager.interfere(interferer, squad.Element);
+                    var waypoint_sector = waypoints[waypoints_order];
+                    var waypoint_position = _LevelDatabase.Waypoints.Waypoints[waypoint_sector].Position;
+                    var min_distance = float.MaxValue;
+                    BattleOrder selected_squad = null;
+                    for (int squad_index = 0; squad_index < solver.BattleOrderList.Length; ++squad_index)
+                    {
+                        var order = solver.BattleOrderList[squad_index];
+                        if (order.TargetSector < 0)
+                        {
+                            var distance = Vector3.Distance(order.PositionZero, waypoint_position);
+                            if (min_distance > distance)
+                            {
+                                min_distance = distance;
+                                selected_squad = order;
+                            }
+                        }
+                    }
+                    if (selected_squad != null)
+                    {
+                        selected_squad.TargetSector = waypoint_sector;
+                    }
+                }
+
+                for (int index = 0; index < solver.BattleOrderList.Length; ++index)
+                {
+                    var order = solver.BattleOrderList[index];
+                    var interferer = new AppAstralInterfererOnCombatSectorUpdate(order.TargetSector);
+                    Singleton.AstralManager.interfere(interferer, order.Squad.Element);
                 }
             }
             return true;
@@ -52,9 +113,9 @@ namespace until.test
         {
         }
 
-        public override bool onAstralInterceptTry(AstralInterfereable interferer)
+        public override AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
-            return false;
+            return AstralInterceptResult.Cancel_Through;
         }
 
         public override AstralAction getSquadAstralAction(AppAstralOrganizationSquad squad)
@@ -76,18 +137,7 @@ namespace until.test
             }
 
             var previous = _PlayerSector;
-            var min_distance = float.MaxValue;
-            for (int index = 0; index < _LevelDatabase.Waypoints.Waypoints.Length; ++index)
-            {
-                var waypoint = _LevelDatabase.Waypoints.Waypoints[index];
-                var gap = waypoint.Position - _RefPlayer.Position;
-                var distance = gap.magnitude;
-                if (min_distance > distance)
-                {
-                    min_distance = distance;
-                    _PlayerSector = index;
-                }
-            }
+            _PlayerSector = _LevelDatabase.Waypoints.getNearestWaypoint(_RefPlayer.Position);
             return previous != _PlayerSector;
         }
         #endregion

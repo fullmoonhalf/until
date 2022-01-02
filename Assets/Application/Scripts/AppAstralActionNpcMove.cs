@@ -37,6 +37,7 @@ namespace until.test
         }
         public override bool onAstralNpcActionUpdate(float delta_time)
         {
+#if false
             if (_AttackTarget != null)
             {
                 var gap = _AttackTarget.Position - RefSubstance.Position;
@@ -50,10 +51,12 @@ namespace until.test
                     }
                 }
             }
+#endif
 
             if (RefSubstance.RefNavMeshAgent != null)
             {
-                return navimove(delta_time);
+                return linermove(delta_time);
+//                return navimove(delta_time);
             }
             else
             {
@@ -105,6 +108,7 @@ namespace until.test
                 RefSubstance.RefNavMeshAgent.isStopped = false;
                 RefSubstance.RefNavMeshAgent.speed = _Speed;
                 RefSubstance.RefNavMeshAgent.SetDestination(target.Value);
+                Log.info(this, nameof(setNavMeshUpdate), RefSubstance.gameObject.name, target.Value);
             }
         }
 

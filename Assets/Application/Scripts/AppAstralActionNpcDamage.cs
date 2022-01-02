@@ -34,9 +34,9 @@ namespace until.test
             Log.info(this, nameof(onAstralActionEnd));
         }
 
-        public override bool onAstralInterceptTry(AstralInterfereable interferer)
+        public override AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
-            return false;
+            return AstralInterceptResult.Cancel_Through;
         }
 
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)

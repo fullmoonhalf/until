@@ -10,6 +10,16 @@ namespace until.test
 {
     public class AppAstralInterfererOnCombatSectorUpdate : AstralInterfereable
     {
+        #region Property
+        public int SectorID { get; private set; }
+        #endregion
+
+        #region Method
+        public AppAstralInterfererOnCombatSectorUpdate(int sector)
+        {
+            SectorID = sector;
+        }
+
         #region AstralInterfereable
         public void onAcceptInterference()
         {
@@ -18,6 +28,7 @@ namespace until.test
         public void onRejectInterference()
         {
         }
+        #endregion
         #endregion
     }
 }

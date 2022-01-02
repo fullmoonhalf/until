@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using until.system;
+using until.develop;
 
 
 namespace until.modules.astral
@@ -56,19 +57,23 @@ namespace until.modules.astral
         public void onUpdate(float delta_time)
         {
             // interfere の処理
-            foreach (var context in _InterfereList)
+            var interferes = _InterfereList.ToArray();
+            _InterfereList.Clear();
+            foreach (var context in interferes)
             {
-                if (context.Target.onAstralInterceptTry(context.Source))
+                Log.info(this, nameof(onUpdate), context.Source, context.Target);
+                switch (context.Target.onAstralInterceptTry(context.Source))
                 {
-                    context.Target.onAstralInterceptEstablished(context.Source);
-                    context.Source.onAcceptInterference();
-                }
-                else
-                {
-                    context.Source.onRejectInterference();
+                    case AstralInterceptResult.Cancel_Through:
+                    case AstralInterceptResult.Cancel_ActionEnd:
+                        context.Source.onRejectInterference();
+                        break;
+                    case AstralInterceptResult.Establish:
+                        context.Target.onAstralInterceptEstablished(context.Source);
+                        context.Source.onAcceptInterference();
+                        break;
                 }
             }
-            _InterfereList.Clear();
 
             // アップデートの更新
             foreach (var element in _ElementsCollection)

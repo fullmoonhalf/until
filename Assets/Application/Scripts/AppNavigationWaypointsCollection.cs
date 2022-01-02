@@ -92,6 +92,7 @@ namespace until.test
         #endregion
 
         #region Methods
+        #region Behavior
         private void Awake()
         {
             _DijkstraFilterTemplate = new DijkstraInfo(_Waypoints);
@@ -109,6 +110,55 @@ namespace until.test
         }
         #endregion
 
+        #region Path Finding.
+        public int[] getPath(int start, int goal)
+        {
+            var filter = new DijkstraInfo(_DijkstraFilterTemplate, start, goal);
+            return DijkstraResolver.resolvePath(filter);
+        }
+
+        public float[] getAllCost(int start)
+        {
+            var filter = new DijkstraInfo(_DijkstraFilterTemplate, start, 0);
+            return DijkstraResolver.resolveAllCost(filter);
+        }
+
+        public int[] getWaypointsNearestList(int start)
+        {
+            var filter = new DijkstraInfo(_DijkstraFilterTemplate, start, 0);
+            return DijkstraResolver.resolveNearestIndexList(filter);
+        }
+
+        public int getNearestWaypoint(Vector3 position)
+        {
+            var nearest = -1;
+            var min_distance = float.MaxValue;
+            for (int index = 0; index < Waypoints.Length; ++index)
+            {
+                var waypoint = Waypoints[index];
+                var gap = waypoint.Position - position;
+                var distance = gap.magnitude;
+                if (min_distance > distance)
+                {
+                    min_distance = distance;
+                    nearest = index;
+                }
+            }
+            return nearest;
+        }
+        #endregion
+
+        #region MyRegion
+        public Vector3? getSectorPosition(int sector)
+        {
+            if (Waypoints != null && Waypoints.Length > 0)
+            {
+                return Waypoints[sector].Position;
+            }
+            return null;
+        }
+        #endregion
+
         #region Develop
 #if TEST
 
@@ -120,8 +170,7 @@ namespace until.test
         [ContextMenu(nameof(test))]
         private void test()
         {
-            var filter = new DijkstraInfo(new DijkstraInfo(_Waypoints), TestStart, TestGoal);
-            var route = DijkstraResolver.resolve(filter);
+            var route = getPath(TestStart, TestGoal);
             if (route != null)
             {
                 foreach (var node in route)
@@ -139,6 +188,7 @@ namespace until.test
         private void fixupLink()
         {
             // undo buffer に積んでおく + インデックスを決める
+            var filter = new DijkstraInfo(new DijkstraInfo(_Waypoints), TestStart, TestGoal);
             var waypoints = gameObject.GetComponentsInChildren<AppNavigaitonWaypointEntry>();
             var wayindecies = new Dictionary<AppNavigaitonWaypointEntry, int>();
             var edit_targets = new UnityEngine.Object[waypoints.Length + 1];
@@ -191,6 +241,7 @@ namespace until.test
             }
         }
 #endif
+        #endregion
         #endregion
     }
 }

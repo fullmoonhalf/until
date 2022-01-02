@@ -44,6 +44,11 @@ namespace until.modules.astral
                 return;
             }
 
+            execActionEnd();
+        }
+
+        private void execActionEnd()
+        {
             _CurrentAction.onAstralActionEnd();
             _NextAction = _CurrentAction.getNextAstralAction();
             _CurrentAction = null;
@@ -58,13 +63,18 @@ namespace until.modules.astral
         }
 
         #region AstralInterceptable
-        public bool onAstralInterceptTry(AstralInterfereable interferer)
+        public AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
             if (_CurrentAction != null)
             {
-                return _CurrentAction.onAstralInterceptTry(interferer);
+                var result = _CurrentAction.onAstralInterceptTry(interferer);
+                if(result == AstralInterceptResult.Cancel_ActionEnd)
+                {
+                    execActionEnd();
+                }
+                return result;
             }
-            return false;
+            return AstralInterceptResult.Cancel_Through;
         }
 
         public void onAstralInterceptEstablished(AstralInterfereable interferer)
