@@ -8,7 +8,7 @@ using until.modules.astral;
 namespace until.test
 {
     [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.GameField_Substance)]
-    public abstract class AppSubstanceCharacter : Substance
+    public abstract class AppSubstanceCharacter : Substance, AstralInterceptedable
     {
         #region Definition
         public abstract AppAstralActionCogitation OriginCongitation { get; }
@@ -44,7 +44,7 @@ namespace until.test
                 RefNavMeshAgent.updateRotation = false;
             }
 
-            _AstralElement = new AstralElement(OriginCongitation);
+            _AstralElement = new AstralElement(OriginCongitation, this);
             Singleton.AstralManager.regist(_AstralElement);
         }
 
@@ -85,6 +85,18 @@ namespace until.test
             {
                 Singleton.AstralManager.interfere(interferer, _AstralElement);
             }
+        }
+        #endregion
+
+        #region AstralInterceptedable
+        public AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
+        {
+            return OriginCongitation.onAstralInterceptTry(interferer);
+        }
+
+        public void onAstralInterceptEstablished(AstralInterfereable interferer)
+        {
+            OriginCongitation.onAstralInterceptEstablished(interferer);
         }
         #endregion
         #endregion

@@ -18,7 +18,8 @@ namespace until.test
         public int Population => _MemberCollection?.Count ?? 0;
         private AppAstralSquadActionBase _CurrentAction = null;
         private List<AppSubstanceCharacter> _MemberCollection = null;
-        private int _TargetSection = -1;
+        private int[] _Route = null;
+        private int _RouteIndex = -1;
         #endregion
 
         #region Methods
@@ -111,7 +112,11 @@ namespace until.test
 
         public override AstralAction getNextAstralAction()
         {
-            _CurrentAction = new AppAstralSquadMove(this, _TargetSection);
+            _CurrentAction = new AppAstralSquadMove(this, _Route, _RouteIndex);
+            if (_Route != null)
+            {
+                _RouteIndex = _Route.Length - 1;
+            }
             return _CurrentAction;
         }
 
@@ -121,13 +126,11 @@ namespace until.test
             {
                 case AppAstralInterfererOnCombatSectorUpdate onCombatSectorUpdate:
                     {
-                        _TargetSection = onCombatSectorUpdate.SectorID;
-                        if (_TargetSection >= 0)
+                        _Route = onCombatSectorUpdate.Route;
+                        _RouteIndex = _Route.Length > 1 ? 1 : 0;
+                        foreach (var member in MemberList)
                         {
-                            foreach (var member in MemberList)
-                            {
-                                member.interfere(interferer);
-                            }
+                            member.interfere(interferer);
                         }
                     }
                     return AstralInterceptResult.Cancel_ActionEnd;

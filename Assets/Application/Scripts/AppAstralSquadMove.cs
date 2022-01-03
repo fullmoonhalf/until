@@ -17,20 +17,27 @@ namespace until.test
         private Vector3 _TargetPosition = Vector3.zero;
         private float _Range = 2.0f;
         private float _RandomRange = 1.0f;
+        private int[] _SectorRoute = null;
+        private int _SectorIndex = 0;
+        private AppAstralLevelDatabase _LocalDB = null;
         #endregion
 
         #region Methods
-        public AppAstralSquadMove(AppAstralOrganizationSquad squad, int target_sector)
+        public AppAstralSquadMove(AppAstralOrganizationSquad squad, int[] sector_route, int start_index)
             : base(squad)
         {
-            var db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
-            if (target_sector < 0)
+            _LocalDB = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
+            if (sector_route != null)
             {
-                target_sector = math.getRandomIndex(db.Waypoints.Waypoints.Length);
+                _SectorRoute = sector_route;
+                _SectorIndex = start_index;
+                var sector_position = _LocalDB.Waypoints.getSectorPosition(_SectorRoute[_SectorIndex]);
+                _TargetPosition = sector_position.Value;
             }
-            var sector_position = db.Waypoints.getSectorPosition(target_sector);
-            if (sector_position != null)
+            else
             {
+                var target_sector = math.getRandomIndex(_LocalDB.Waypoints.Waypoints.Length);
+                var sector_position = _LocalDB.Waypoints.getSectorPosition(target_sector);
                 _TargetPosition = sector_position.Value;
             }
         }
@@ -47,16 +54,37 @@ namespace until.test
 
         public override bool onAstralActionUpdate(float delta_time)
         {
+            if (checkArrival())
+            {
+                if (_SectorRoute == null)
+                {
+                    return false;
+                }
+                _SectorIndex++;
+                if (_SectorIndex >= _SectorRoute.Length)
+                {
+                    return false;
+                }
+
+                var sector_position = _LocalDB.Waypoints.getSectorPosition(_SectorRoute[_SectorIndex]);
+                _TargetPosition = sector_position.Value;
+            }
+
+            return true;
+        }
+
+        private bool checkArrival()
+        {
             foreach (var member in RefSquad.MemberList)
             {
                 var gap = member.Position - _TargetPosition;
                 if (gap.magnitude > _Range)
                 {
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         }
 
         public override void onAstralActionEnd()
@@ -73,8 +101,8 @@ namespace until.test
         public override AstralAction getMemberAstralAction(AppSubstanceCharacter substance)
         {
             var target = _TargetPosition;
-            //target.x += math.getRandomRange(-_RandomRange, _RandomRange);
-            //target.z += math.getRandomRange(-_RandomRange, _RandomRange);
+            target.x += math.getRandomRange(-_RandomRange, _RandomRange);
+            target.z += math.getRandomRange(-_RandomRange, _RandomRange);
             return new AppAstralActionNpcSquadMove(substance, target);
         }
         #endregion

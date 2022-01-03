@@ -55,8 +55,7 @@ namespace until.test
 
             if (RefSubstance.RefNavMeshAgent != null)
             {
-                return linermove(delta_time);
-//                return navimove(delta_time);
+                return navimove(delta_time);
             }
             else
             {

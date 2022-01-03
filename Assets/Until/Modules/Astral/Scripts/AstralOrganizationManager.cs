@@ -51,7 +51,7 @@ namespace until.modules.astral
         #region Management
         public void regist(AstralOrganizationGroup group)
         {
-            var element = new AstralElement(group);
+            var element = new AstralElement(group, group);
             _GroupCollection.Add(group, element);
             group.bind(element);
         }

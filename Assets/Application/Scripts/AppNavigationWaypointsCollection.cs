@@ -84,18 +84,19 @@ namespace until.test
 
         #region Properties
         public AppNavigaitonWaypointEntry[] Waypoints => _Waypoints;
+        public DijkstraCondition DijkstraConditionTemplate => _DijkstraConditionTemplate;
         #endregion
 
         #region Fields
         private AppAstralLevelDatabase _RefLevelDatabase = null;
-        private DijkstraInfo _DijkstraFilterTemplate = null;
+        private DijkstraInfo _DijkstraConditionTemplate = null;
         #endregion
 
         #region Methods
         #region Behavior
         private void Awake()
         {
-            _DijkstraFilterTemplate = new DijkstraInfo(_Waypoints);
+            _DijkstraConditionTemplate = new DijkstraInfo(_Waypoints);
         }
 
         private void Start()
@@ -113,19 +114,19 @@ namespace until.test
         #region Path Finding.
         public int[] getPath(int start, int goal)
         {
-            var filter = new DijkstraInfo(_DijkstraFilterTemplate, start, goal);
+            var filter = new DijkstraInfo(_DijkstraConditionTemplate, start, goal);
             return DijkstraResolver.resolvePath(filter);
         }
 
         public float[] getAllCost(int start)
         {
-            var filter = new DijkstraInfo(_DijkstraFilterTemplate, start, 0);
+            var filter = new DijkstraInfo(_DijkstraConditionTemplate, start, 0);
             return DijkstraResolver.resolveAllCost(filter);
         }
 
         public int[] getWaypointsNearestList(int start)
         {
-            var filter = new DijkstraInfo(_DijkstraFilterTemplate, start, 0);
+            var filter = new DijkstraInfo(_DijkstraConditionTemplate, start, 0);
             return DijkstraResolver.resolveNearestIndexList(filter);
         }
 

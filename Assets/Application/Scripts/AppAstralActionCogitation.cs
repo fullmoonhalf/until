@@ -22,10 +22,12 @@ namespace until.test
         #endregion
 
         #region Methods
+        #region bind
         public void bind(AppAstralOrganizationSquad group)
         {
             BelongGroup = group;
         }
+        #endregion
 
         #region AstralAction
         public abstract void onAstralActionStart();

@@ -11,13 +11,13 @@ namespace until.test
     public class AppAstralInterfererOnCombatSectorUpdate : AstralInterfereable
     {
         #region Property
-        public int SectorID { get; private set; }
+        public int[] Route { get; private set; }
         #endregion
 
         #region Method
-        public AppAstralInterfererOnCombatSectorUpdate(int sector)
+        public AppAstralInterfererOnCombatSectorUpdate(int[] route)
         {
-            SectorID = sector;
+            Route = route;
         }
 
         #region AstralInterfereable
