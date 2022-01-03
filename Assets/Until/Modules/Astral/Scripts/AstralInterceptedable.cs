@@ -7,12 +7,19 @@ using System.Threading.Tasks;
 
 namespace until.modules.astral
 {
+    public enum AstralInterceptResult
+    {
+        Cancel_Through,
+        Cancel_ActionEnd,
+        Establish,
+    }
+
     /// <summary>
     /// 妨害される側
     /// </summary>
     public interface AstralInterceptedable
     {
-        public bool onAstralInterceptTry(AstralInterfereable interferer);
+        public AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer);
         public void onAstralInterceptEstablished(AstralInterfereable interferer);
     }
 }

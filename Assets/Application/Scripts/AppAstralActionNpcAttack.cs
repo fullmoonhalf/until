@@ -18,8 +18,8 @@ namespace until.test
         #endregion
 
         #region Methods
-        public AppAstralActionNpcAttack(AppSubstanceCharacter substance, AppAstralActionNpcCogitation cogitation, Substance target)
-             : base(substance, cogitation)
+        public AppAstralActionNpcAttack(AppSubstanceCharacter substance, Substance target)
+             : base(substance)
         {
             _Target = target;
         }
@@ -81,9 +81,9 @@ namespace until.test
         {
         }
 
-        public override bool onAstralInterceptTry(AstralInterfereable interferer)
+        public override AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
-            return false;
+            return AstralInterceptResult.Cancel_Through;
         }
 
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)

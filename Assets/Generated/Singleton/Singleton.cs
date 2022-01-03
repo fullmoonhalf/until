@@ -16,6 +16,7 @@ public static until.modules.gamefield.SubstanceManager SubstanceManager = until.
 public static until.modules.camera.CameraManager CameraManager = until.modules.camera.CameraManager.Instance;
 public static until.modules.bullet.BulletManager BulletManager = until.modules.bullet.BulletManager.Instance;
 public static until.modules.astral.AstralManager AstralManager = until.modules.astral.AstralManager.Instance;
+public static until.modules.astral.AstralOrganizationManager AstralOrganizationManager = until.modules.astral.AstralOrganizationManager.Instance;
 public static until.modules.gamemaster.GameMaster GameMaster = until.modules.gamemaster.GameMaster.Instance;
 public static until.test.AppAstralWorldDatabase AppAstralWorldDatabase = until.test.AppAstralWorldDatabase.Instance;
 

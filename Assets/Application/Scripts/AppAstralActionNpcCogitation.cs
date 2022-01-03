@@ -11,10 +11,10 @@ using until.utils;
 
 namespace until.test
 {
-    public class AppAstralActionNpcCogitation : AstralAction
+    public class AppAstralActionNpcCogitation : AppAstralActionCogitation
     {
         #region Fields
-        public bool Trapped => _NextAction != null;
+        public override bool Trapped => _NextAction != null;
         protected AppSubstanceCharacter RefSubstance { get; private set; } = null;
         private AstralAction _NextAction = null;
         #endregion
@@ -26,51 +26,75 @@ namespace until.test
         }
 
         #region AstralAction
-        public AstralAction getNextAstralAction()
+        public override AstralAction getNextAstralAction()
         {
             var next_action = _NextAction;
-            if (next_action == null)
+            if (next_action != null)
             {
-                var x = math.getRandomRange(-3.0f, 3.0f);
-                var z = math.getRandomRange(-3.0f, 3.0f);
-                var pos = new Vector3(x, 0.0f, z);
-                var db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
-                if (db != null && db.Waypoints != null && db.Waypoints.Waypoints.Length > 0)
-                {
-                    var index = math.getRandomIndex(db.Waypoints.Waypoints.Length);
-                    pos += db.Waypoints.Waypoints[index].Position;
-                }
-
-                next_action = new AppAstralActionNpcMove(RefSubstance, this, pos);
+                _NextAction = null;
+                return next_action;
             }
 
-            _NextAction = null;
+            // グループ指示による行動選択
+            if (BelongGroup != null)
+            {
+                next_action = BelongGroup.getMemberAstralAction(RefSubstance);
+                if (next_action != null)
+                {
+                    return next_action;
+                }
+            }
+
+            // 単体での行動選択
+            var x = math.getRandomRange(-3.0f, 3.0f);
+            var z = math.getRandomRange(-3.0f, 3.0f);
+            var pos = new Vector3(x, 0.0f, z);
+            var db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
+            if (db != null && db.Waypoints != null && db.Waypoints.Waypoints.Length > 0)
+            {
+                var index = math.getRandomIndex(db.Waypoints.Waypoints.Length);
+                pos += db.Waypoints.Waypoints[index].Position;
+            }
+
+            next_action = new AppAstralActionNpcMove(RefSubstance, pos);
             return next_action;
         }
 
-        public void onAstralActionStart()
+        public override void onAstralActionStart()
         {
         }
-        public bool onAstralActionUpdate(float delta_time)
+        public override bool onAstralActionUpdate(float delta_time)
         {
             return false;
         }
-        public void onAstralActionEnd()
+        public override void onAstralActionEnd()
         {
         }
 
-        public bool onAstralInterceptTry(AstralInterfereable interferer)
+        public override AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
-            if (interferer is AppAstralInterfererBullet)
+            switch (interferer)
             {
-                _NextAction = new AppAstralActionNpcDamage(RefSubstance, this);
-                return false;
+                case AppAstralInterfererBullet bullet:
+                    {
+                        _NextAction = new AppAstralActionNpcDamage(RefSubstance);
+                        return AstralInterceptResult.Cancel_Through;
+                    }
+                case AppAstralInterfererOnCombatSectorUpdate onCombatSectorUpdate:
+                    {
+                        _NextAction = getNextAstralAction();
+                        return AstralInterceptResult.Cancel_Through;
+                    }
             }
 
-            return false;
+            return AstralInterceptResult.Cancel_Through;
         }
 
-        public void onAstralInterceptEstablished(AstralInterfereable interferer)
+        public override void onAstralInterceptEstablished(AstralInterfereable interferer)
+        {
+        }
+
+        public override void onAstralWarp(Vector3 position)
         {
         }
         #endregion

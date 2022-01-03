@@ -43,12 +43,16 @@ namespace until.test
         {
         }
 
-        public override bool onAstralInterceptTry(AstralInterfereable interferer)
+        public override AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
-            return false;
+            return AstralInterceptResult.Cancel_Through;
         }
 
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
+        {
+        }
+
+        public override void onAstralWarp(Vector3 position)
         {
         }
         #endregion

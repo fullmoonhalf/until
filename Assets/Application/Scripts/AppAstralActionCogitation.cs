@@ -4,33 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 using until.modules.astral;
-
+using until.utils;
 
 
 namespace until.test
 {
-    public abstract class AppAstralActionPlayerBase : AstralAction
+    /// <summary>
+    /// 行動思考起点
+    /// </summary>
+    public abstract class AppAstralActionCogitation : AstralAction
     {
         #region Fields
-        protected AppSubstancePlayer RefPlayer { get; private set; } = null;
+        public abstract bool Trapped { get; }
+        protected AppAstralOrganizationSquad BelongGroup { get; private set; } = null;
         #endregion
 
         #region Methods
-        public AppAstralActionPlayerBase(AppSubstancePlayer player)
+        #region bind
+        public void bind(AppAstralOrganizationSquad group)
         {
-            RefPlayer = player;
+            BelongGroup = group;
         }
+        #endregion
 
         #region AstralAction
-        public AstralAction getNextAstralAction()
-        {
-            return new AppAstralActionPlayerControl(RefPlayer);
-        }
-
         public abstract void onAstralActionStart();
         public abstract bool onAstralActionUpdate(float delta_time);
         public abstract void onAstralActionEnd();
+        public abstract AstralAction getNextAstralAction();
         public abstract AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer);
         public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
         public abstract void onAstralWarp(Vector3 position);

@@ -13,6 +13,7 @@ namespace until.modules.gamefield
     {
         #region Definition
         public abstract Vector3 Position { get; set; }
+        protected abstract void onWarp(Vector3 position);
         #endregion
 
         #region Inspector
@@ -31,6 +32,12 @@ namespace until.modules.gamefield
         public void setIndividualIdentifier(GameEntityIdentifier individual)
         {
             _Individual = individual;
+        }
+
+        public void warp(Vector3 position)
+        {
+            onWarp(position);
+            Position = position;
         }
         #endregion
     }

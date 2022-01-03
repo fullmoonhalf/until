@@ -9,14 +9,16 @@ namespace until.modules.astral
     public class AstralElement : AstralInterceptedable
     {
         #region Fields.
-        private AstralAction _CurrentAction = null;
+        public AstralAction CurrentAction { get; private set; } = null;
         private AstralAction _NextAction = null;
+        private AstralInterceptedable _InterceptReceiver = null;
         #endregion
 
         #region Methods.
-        public AstralElement(AstralAction action)
+        public AstralElement(AstralAction start_action, AstralInterceptedable receiver)
         {
-            _NextAction = action;
+            _NextAction = start_action;
+            _InterceptReceiver = receiver;
         }
 
         public void onAstralUpdate(float delta_time)
@@ -24,47 +26,68 @@ namespace until.modules.astral
             // Ç±ÇÃÇ†ÇΩÇËâºÅB
             if (_NextAction != null)
             {
-                _CurrentAction = _NextAction;
+                CurrentAction = _NextAction;
                 _NextAction = null;
-                if (_CurrentAction != null)
+                if (CurrentAction != null)
                 {
-                    Log.info(this, $"{nameof(onAstralUpdate)} change action {_CurrentAction}");
-                    _CurrentAction.onAstralActionStart();
+                    Log.info(this, $"{nameof(onAstralUpdate)} change action {CurrentAction}");
+                    CurrentAction.onAstralActionStart();
                     return;
                 }
             }
-            if (_CurrentAction == null)
+            if (CurrentAction == null)
             {
                 return;
             }
 
-            var keep_alive = _CurrentAction.onAstralActionUpdate(delta_time);
+            var keep_alive = CurrentAction.onAstralActionUpdate(delta_time);
             if (keep_alive)
             {
                 return;
             }
 
-            _CurrentAction.onAstralActionEnd();
-            _NextAction = _CurrentAction.getNextAstralAction();
-            _CurrentAction = null;
+            execActionEnd();
+        }
+
+        private void execActionEnd()
+        {
+            if(CurrentAction != null)
+            {
+                CurrentAction.onAstralActionEnd();
+                _NextAction = CurrentAction.getNextAstralAction();
+                CurrentAction = null;
+            }
+        }
+
+        public void onWarp(Vector3 position)
+        {
+            if (CurrentAction != null)
+            {
+                CurrentAction.onAstralWarp(position);
+            }
         }
 
         #region AstralInterceptable
-        public bool onAstralInterceptTry(AstralInterfereable interferer)
+        public AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
-            if (_CurrentAction != null)
+            if (_InterceptReceiver != null)
             {
-                return _CurrentAction.onAstralInterceptTry(interferer);
+                var result = _InterceptReceiver.onAstralInterceptTry(interferer);
+                if (result == AstralInterceptResult.Cancel_ActionEnd)
+                {
+                    execActionEnd();
+                }
+                return result;
             }
-            return false;
+            return AstralInterceptResult.Cancel_Through;
         }
 
         public void onAstralInterceptEstablished(AstralInterfereable interferer)
         {
-            if (_CurrentAction != null)
+            if (_InterceptReceiver != null)
             {
-                _CurrentAction.onAstralInterceptEstablished(interferer);
-                _CurrentAction = null;
+                _InterceptReceiver.onAstralInterceptEstablished(interferer);
+                execActionEnd();
             }
         }
         #endregion

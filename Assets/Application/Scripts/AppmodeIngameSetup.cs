@@ -22,9 +22,13 @@ namespace until.test
             StageSetup,
             StageWait,
             CameraSetup,
+            SquadSetup,
             Transit,
             Exit,
         }
+
+        private const int EnemyCount = 30;
+        private const int SquadCapacity = 3;
         #endregion
 
         #region Fields.
@@ -63,7 +67,7 @@ namespace until.test
                         var builder = new StageSetupOrderBuilder();
                         builder.add(new AppStageIdentifier(LevelID.lv_003_001_00), StageSceneStatus.Active);
                         builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch01000, new GameEntitySerializableIdentifier("0"), Vector3.zero);
-                        for (var index = 0; index < 30; ++index)
+                        for (var index = 0; index < EnemyCount; ++index)
                         {
                             var x = math.getRandomRange(-3.0f, 3.0f);
                             var z = math.getRandomRange(-3.0f, 3.0f);
@@ -77,7 +81,47 @@ namespace until.test
                     break;
                 case Phase.CameraSetup:
                     Singleton.CameraManager.transitCamera<AppCameraActoinPlayerFollow>();
-                    transit(Phase.Transit);
+                    transit(Phase.SquadSetup);
+                    break;
+                case Phase.SquadSetup:
+                    {
+                        var local_db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
+                        var waypoint_index = math.getRandomIndex(local_db.Waypoints.Waypoints.Length);
+                        var company = new AppAstralOrganizationCompany();
+                        Singleton.AstralOrganizationManager.regist(company);
+                        AppAstralOrganizationSquad squad = null;
+                        for (var index = 0; index < EnemyCount; ++index)
+                        {
+                            if (squad != null)
+                            {
+                                if (squad.Population >= squad.Capacity)
+                                {
+                                    squad = null;
+                                }
+                            }
+                            if (squad == null)
+                            {
+                                squad = new AppAstralOrganizationSquad(SquadCapacity);
+                                company.regist(squad);
+                                Singleton.AstralOrganizationManager.regist(squad);
+                                waypoint_index = math.getRandomIndex(local_db.Waypoints.Waypoints.Length);
+                            }
+
+                            var identifier = new GameEntitySerializableIdentifier($"{1 + index}");
+                            var substance = Singleton.SubstanceManager.get(identifier) as AppSubstanceEnemy;
+                            if (substance != null)
+                            {
+                                var pos = local_db.Waypoints.Waypoints[waypoint_index].Position;
+                                pos.x += math.getRandomRange(-3.0f, 3.0f);
+                                pos.z += math.getRandomRange(-3.0f, 3.0f);
+                                substance.warp(pos);
+
+                                substance.bind(squad);
+                                squad.regist(substance);
+                            }
+                        }
+                        transit(Phase.Transit);
+                    }
                     break;
                 case Phase.Transit:
                     Singleton.ModeManager.enqueueNextMode<AppmodeIngame>();

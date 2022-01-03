@@ -18,8 +18,8 @@ namespace until.test
         #endregion
 
         #region Methods
-        public AppAstralActionNpcMove(AppSubstanceCharacter substance, AppAstralActionNpcCogitation cogitation, Vector3 target)
-             : base(substance, cogitation)
+        public AppAstralActionNpcMove(AppSubstanceCharacter substance, Vector3 target)
+             : base(substance)
         {
             _TargetPosition = target;
             _AttackTarget = Singleton.SubstanceManager.get(new GameEntitySerializableIdentifier("0"));
@@ -37,7 +37,8 @@ namespace until.test
         }
         public override bool onAstralNpcActionUpdate(float delta_time)
         {
-            if(_AttackTarget != null)
+#if false
+            if (_AttackTarget != null)
             {
                 var gap = _AttackTarget.Position - RefSubstance.Position;
                 var distance = gap.magnitude;
@@ -50,6 +51,7 @@ namespace until.test
                     }
                 }
             }
+#endif
 
             if (RefSubstance.RefNavMeshAgent != null)
             {
@@ -70,7 +72,7 @@ namespace until.test
         {
             if (TryToAttack)
             {
-                return new AppAstralActionNpcAttack(RefSubstance, RefCogitation, _AttackTarget);
+                return new AppAstralActionNpcAttack(RefSubstance, _AttackTarget);
             }
 
             return base.getNextAstralAction();
@@ -79,6 +81,12 @@ namespace until.test
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
         {
             setNavMeshUpdate(null);
+        }
+
+        public override void onAstralWarp(Vector3 position)
+        {
+            RefSubstance.Position = position;
+            setNavMeshUpdate(_TargetPosition);
         }
         #endregion
 
@@ -95,9 +103,11 @@ namespace until.test
             }
             else
             {
+                RefSubstance.RefNavMeshAgent.Warp(RefSubstance.Position);
                 RefSubstance.RefNavMeshAgent.isStopped = false;
-                RefSubstance.RefNavMeshAgent.SetDestination(target.Value);
                 RefSubstance.RefNavMeshAgent.speed = _Speed;
+                RefSubstance.RefNavMeshAgent.SetDestination(target.Value);
+                Log.info(this, nameof(setNavMeshUpdate), RefSubstance.gameObject.name, target.Value);
             }
         }
 
@@ -133,5 +143,14 @@ namespace until.test
         }
         #endregion
         #endregion
+    }
+
+
+    public class AppAstralActionNpcSquadMove : AppAstralActionNpcMove
+    {
+        public AppAstralActionNpcSquadMove(AppSubstanceCharacter substance, Vector3 target)
+            : base(substance, target)
+        {
+        }
     }
 }

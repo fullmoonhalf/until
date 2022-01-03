@@ -7,33 +7,43 @@ using UnityEngine;
 using until.modules.astral;
 
 
-
 namespace until.test
 {
-    public abstract class AppAstralActionPlayerBase : AstralAction
+    public abstract class AppAstralSquadActionBase : AstralAction
     {
         #region Fields
-        protected AppSubstancePlayer RefPlayer { get; private set; } = null;
+        public AppAstralOrganizationSquad RefSquad { get; private set; } = null;
         #endregion
 
         #region Methods
-        public AppAstralActionPlayerBase(AppSubstancePlayer player)
+        public AppAstralSquadActionBase(AppAstralOrganizationSquad squad)
         {
-            RefPlayer = player;
+            RefSquad = squad;
         }
 
         #region AstralAction
         public AstralAction getNextAstralAction()
         {
-            return new AppAstralActionPlayerControl(RefPlayer);
+            return RefSquad.getNextAstralAction();
+        }
+
+        public void onAstralWarp(Vector3 position)
+        {
+        }
+
+        public virtual AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
+        {
+            return RefSquad.onAstralInterceptTry(interferer);
         }
 
         public abstract void onAstralActionStart();
         public abstract bool onAstralActionUpdate(float delta_time);
         public abstract void onAstralActionEnd();
-        public abstract AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer);
         public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
-        public abstract void onAstralWarp(Vector3 position);
+        #endregion
+
+        #region Squad
+        public abstract AstralAction getMemberAstralAction(AppSubstanceCharacter substance);
         #endregion
         #endregion
     }

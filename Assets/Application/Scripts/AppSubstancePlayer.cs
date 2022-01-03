@@ -10,15 +10,18 @@ namespace until.test
     public class AppSubstancePlayer : AppSubstanceCharacter
     {
         #region Fields.
-        #endregion
-
-        #region Methods
-        #region AppSubstanceCharacter
-        protected override AstralAction getCogitationOrigin()
+        public override AppAstralActionCogitation OriginCongitation
         {
-            return new AppAstralActionPlayerControl(this);
+            get
+            {
+                if (_OriginCongitation == null)
+                {
+                    _OriginCongitation = new AppAstralActionPlayerCogitation(this);
+                }
+                return _OriginCongitation;
+            }
         }
-        #endregion
+        private AppAstralActionPlayerCogitation _OriginCongitation;
         #endregion
     }
 }

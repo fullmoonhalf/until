@@ -4,33 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using until.modules.astral;
+using until.system;
 
 
-
-namespace until.test
+namespace until.modules.astral
 {
-    public abstract class AppAstralActionPlayerBase : AstralAction
+    public abstract class AstralOrganizationGroup : AstralAction
     {
-        #region Fields
-        protected AppSubstancePlayer RefPlayer { get; private set; } = null;
+        #region Properties
+        public AstralElement Element { get; private set; }
         #endregion
 
         #region Methods
-        public AppAstralActionPlayerBase(AppSubstancePlayer player)
+        public void bind(AstralElement element)
         {
-            RefPlayer = player;
+            Element = element;
         }
 
         #region AstralAction
-        public AstralAction getNextAstralAction()
-        {
-            return new AppAstralActionPlayerControl(RefPlayer);
-        }
-
-        public abstract void onAstralActionStart();
-        public abstract bool onAstralActionUpdate(float delta_time);
         public abstract void onAstralActionEnd();
+        public abstract bool onAstralActionUpdate(float delta_time);
+        public abstract void onAstralActionStart();
+        public abstract AstralAction getNextAstralAction();
         public abstract AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer);
         public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
         public abstract void onAstralWarp(Vector3 position);
