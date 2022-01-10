@@ -51,17 +51,19 @@ namespace until.test
             public int Goal { get; set; }
             public int EntityCount => _RefTemplate.EntityCount;
             private DijkstraCondition _RefTemplate = null;
-            private float[,] _AdditionalCostTable = null;
+            private float[,] _AdditionalLinkCost = null;
+            private float[] _AdditionalNodeCost = null;
 
             public BattleOrderRouteContidtion(DijkstraCondition template)
             {
                 _RefTemplate = template;
-                _AdditionalCostTable = new float[template.EntityCount, template.EntityCount];
+                _AdditionalLinkCost = new float[template.EntityCount, template.EntityCount];
+                _AdditionalNodeCost = new float[template.EntityCount];
             }
 
             public float getLinkCost(int start, int end)
             {
-                return _RefTemplate.getLinkCost(start, end) + _AdditionalCostTable[start, end];
+                return _RefTemplate.getLinkCost(start, end) + _AdditionalLinkCost[start, end] + _AdditionalNodeCost[end];
             }
 
             public int[] getNeighbours(int start)
@@ -69,9 +71,15 @@ namespace until.test
                 return _RefTemplate.getNeighbours(start);
             }
 
-            public void addCost(int start, int end, float cost)
+            public void addNodeCost(int node, float cost)
             {
-                _AdditionalCostTable[start, end] = cost;
+                _AdditionalNodeCost[node] = cost;
+            }
+
+            public void addLinkCost(int start, int end, float cost)
+            {
+                _AdditionalLinkCost[start, end] += cost;
+                _AdditionalLinkCost[end, start] += cost;
             }
         }
         #endregion
@@ -99,10 +107,11 @@ namespace until.test
         {
             if (updatePlayerSectorInfo())
             {
-                var waypoints = _LevelDatabase.Waypoints.getWaypointsNearestList(_PlayerSector);
+                var waypoints = _LevelDatabase.Waypoints.getWaypointsNearestList(_RefPlayer.Position);
                 var orderer = new BattleOrderSolver(RefCompany.SquadList, _LevelDatabase);
                 var route_condition = new BattleOrderRouteContidtion(_LevelDatabase.Waypoints.DijkstraConditionTemplate);
 
+                // 移動先を決定
                 for (int waypoints_order = 0; waypoints_order < waypoints.Length; ++waypoints_order)
                 {
                     var waypoint_sector = waypoints[waypoints_order];
@@ -128,6 +137,7 @@ namespace until.test
                     }
                 }
 
+                // それぞれの移動ルートを指定
                 for (int index = 0; index < orderer.BattleOrderList.Length; ++index)
                 {
                     var order = orderer.BattleOrderList[index];
@@ -140,13 +150,11 @@ namespace until.test
                     route_condition.Goal = order.TargetSector;
                     var route = DijkstraResolver.resolvePath(route_condition);
                     var interferer = new AppAstralInterfererOnCombatSectorUpdate(route);
-
-                    Log.info(this, nameof(onAstralActionUpdate), route_condition.Start, route_condition.Goal);
                     for (int route_index = 1; route_index < route.Length; ++route_index)
                     {
-                        Log.info(this, nameof(onAstralActionUpdate), route[route_index]);
-                        route_condition.addCost(route[route_index - 1], route[route_index], 1.5f);
+                        route_condition.addLinkCost(route[route_index - 1], route[route_index], 1.5f);
                     }
+                    route_condition.addNodeCost(route_condition.Goal, 3.0f);
                     Singleton.AstralManager.interfere(interferer, order.Squad.Element);
                 }
             }
