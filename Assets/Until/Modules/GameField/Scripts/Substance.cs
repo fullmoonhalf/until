@@ -42,5 +42,3 @@ namespace until.modules.gamefield
         #endregion
     }
 }
-
-

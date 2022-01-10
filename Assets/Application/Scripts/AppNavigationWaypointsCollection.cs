@@ -124,10 +124,20 @@ namespace until.test
             return DijkstraResolver.resolveAllCost(filter);
         }
 
-        public int[] getWaypointsNearestList(int start)
+        public int[] getWaypointsNearestList(Vector3 position)
         {
-            var filter = new DijkstraInfo(_DijkstraConditionTemplate, start, 0);
-            return DijkstraResolver.resolveNearestIndexList(filter);
+            var list = new List<int>(Waypoints.Length);
+            var distance = new float[Waypoints.Length];
+            for (int index = 0; index < Waypoints.Length; ++index)
+            {
+                var waypoint = Waypoints[index];
+                var gap = waypoint.Position - position;
+                distance[index] = gap.sqrMagnitude;
+                list.Add(index);
+            }
+
+            list.Sort((a, b) => Math.Sign(distance[a] - distance[b]));
+            return list.ToArray();
         }
 
         public int getNearestWaypoint(Vector3 position)

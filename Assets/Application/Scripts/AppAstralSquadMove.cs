@@ -20,6 +20,7 @@ namespace until.test
         private int[] _SectorRoute = null;
         private int _SectorIndex = 0;
         private AppAstralLevelDatabase _LocalDB = null;
+        private Vector3 _StartPosition;
         #endregion
 
         #region Methods
@@ -27,6 +28,7 @@ namespace until.test
             : base(squad)
         {
             _LocalDB = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
+            _StartPosition = RefSquad.getPositionZero();
             if (sector_route != null)
             {
                 _SectorRoute = sector_route;
