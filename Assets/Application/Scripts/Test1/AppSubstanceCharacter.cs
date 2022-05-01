@@ -68,7 +68,6 @@ namespace until.test
 
         protected override void onWarp(Vector3 position)
         {
-            _AstralElement.onWarp(position);
         }
 
         public void bind(AppAstralOrganizationSquad group)

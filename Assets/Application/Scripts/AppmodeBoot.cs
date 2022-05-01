@@ -104,7 +104,8 @@ namespace until.test
                     break;
                 case Phase.NextMode:
                     Singleton.CameraManager.transitCamera<CameraActionFree>();
-                    Singleton.ModeManager.enqueueNextMode<ModeIngameSetup>();
+                    //Singleton.ModeManager.enqueueNextMode<ModeIngameSetup>();
+                    Singleton.ModeManager.enqueueNextMode<test.AppmodeIngameSetup>();
                     transit(Phase.Finish);
                     break;
                 default:

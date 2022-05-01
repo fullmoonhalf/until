@@ -67,14 +67,6 @@ namespace until.modules.astral
             }
         }
 
-        public void onWarp(Vector3 position)
-        {
-            if (CurrentAction != null)
-            {
-                CurrentAction.onAstralWarp(_RefSprite, position);
-            }
-        }
-
         #region AstralInterceptable
         public AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
