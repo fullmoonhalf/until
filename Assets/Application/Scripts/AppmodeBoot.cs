@@ -8,6 +8,7 @@ using until.system;
 using until.develop;
 using until.modules.camera;
 using until.modules.gamefield;
+using until.test2;
 
 namespace until.test
 {
@@ -103,7 +104,7 @@ namespace until.test
                     break;
                 case Phase.NextMode:
                     Singleton.CameraManager.transitCamera<CameraActionFree>();
-                    Singleton.ModeManager.enqueueNextMode<AppmodeIngameSetup>();
+                    Singleton.ModeManager.enqueueNextMode<ModeIngameSetup>();
                     transit(Phase.Finish);
                     break;
                 default:
