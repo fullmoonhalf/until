@@ -65,8 +65,10 @@ namespace until.test
                     {
                         transit(Phase.StageWait);
                         var builder = new StageSetupOrderBuilder();
+                        // プレイヤーのセットアップ
                         builder.add(new AppStageIdentifier(LevelID.lv_003_001_00), StageSceneStatus.Active);
                         builder.add(GameEntityIdentifiable.until_test_CharacterID_Ch01000, new GameEntitySerializableIdentifier("0"), Vector3.zero);
+                        // 敵キャラのセットアップ
                         for (var index = 0; index < EnemyCount; ++index)
                         {
                             var x = math.getRandomRange(-3.0f, 3.0f);

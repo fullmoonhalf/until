@@ -30,7 +30,6 @@ namespace until.modules.astral
                 _NextAction = null;
                 if (CurrentAction != null)
                 {
-                    Log.info(this, $"{nameof(onAstralUpdate)} change action {CurrentAction}");
                     CurrentAction.onAstralActionStart();
                     return;
                 }

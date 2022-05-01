@@ -107,7 +107,6 @@ namespace until.test
                 RefSubstance.RefNavMeshAgent.isStopped = false;
                 RefSubstance.RefNavMeshAgent.speed = _Speed;
                 RefSubstance.RefNavMeshAgent.SetDestination(target.Value);
-                Log.info(this, nameof(setNavMeshUpdate), RefSubstance.gameObject.name, target.Value);
             }
         }
 
