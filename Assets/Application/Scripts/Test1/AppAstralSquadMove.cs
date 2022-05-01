@@ -50,11 +50,11 @@ namespace until.test
         }
 
         #region AstralAction
-        public override void onAstralActionStart()
+        public override void onAstralActionStart(AstralSpritable sprite)
         {
         }
 
-        public override bool onAstralActionUpdate(float delta_time)
+        public override bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
         {
             if (checkArrival())
             {
@@ -89,7 +89,7 @@ namespace until.test
             return true;
         }
 
-        public override void onAstralActionEnd()
+        public override void onAstralActionEnd(AstralSpritable sprite)
         {
         }
 

@@ -31,11 +31,11 @@ namespace until.test
         }
 
         #region AstralAction
-        public override void onAstralActionStart()
+        public override void onAstralActionStart(AstralSpritable sprite)
         {
             setNavMeshUpdate(_TargetPosition);
         }
-        public override bool onAstralNpcActionUpdate(float delta_time)
+        public override bool onAstralNpcActionUpdate(AstralSpritable sprite, float delta_time)
         {
 #if false
             if (_AttackTarget != null)
@@ -63,19 +63,19 @@ namespace until.test
             }
         }
 
-        public override void onAstralActionEnd()
+        public override void onAstralActionEnd(AstralSpritable sprite)
         {
             setNavMeshUpdate(null);
         }
 
-        public override AstralAction getNextAstralAction()
+        public override AstralAction getNextAstralAction(AstralSpritable sprite)
         {
             if (TryToAttack)
             {
                 return new AppAstralActionNpcAttack(RefSubstance, _AttackTarget);
             }
 
-            return base.getNextAstralAction();
+            return base.getNextAstralAction(sprite);
         }
 
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
@@ -83,7 +83,7 @@ namespace until.test
             setNavMeshUpdate(null);
         }
 
-        public override void onAstralWarp(Vector3 position)
+        public override void onAstralWarp(AstralSpritable sprite, Vector3 position)
         {
             RefSubstance.Position = position;
             setNavMeshUpdate(_TargetPosition);

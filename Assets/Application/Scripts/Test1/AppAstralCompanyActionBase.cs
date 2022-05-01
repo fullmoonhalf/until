@@ -22,12 +22,12 @@ namespace until.test
         }
 
         #region AstralAction
-        public AstralAction getNextAstralAction()
+        public AstralAction getNextAstralAction(AstralSpritable sprite)
         {
-            return RefCompany.getNextAstralAction();
+            return RefCompany.getNextAstralAction(sprite);
         }
 
-        public void onAstralWarp(Vector3 position)
+        public void onAstralWarp(AstralSpritable sprite, Vector3 position)
         {
         }
 
@@ -36,9 +36,9 @@ namespace until.test
             return RefCompany.onAstralInterceptTry(interferer);
         }
 
-        public abstract void onAstralActionStart();
-        public abstract bool onAstralActionUpdate(float delta_time);
-        public abstract void onAstralActionEnd();
+        public abstract void onAstralActionStart(AstralSpritable sprite);
+        public abstract bool onAstralActionUpdate(AstralSpritable sprite, float delta_time);
+        public abstract void onAstralActionEnd(AstralSpritable sprite);
         public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
         #endregion
 

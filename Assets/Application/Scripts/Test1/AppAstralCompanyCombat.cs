@@ -97,13 +97,13 @@ namespace until.test
         }
 
         #region AppAstralCompanyActionBase
-        public override void onAstralActionStart()
+        public override void onAstralActionStart(AstralSpritable sprite)
         {
             _LevelDatabase = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
             _RefPlayer = Singleton.SubstanceManager.get(new GameEntitySerializableIdentifier("0"));
         }
 
-        public override bool onAstralActionUpdate(float delta_time)
+        public override bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
         {
             if (updatePlayerSectorInfo())
             {
@@ -161,7 +161,7 @@ namespace until.test
             return true;
         }
 
-        public override void onAstralActionEnd()
+        public override void onAstralActionEnd(AstralSpritable sprite)
         {
         }
 

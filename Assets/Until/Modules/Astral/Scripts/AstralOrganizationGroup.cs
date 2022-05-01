@@ -22,13 +22,13 @@ namespace until.modules.astral
         }
 
         #region AstralAction
-        public abstract void onAstralActionEnd();
-        public abstract bool onAstralActionUpdate(float delta_time);
-        public abstract void onAstralActionStart();
-        public abstract AstralAction getNextAstralAction();
+        public abstract void onAstralActionEnd(AstralSpritable sprite);
+        public abstract bool onAstralActionUpdate(AstralSpritable sprite, float delta_time);
+        public abstract void onAstralActionStart(AstralSpritable sprite);
+        public abstract AstralAction getNextAstralAction(AstralSpritable sprite);
         public abstract AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer);
         public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
-        public abstract void onAstralWarp(Vector3 position);
+        public abstract void onAstralWarp(AstralSpritable sprite, Vector3 position);
         #endregion
         #endregion
     }

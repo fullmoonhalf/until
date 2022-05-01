@@ -25,20 +25,20 @@ namespace until.test
         }
 
         #region AstralAction
-        public override AstralAction getNextAstralAction()
+        public override AstralAction getNextAstralAction(AstralSpritable sprite)
         {
             return new AppAstralActionPlayerControl(RefSubstance);
         }
 
-        public override void onAstralActionStart()
+        public override void onAstralActionStart(AstralSpritable sprite)
         {
         }
 
-        public override bool onAstralActionUpdate(float delta_time)
+        public override bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
         {
             return false;
         }
-        public override void onAstralActionEnd()
+        public override void onAstralActionEnd(AstralSpritable sprite)
         {
         }
 
@@ -51,7 +51,7 @@ namespace until.test
         {
         }
 
-        public override void onAstralWarp(Vector3 position)
+        public override void onAstralWarp(AstralSpritable sprite, Vector3 position)
         {
         }
         #endregion

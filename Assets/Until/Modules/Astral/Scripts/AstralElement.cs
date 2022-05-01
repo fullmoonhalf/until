@@ -12,6 +12,7 @@ namespace until.modules.astral
         public AstralAction CurrentAction { get; private set; } = null;
         private AstralAction _NextAction = null;
         private AstralInterceptedable _InterceptReceiver = null;
+        private AstralSpritable _RefSprite = null;
         #endregion
 
         #region Methods.
@@ -19,6 +20,14 @@ namespace until.modules.astral
         {
             _NextAction = start_action;
             _InterceptReceiver = receiver;
+            _RefSprite = null;
+        }
+
+        public AstralElement(AstralAction start_action, AstralSpritable sprite)
+        {
+            _NextAction = start_action;
+            _InterceptReceiver = sprite;
+            _RefSprite = sprite;
         }
 
         public void onAstralUpdate(float delta_time)
@@ -30,7 +39,7 @@ namespace until.modules.astral
                 _NextAction = null;
                 if (CurrentAction != null)
                 {
-                    CurrentAction.onAstralActionStart();
+                    CurrentAction.onAstralActionStart(_RefSprite);
                     return;
                 }
             }
@@ -39,7 +48,7 @@ namespace until.modules.astral
                 return;
             }
 
-            var keep_alive = CurrentAction.onAstralActionUpdate(delta_time);
+            var keep_alive = CurrentAction.onAstralActionUpdate(_RefSprite, delta_time);
             if (keep_alive)
             {
                 return;
@@ -50,10 +59,10 @@ namespace until.modules.astral
 
         private void execActionEnd()
         {
-            if(CurrentAction != null)
+            if (CurrentAction != null)
             {
-                CurrentAction.onAstralActionEnd();
-                _NextAction = CurrentAction.getNextAstralAction();
+                CurrentAction.onAstralActionEnd(_RefSprite);
+                _NextAction = CurrentAction.getNextAstralAction(_RefSprite);
                 CurrentAction = null;
             }
         }
@@ -62,7 +71,7 @@ namespace until.modules.astral
         {
             if (CurrentAction != null)
             {
-                CurrentAction.onAstralWarp(position);
+                CurrentAction.onAstralWarp(_RefSprite, position);
             }
         }
 

@@ -23,7 +23,7 @@ namespace until.test
         }
 
         #region AstralAction
-        public virtual AstralAction getNextAstralAction()
+        public virtual AstralAction getNextAstralAction(AstralSpritable sprite)
         {
             return RefSubstance.OriginCongitation;
         }
@@ -33,9 +33,9 @@ namespace until.test
             return RefSubstance.OriginCongitation.onAstralInterceptTry(interferer);
         }
 
-        public bool onAstralActionUpdate(float delta_time)
+        public bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
         {
-            var keep_alive = onAstralNpcActionUpdate(delta_time);
+            var keep_alive = onAstralNpcActionUpdate(sprite, delta_time);
             if (RefSubstance.OriginCongitation.Trapped)
             {
                 keep_alive = false;
@@ -43,17 +43,17 @@ namespace until.test
             return keep_alive;
         }
 
-        public virtual void onAstralWarp(Vector3 position)
+        public virtual void onAstralWarp(AstralSpritable sprite, Vector3 position)
         {
         }
 
-        public abstract void onAstralActionStart();
-        public abstract void onAstralActionEnd();
+        public abstract void onAstralActionStart(AstralSpritable sprite);
+        public abstract void onAstralActionEnd(AstralSpritable sprite);
         public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
         #endregion
 
         #region AstralNpcAction
-        public abstract bool onAstralNpcActionUpdate(float delta_time);
+        public abstract bool onAstralNpcActionUpdate(AstralSpritable sprite, float delta_time);
         #endregion
         #endregion
     }

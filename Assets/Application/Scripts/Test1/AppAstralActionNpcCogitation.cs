@@ -26,7 +26,7 @@ namespace until.test
         }
 
         #region AstralAction
-        public override AstralAction getNextAstralAction()
+        public override AstralAction getNextAstralAction(AstralSpritable sprite)
         {
             var next_action = _NextAction;
             if (next_action != null)
@@ -60,14 +60,14 @@ namespace until.test
             return next_action;
         }
 
-        public override void onAstralActionStart()
+        public override void onAstralActionStart(AstralSpritable sprite)
         {
         }
-        public override bool onAstralActionUpdate(float delta_time)
+        public override bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
         {
             return false;
         }
-        public override void onAstralActionEnd()
+        public override void onAstralActionEnd(AstralSpritable sprite)
         {
         }
 
@@ -82,7 +82,7 @@ namespace until.test
                     }
                 case AppAstralInterfererOnCombatSectorUpdate onCombatSectorUpdate:
                     {
-                        _NextAction = getNextAstralAction();
+                        _NextAction = getNextAstralAction(null);
                         return AstralInterceptResult.Cancel_Through;
                     }
             }
@@ -94,7 +94,7 @@ namespace until.test
         {
         }
 
-        public override void onAstralWarp(Vector3 position)
+        public override void onAstralWarp(AstralSpritable sprite, Vector3 position)
         {
         }
         #endregion

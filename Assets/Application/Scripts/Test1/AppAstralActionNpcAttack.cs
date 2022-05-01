@@ -25,12 +25,12 @@ namespace until.test
         }
 
         #region AstralAction
-        public override void onAstralActionStart()
+        public override void onAstralActionStart(AstralSpritable sprite)
         {
             _PhaseCount = 0;
         }
 
-        public override bool onAstralNpcActionUpdate(float delta_time)
+        public override bool onAstralNpcActionUpdate(AstralSpritable sprite, float delta_time)
         {
             switch (_PhaseCount)
             {
@@ -77,7 +77,7 @@ namespace until.test
             Singleton.BulletManager.regist(new BulletEmitter(specifier));
         }
 
-        public override void onAstralActionEnd()
+        public override void onAstralActionEnd(AstralSpritable sprite)
         {
         }
 
