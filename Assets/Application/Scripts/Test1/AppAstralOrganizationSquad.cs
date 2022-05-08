@@ -10,7 +10,7 @@ using until.modules.gamefield;
 
 namespace until.test
 {
-    public class AppAstralOrganizationSquad : AstralOrganizationGroup
+    public class AppAstralOrganizationSquad : AppAstralActionBase
     {
         #region Fields
         public AppSubstanceCharacter[] MemberList { get; private set; } = null;
@@ -97,20 +97,20 @@ namespace until.test
         #endregion
 
         #region AstralAction
-        public override void onAstralActionStart(AstralSpritable sprite)
+        public override void onAstralActionStart(AppAstralSpriteBase sprite)
         {
         }
 
-        public override bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
+        public override bool onAstralActionUpdate(AppAstralSpriteBase sprite, float delta_time)
         {
             return false;
         }
 
-        public override void onAstralActionEnd(AstralSpritable sprite)
+        public override void onAstralActionEnd(AppAstralSpriteBase sprite)
         {
         }
 
-        public override AstralAction getNextAstralAction(AstralSpritable sprite)
+        public override AppAstralActionBase getNextAstralAction(AppAstralSpriteBase sprite)
         {
             _CurrentAction = new AppAstralSquadMove(this, _Route, _RouteIndex);
             if (_Route != null)
@@ -141,14 +141,10 @@ namespace until.test
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
         {
         }
-
-        public override void onAstralWarp(AstralSpritable sprite, Vector3 position)
-        {
-        }
         #endregion
 
         #region AstralOrganizationGroup
-        public AstralAction getMemberAstralAction(AppSubstanceCharacter substance)
+        public AppAstralActionBase getMemberAstralAction(AppSubstanceCharacter substance)
         {
             if (_CurrentAction != null)
             {

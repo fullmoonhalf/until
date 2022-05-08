@@ -6,24 +6,31 @@ using until.develop;
 
 namespace until.modules.astral
 {
-    public class AstralElement : AstralInterceptedable
+    public interface AstralElementable : AstralInterceptedable
+    {
+        public void onAstralUpdate(float delta_time);
+    }
+
+    public class AstralElement<TypeAstralAction, TypeAstralSprite> : AstralElementable
+        where TypeAstralAction : AstralActionable<TypeAstralAction, TypeAstralSprite>
+        where TypeAstralSprite : AstralSpritable<TypeAstralSprite>
     {
         #region Fields.
-        public AstralAction CurrentAction { get; private set; } = null;
-        private AstralAction _NextAction = null;
+        public TypeAstralAction CurrentAction { get; private set; } = null;
+        private TypeAstralAction _NextAction = null;
         private AstralInterceptedable _InterceptReceiver = null;
-        private AstralSpritable _RefSprite = null;
+        private TypeAstralSprite _RefSprite = null;
         #endregion
 
         #region Methods.
-        public AstralElement(AstralAction start_action, AstralInterceptedable receiver)
+        public AstralElement(TypeAstralAction start_action, AstralInterceptedable receiver)
         {
             _NextAction = start_action;
             _InterceptReceiver = receiver;
             _RefSprite = null;
         }
 
-        public AstralElement(AstralAction start_action, AstralSpritable sprite)
+        public AstralElement(TypeAstralAction start_action, TypeAstralSprite sprite)
         {
             _NextAction = start_action;
             _InterceptReceiver = sprite;

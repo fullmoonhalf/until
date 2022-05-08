@@ -10,7 +10,7 @@ using until.modules.astral;
 
 namespace until.test
 {
-    public abstract class AppAstralActionPlayerBase : AstralAction
+    public abstract class AppAstralActionPlayerBase : AppAstralActionBase
     {
         #region Fields
         protected AppSubstancePlayer RefPlayer { get; private set; } = null;
@@ -23,17 +23,10 @@ namespace until.test
         }
 
         #region AstralAction
-        public AstralAction getNextAstralAction(AstralSpritable sprite)
+        public override AppAstralActionBase getNextAstralAction(AppAstralSpriteBase sprite)
         {
             return new AppAstralActionPlayerControl(RefPlayer);
-        }
-
-        public abstract void onAstralActionStart(AstralSpritable sprite);
-        public abstract bool onAstralActionUpdate(AstralSpritable sprite, float delta_time);
-        public abstract void onAstralActionEnd(AstralSpritable sprite);
-        public abstract AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer);
-        public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
-        public abstract void onAstralWarp(AstralSpritable sprite, Vector3 position);
+            }
         #endregion
         #endregion
     }

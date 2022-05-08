@@ -9,7 +9,7 @@ using until.modules.astral;
 
 namespace until.test
 {
-    public abstract class AppAstralSquadActionBase : AstralAction
+    public abstract class AppAstralSquadActionBase : AppAstralActionBase
     {
         #region Fields
         public AppAstralOrganizationSquad RefSquad { get; private set; } = null;
@@ -22,28 +22,19 @@ namespace until.test
         }
 
         #region AstralAction
-        public AstralAction getNextAstralAction(AstralSpritable sprite)
+        public override AppAstralActionBase getNextAstralAction(AppAstralSpriteBase sprite)
         {
             return RefSquad.getNextAstralAction(sprite);
         }
 
-        public void onAstralWarp(AstralSpritable sprite, Vector3 position)
-        {
-        }
-
-        public virtual AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
+        public override AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
             return RefSquad.onAstralInterceptTry(interferer);
         }
-
-        public abstract void onAstralActionStart(AstralSpritable sprite);
-        public abstract bool onAstralActionUpdate(AstralSpritable sprite, float delta_time);
-        public abstract void onAstralActionEnd(AstralSpritable sprite);
-        public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
         #endregion
 
         #region Squad
-        public abstract AstralAction getMemberAstralAction(AppSubstanceCharacter substance);
+        public abstract AppAstralActionBase getMemberAstralAction(AppSubstanceCharacter substance);
         #endregion
         #endregion
     }

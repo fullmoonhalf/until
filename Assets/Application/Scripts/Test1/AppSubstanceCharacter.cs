@@ -23,7 +23,7 @@ namespace until.test
         /// <summary>CharacterID への参照</summary>
         public CharacterID CharacterID => _CharacterId;
         /// <summary>AstralElement</summary>
-        private AstralElement _AstralElement = null;
+        private AppAstralElement _AstralElement = null;
         /// <summary>位置</summary>
         private Vector3 _Position = Vector3.zero;
         /// <summary>ナビエージェントへの参照</summary>
@@ -44,7 +44,7 @@ namespace until.test
                 RefNavMeshAgent.updateRotation = false;
             }
 
-            _AstralElement = new AstralElement(OriginCongitation, this);
+            _AstralElement = new AppAstralElement(OriginCongitation, this);
             Singleton.AstralManager.regist(_AstralElement);
         }
 

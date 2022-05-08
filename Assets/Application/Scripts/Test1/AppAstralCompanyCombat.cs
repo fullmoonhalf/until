@@ -97,13 +97,13 @@ namespace until.test
         }
 
         #region AppAstralCompanyActionBase
-        public override void onAstralActionStart(AstralSpritable sprite)
+        public override void onAstralActionStart(AppAstralSpriteBase sprite)
         {
             _LevelDatabase = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
             _RefPlayer = Singleton.SubstanceManager.get(new GameEntitySerializableIdentifier("0"));
         }
 
-        public override bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
+        public override bool onAstralActionUpdate(AppAstralSpriteBase sprite, float delta_time)
         {
             if (updatePlayerSectorInfo())
             {
@@ -155,13 +155,13 @@ namespace until.test
                         route_condition.addLinkCost(route[route_index - 1], route[route_index], 1.5f);
                     }
                     route_condition.addNodeCost(route_condition.Goal, 3.0f);
-                    Singleton.AstralManager.interfere(interferer, order.Squad.Element);
+                    //Singleton.AstralManager.interfere(interferer, order.Squad);
                 }
             }
             return true;
         }
 
-        public override void onAstralActionEnd(AstralSpritable sprite)
+        public override void onAstralActionEnd(AppAstralSpriteBase sprite)
         {
         }
 
@@ -174,7 +174,7 @@ namespace until.test
             return AstralInterceptResult.Cancel_Through;
         }
 
-        public override AstralAction getSquadAstralAction(AppAstralOrganizationSquad squad)
+        public override AppAstralActionBase getSquadAstralAction(AppAstralOrganizationSquad squad)
         {
             return null;
         }

@@ -25,11 +25,11 @@ namespace until.test
 
 
         #region AstralAction
-        public override void onAstralActionStart(AstralSpritable sprite)
+        public override void onAstralActionStart(AppAstralSpriteBase sprite)
         {
         }
 
-        public override bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
+        public override bool onAstralActionUpdate(AppAstralSpriteBase sprite, float delta_time)
         {
             move(delta_time);
             if (Singleton.InputManager.isTrig(InputPad.Player1, InputButton.R2))
@@ -39,7 +39,7 @@ namespace until.test
             return true;
         }
 
-        public override void onAstralActionEnd(AstralSpritable sprite)
+        public override void onAstralActionEnd(AppAstralSpriteBase sprite)
         {
         }
 
@@ -51,12 +51,7 @@ namespace until.test
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
         {
         }
-
-        public override void onAstralWarp(AstralSpritable sprite, Vector3 position)
-        {
-        }
         #endregion
-
 
         private void move(float delta_time)
         {

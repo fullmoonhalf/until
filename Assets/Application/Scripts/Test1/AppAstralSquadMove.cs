@@ -50,11 +50,11 @@ namespace until.test
         }
 
         #region AstralAction
-        public override void onAstralActionStart(AstralSpritable sprite)
+        public override void onAstralActionStart(AppAstralSpriteBase sprite)
         {
         }
 
-        public override bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
+        public override bool onAstralActionUpdate(AppAstralSpriteBase sprite, float delta_time)
         {
             if (checkArrival())
             {
@@ -89,7 +89,7 @@ namespace until.test
             return true;
         }
 
-        public override void onAstralActionEnd(AstralSpritable sprite)
+        public override void onAstralActionEnd(AppAstralSpriteBase sprite)
         {
         }
 
@@ -100,7 +100,7 @@ namespace until.test
         #endregion
 
         #region AppAstralSquadActionBase
-        public override AstralAction getMemberAstralAction(AppSubstanceCharacter substance)
+        public override AppAstralActionBase getMemberAstralAction(AppSubstanceCharacter substance)
         {
             var target = _TargetPosition;
             target.x += math.getRandomRange(-_RandomRange, _RandomRange);

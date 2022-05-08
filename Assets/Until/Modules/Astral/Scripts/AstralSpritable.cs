@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace until.modules.astral
 {
-    public interface AstralSpritable : AstralInterceptedable
+    public abstract class AstralSpritable<TypeAstralSprite> : AstralInterceptedable
+        where TypeAstralSprite : AstralSpritable<TypeAstralSprite>
     {
+        public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
+        public abstract AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer);
     }
 }

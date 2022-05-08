@@ -6,16 +6,19 @@ using UnityEngine;
 
 namespace until.modules.astral
 {
-    public interface AstralAction : AstralInterceptedable
+    public abstract class AstralActionable<TypeAstralAction, TypeAstralSprite>
+        where TypeAstralAction : AstralActionable<TypeAstralAction, TypeAstralSprite>
+        where TypeAstralSprite : AstralSpritable<TypeAstralSprite>
     {
         /// <summary>アクション開始時</summary>
-        public void onAstralActionStart(AstralSpritable sprite);
+        public abstract void onAstralActionStart(TypeAstralSprite sprite);
         /// <summary>アクション更新時処理</summary>
         /// <returns>アクションを継続する場合は true を返す</returns>
-        public bool onAstralActionUpdate(AstralSpritable sprite, float delta_time);
+        public abstract bool onAstralActionUpdate(TypeAstralSprite sprite, float delta_time);
         /// <summary>アクション終了時</summary>
-        public void onAstralActionEnd(AstralSpritable sprite);
-        /// <summary>次のアクションを取得する</summary>
-        public AstralAction getNextAstralAction(AstralSpritable spritable);
+        public abstract void onAstralActionEnd(TypeAstralSprite sprite);
+        public abstract TypeAstralAction getNextAstralAction(TypeAstralSprite spritable);
+        public abstract AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer);
+        public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
     }
 }

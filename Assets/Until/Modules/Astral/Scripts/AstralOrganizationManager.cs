@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if false
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace until.modules.astral
     public class AstralOrganizationManager : Singleton<AstralOrganizationManager>
     {
         #region Fields
-        private Dictionary<AstralOrganizationGroup, AstralElement> _GroupCollection = new Dictionary<AstralOrganizationGroup, AstralElement>();
+        private Dictionary<AstralOrganizationGroupable, AstralElementable> _GroupCollection = new Dictionary<AstralOrganizationGroupable, AstralElementable>();
         #endregion
 
         #region Methods
@@ -49,14 +50,14 @@ namespace until.modules.astral
         #endregion
 
         #region Management
-        public void regist(AstralOrganizationGroup group)
+        public void regist(AstralOrganizationGroupable group)
         {
             var element = new AstralElement(group, group);
             _GroupCollection.Add(group, element);
             group.bind(element);
         }
 
-        public void unregist(AstralOrganizationGroup group)
+        public void unregist(AstralOrganizationGroupable group)
         {
             _GroupCollection.Remove(group);
         }
@@ -64,3 +65,4 @@ namespace until.modules.astral
         #endregion
     }
 }
+#endif

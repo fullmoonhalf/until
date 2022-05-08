@@ -90,7 +90,7 @@ namespace until.test
                         var local_db = Singleton.AppAstralWorldDatabase.getLevelDatabase(new AppStageIdentifier(LevelID.lv_003_001_00));
                         var waypoint_index = math.getRandomIndex(local_db.Waypoints.Waypoints.Length);
                         var company = new AppAstralOrganizationCompany();
-                        Singleton.AstralOrganizationManager.regist(company);
+                        //Singleton.AstralOrganizationManager.regist(company);
                         AppAstralOrganizationSquad squad = null;
                         for (var index = 0; index < EnemyCount; ++index)
                         {
@@ -105,7 +105,7 @@ namespace until.test
                             {
                                 squad = new AppAstralOrganizationSquad(SquadCapacity);
                                 company.regist(squad);
-                                Singleton.AstralOrganizationManager.regist(squad);
+                                //Singleton.AstralOrganizationManager.regist(squad);
                                 waypoint_index = math.getRandomIndex(local_db.Waypoints.Waypoints.Length);
                             }
 

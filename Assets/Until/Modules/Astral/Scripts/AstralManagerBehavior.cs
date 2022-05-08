@@ -14,7 +14,6 @@ namespace until.modules.astral
         // Start is called before the first frame update
         void Start()
         {
-            Singleton.AstralOrganizationManager.onStart();
             Singleton.AstralManager.onStart();
         }
 
@@ -22,14 +21,12 @@ namespace until.modules.astral
         void Update()
         {
             var delta_time = Time.deltaTime;
-            Singleton.AstralOrganizationManager.onUpdate(delta_time);
             Singleton.AstralManager.onUpdate(delta_time);
         }
 
         void OnDestroy()
         {
             Singleton.AstralManager.onDestroy();
-            Singleton.AstralOrganizationManager.onDestroy();
         }
     }
 }

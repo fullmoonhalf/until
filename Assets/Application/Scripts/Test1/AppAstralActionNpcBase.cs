@@ -10,7 +10,7 @@ using until.modules.astral;
 
 namespace until.test
 {
-    public abstract class AppAstralActionNpcBase : AstralAction
+    public abstract class AppAstralActionNpcBase : AppAstralActionBase
     {
         #region Fields
         protected AppSubstanceCharacter RefSubstance { get; private set; } = null;
@@ -23,17 +23,17 @@ namespace until.test
         }
 
         #region AstralAction
-        public virtual AstralAction getNextAstralAction(AstralSpritable sprite)
+        public override AppAstralActionBase getNextAstralAction(AppAstralSpriteBase sprite)
         {
             return RefSubstance.OriginCongitation;
         }
 
-        public virtual AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
+        public override AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer)
         {
             return RefSubstance.OriginCongitation.onAstralInterceptTry(interferer);
         }
 
-        public bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
+        public override bool onAstralActionUpdate(AppAstralSpriteBase sprite, float delta_time)
         {
             var keep_alive = onAstralNpcActionUpdate(sprite, delta_time);
             if (RefSubstance.OriginCongitation.Trapped)
@@ -42,18 +42,10 @@ namespace until.test
             }
             return keep_alive;
         }
-
-        public virtual void onAstralWarp(AstralSpritable sprite, Vector3 position)
-        {
-        }
-
-        public abstract void onAstralActionStart(AstralSpritable sprite);
-        public abstract void onAstralActionEnd(AstralSpritable sprite);
-        public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
         #endregion
 
         #region AstralNpcAction
-        public abstract bool onAstralNpcActionUpdate(AstralSpritable sprite, float delta_time);
+        public abstract bool onAstralNpcActionUpdate(AppAstralSpriteBase sprite, float delta_time);
         #endregion
         #endregion
     }

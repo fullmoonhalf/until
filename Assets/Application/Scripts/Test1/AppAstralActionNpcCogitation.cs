@@ -16,7 +16,7 @@ namespace until.test
         #region Fields
         public override bool Trapped => _NextAction != null;
         protected AppSubstanceCharacter RefSubstance { get; private set; } = null;
-        private AstralAction _NextAction = null;
+        private AppAstralActionBase _NextAction = null;
         #endregion
 
         #region Methods
@@ -26,7 +26,7 @@ namespace until.test
         }
 
         #region AstralAction
-        public override AstralAction getNextAstralAction(AstralSpritable sprite)
+        public override AppAstralActionBase getNextAstralAction(AppAstralSpriteBase sprite)
         {
             var next_action = _NextAction;
             if (next_action != null)
@@ -60,14 +60,14 @@ namespace until.test
             return next_action;
         }
 
-        public override void onAstralActionStart(AstralSpritable sprite)
+        public override void onAstralActionStart(AppAstralSpriteBase sprite)
         {
         }
-        public override bool onAstralActionUpdate(AstralSpritable sprite, float delta_time)
+        public override bool onAstralActionUpdate(AppAstralSpriteBase sprite, float delta_time)
         {
             return false;
         }
-        public override void onAstralActionEnd(AstralSpritable sprite)
+        public override void onAstralActionEnd(AppAstralSpriteBase sprite)
         {
         }
 
@@ -91,10 +91,6 @@ namespace until.test
         }
 
         public override void onAstralInterceptEstablished(AstralInterfereable interferer)
-        {
-        }
-
-        public override void onAstralWarp(AstralSpritable sprite, Vector3 position)
         {
         }
         #endregion
