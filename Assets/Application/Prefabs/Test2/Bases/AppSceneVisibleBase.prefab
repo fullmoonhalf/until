@@ -19,6 +19,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Visible
       objectReference: {fileID: 0}
+    - target: {fileID: 2759468840673954568, guid: 05d4337616934da4b95196e592c31da2, type: 3}
+      propertyPath: _ObjectTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759468840673954568, guid: 05d4337616934da4b95196e592c31da2, type: 3}
+      propertyPath: _ObjectTags.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6792807620800616200, guid: 05d4337616934da4b95196e592c31da2, type: 3}
       propertyPath: m_RootOrder
       value: 0
