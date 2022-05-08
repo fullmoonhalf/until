@@ -15,6 +15,12 @@ until_test2_IdentifierCharacter_Invalid,
 until_test2_IdentifierCharacter_Ch03000,
 [GameEntityIdentifierValue(IdentifierCharacter.Ch04000)]
 until_test2_IdentifierCharacter_Ch04000,
+[GameEntityIdentifierValue(IdentifierStage.lv_003_001_00)]
+until_test2_IdentifierStage_lv_003_001_00,
+[GameEntityIdentifierValue(IdentifierStage.lv_004_001_00)]
+until_test2_IdentifierStage_lv_004_001_00,
+[GameEntityIdentifierValue(IdentifierStage.Invalid)]
+until_test2_IdentifierStage_Invalid,
 [GameEntityIdentifierValue(CharacterID.Invalid)]
 until_test_CharacterID_Invalid,
 [GameEntityIdentifierValue(CharacterID.Ch01000)]

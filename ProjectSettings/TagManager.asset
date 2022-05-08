@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Develop
   - System
+  - Visible
   layers:
   - Default
   - TransparentFX

@@ -13,6 +13,7 @@ namespace until.test2
     {
         None,
         Visible,
+        Character,
     }
 
     public class TestTag : Taggable<TestTag>

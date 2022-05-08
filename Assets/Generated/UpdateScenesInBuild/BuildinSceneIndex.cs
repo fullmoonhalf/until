@@ -10,7 +10,7 @@ public static readonly int[] Category_AppSystem = new int[]{AppSystem_PermanentC
 public static readonly int[] Category_CameraModule = new int[]{CameraModule_CameraModule, };
 
 public static readonly string[] Paths = new string[]{
-"Assets/Application/Scenes/lv_003_001_00.unity",
+"Assets/Application/Level/lv_003_001_00.unity",
 "Assets/Application/Scenes/PermanentCollection.unity",
 "Assets/Until/Modules/Camera/Scenes/CameraModule.unity",
 };

@@ -1,4 +1,6 @@
 #if TEST
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +20,7 @@ namespace until.test
         private enum Phase
         {
             Initial,
+            IngameField_Setup,
             SetupBullet,
             StageSetup,
             StageWait,
@@ -50,7 +53,22 @@ namespace until.test
             switch (_CurrentPhase)
             {
                 case Phase.Initial:
-                    transit(Phase.SetupBullet);
+                    transit(Phase.IngameField_Setup);
+                    break;
+                case Phase.IngameField_Setup:
+                    {
+                        foreach (var stage in BuildinSceneIndex.Category_AppStage)
+                        {
+                            var path = BuildinSceneIndex.Paths[stage];
+                            var symbol = Path.GetFileNameWithoutExtension(path);
+                            if (Enum.TryParse<LevelID>(symbol, out var id))
+                            {
+                                var controller = new StageSceneController(new AppStageIdentifier(id), stage);
+                                Singleton.StageSceneManager.regist(controller);
+                            }
+                        }
+                        transit(Phase.SetupBullet);
+                    }
                     break;
                 case Phase.SetupBullet:
                     {

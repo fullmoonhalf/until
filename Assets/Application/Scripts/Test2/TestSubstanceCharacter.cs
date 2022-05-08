@@ -12,7 +12,7 @@ using until.modules.gamefield;
 namespace until.test2
 {
     [DefaultExecutionOrder(until.system.settings.UntilBehaviorOrder.GameField_Substance)]
-    public abstract class AppSubstanceCharacter : Substance
+    public class TestSubstanceCharacter : Substance
     {
         #region Field
         private TestAstralCharacterElement _BindedElement = null;
@@ -28,6 +28,21 @@ namespace until.test2
         public void unbind()
         {
             _BindedElement = null;
+        }
+
+        #endregion
+
+        #region Substance
+        public override Vector3 Position
+        {
+            get => _Position;
+            set => _Position = value;
+        }
+        private Vector3 _Position = Vector3.zero;
+
+        protected override void onWarp(Vector3 position)
+        {
+            _Position = position;
         }
         #endregion
         #endregion
