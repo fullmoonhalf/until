@@ -6,19 +6,28 @@ using until.develop;
 
 namespace until.modules.astral
 {
-    public class AstralElement : AstralInterceptedable
+    public interface AstralElementable : AstralInterceptedable
+    {
+        public void onAstralUpdate(float delta_time);
+    }
+
+    public class AstralElement<TypeAstralAction, TypeAstralSprite> : AstralElementable
+        where TypeAstralAction : AstralActionable<TypeAstralAction, TypeAstralSprite>
+        where TypeAstralSprite : AstralSpritable<TypeAstralSprite>
     {
         #region Fields.
-        public AstralAction CurrentAction { get; private set; } = null;
-        private AstralAction _NextAction = null;
+        public TypeAstralAction CurrentAction { get; private set; } = null;
+        private TypeAstralAction _NextAction = null;
         private AstralInterceptedable _InterceptReceiver = null;
+        private TypeAstralSprite _RefSprite = null;
         #endregion
 
         #region Methods.
-        public AstralElement(AstralAction start_action, AstralInterceptedable receiver)
+        public AstralElement(TypeAstralAction start_action, AstralInterceptedable receiver, TypeAstralSprite sprite)
         {
             _NextAction = start_action;
             _InterceptReceiver = receiver;
+            _RefSprite = sprite;
         }
 
         public void onAstralUpdate(float delta_time)
@@ -30,8 +39,7 @@ namespace until.modules.astral
                 _NextAction = null;
                 if (CurrentAction != null)
                 {
-                    Log.info(this, $"{nameof(onAstralUpdate)} change action {CurrentAction}");
-                    CurrentAction.onAstralActionStart();
+                    CurrentAction.onAstralActionStart(_RefSprite);
                     return;
                 }
             }
@@ -40,7 +48,7 @@ namespace until.modules.astral
                 return;
             }
 
-            var keep_alive = CurrentAction.onAstralActionUpdate(delta_time);
+            var keep_alive = CurrentAction.onAstralActionUpdate(_RefSprite, delta_time);
             if (keep_alive)
             {
                 return;
@@ -51,19 +59,11 @@ namespace until.modules.astral
 
         private void execActionEnd()
         {
-            if(CurrentAction != null)
-            {
-                CurrentAction.onAstralActionEnd();
-                _NextAction = CurrentAction.getNextAstralAction();
-                CurrentAction = null;
-            }
-        }
-
-        public void onWarp(Vector3 position)
-        {
             if (CurrentAction != null)
             {
-                CurrentAction.onAstralWarp(position);
+                CurrentAction.onAstralActionEnd(_RefSprite);
+                _NextAction = CurrentAction.getNextAstralAction(_RefSprite);
+                CurrentAction = null;
             }
         }
 

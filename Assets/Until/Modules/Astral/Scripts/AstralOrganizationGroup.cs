@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if false
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,27 +10,27 @@ using until.system;
 
 namespace until.modules.astral
 {
-    public abstract class AstralOrganizationGroup : AstralAction
+    public interface AstralOrganizationGroupable
+    {
+        public void onAstralUpdate(float delta_time);
+    }
+
+
+    public abstract class AstralOrganizationGroup<TypeAstralAction, TypeAstralSprite>
+        : AstralActionable<TypeAstralAction, TypeAstralSprite>, AstralOrganizationGroupable
+        where TypeAstralAction : AstralActionable<TypeAstralAction, TypeAstralSprite>
+        where TypeAstralSprite : AstralSpritable<TypeAstralSprite>
     {
         #region Properties
-        public AstralElement Element { get; private set; }
+        public AstralElement<TypeAstralAction, TypeAstralSprite> Element { get; private set; }
         #endregion
 
         #region Methods
-        public void bind(AstralElement element)
+        public void bind(AstralElement<TypeAstralAction, TypeAstralSprite> element)
         {
             Element = element;
         }
-
-        #region AstralAction
-        public abstract void onAstralActionEnd();
-        public abstract bool onAstralActionUpdate(float delta_time);
-        public abstract void onAstralActionStart();
-        public abstract AstralAction getNextAstralAction();
-        public abstract AstralInterceptResult onAstralInterceptTry(AstralInterfereable interferer);
-        public abstract void onAstralInterceptEstablished(AstralInterfereable interferer);
-        public abstract void onAstralWarp(Vector3 position);
-        #endregion
         #endregion
     }
 }
+#endif

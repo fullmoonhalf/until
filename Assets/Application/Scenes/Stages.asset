@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Category: AppStage
   _Entries:
-  - Path: Assets/Application/Scenes/lv_003_001_00.unity
+  - Path: Assets/Application/Level/lv_003_001_00.unity

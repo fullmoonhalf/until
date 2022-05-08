@@ -13,9 +13,9 @@ namespace until.modules.astral
         private class InterfereContext
         {
             public AstralInterfereable Source { get; private set; }
-            public AstralElement Target { get; private set; }
+            public AstralElementable Target { get; private set; }
 
-            public InterfereContext(AstralInterfereable source, AstralElement target)
+            public InterfereContext(AstralInterfereable source, AstralElementable target)
             {
                 Source = source;
                 Target = target;
@@ -27,7 +27,7 @@ namespace until.modules.astral
         /// <summary>排他制御オブジェ</summary>
         private Object _LockObject = new Object();
         /// <summary>Element の集合</summary>
-        private List<AstralElement> _ElementsCollection = new List<AstralElement>();
+        private List<AstralElementable> _ElementsCollection = new List<AstralElementable>();
         /// <summaryインターフェアリスト</summary>
         private List<InterfereContext> _InterfereList = new List<InterfereContext>();
         #endregion
@@ -88,7 +88,7 @@ namespace until.modules.astral
         #endregion
 
         #region Management
-        public void regist(AstralElement element)
+        public void regist(AstralElementable element)
         {
             lock (_LockObject)
             {
@@ -96,7 +96,7 @@ namespace until.modules.astral
             }
         }
 
-        public void unregist(AstralElement element)
+        public void unregist(AstralElementable element)
         {
             lock (_LockObject)
             {
@@ -106,7 +106,7 @@ namespace until.modules.astral
         #endregion
 
         #region Interfere
-        public void interfere(AstralInterfereable interferer, AstralElement target)
+        public void interfere(AstralInterfereable interferer, AstralElementable target)
         {
             lock (_LockObject)
             {

@@ -8,6 +8,7 @@ using until.system;
 using until.develop;
 using until.modules.camera;
 using until.modules.gamefield;
+using until.test2;
 
 namespace until.test
 {
@@ -23,7 +24,6 @@ namespace until.test
             PermanentCollection_Wait,
             System_Start,
             System_Wait,
-            IngameField_Setup,
             NextMode,
             Finish,
         }
@@ -82,28 +82,14 @@ namespace until.test
                 case Phase.PermanentCollection_Wait:
                     break;
                 case Phase.System_Start:
-                    Singleton.PrefabInstantiateMediator.requestFromCollection("AppSystem", (result, go) => transit(Phase.IngameField_Setup));
+                    Singleton.PrefabInstantiateMediator.requestFromCollection("AppSystem", (result, go) => transit(Phase.NextMode));
                     break;
                 case Phase.System_Wait:
                     break;
-                case Phase.IngameField_Setup:
-                    {
-                        foreach (var stage in BuildinSceneIndex.Category_AppStage)
-                        {
-                            var path = BuildinSceneIndex.Paths[stage];
-                            var symbol = Path.GetFileNameWithoutExtension(path);
-                            if (Enum.TryParse<LevelID>(symbol, out var id))
-                            {
-                                var controller = new StageSceneController(new AppStageIdentifier(id), stage);
-                                Singleton.StageSceneManager.regist(controller);
-                            }
-                        }
-                        transit(Phase.NextMode);
-                    }
-                    break;
                 case Phase.NextMode:
                     Singleton.CameraManager.transitCamera<CameraActionFree>();
-                    Singleton.ModeManager.enqueueNextMode<AppmodeIngameSetup>();
+                    Singleton.ModeManager.enqueueNextMode<ModeIngameSetup>();
+                    //Singleton.ModeManager.enqueueNextMode<test.AppmodeIngameSetup>();
                     transit(Phase.Finish);
                     break;
                 default:
