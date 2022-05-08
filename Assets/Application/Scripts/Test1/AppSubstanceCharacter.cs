@@ -44,7 +44,7 @@ namespace until.test
                 RefNavMeshAgent.updateRotation = false;
             }
 
-            _AstralElement = new AppAstralElement(OriginCongitation, this);
+            _AstralElement = new AppAstralElement(OriginCongitation, this, null);
             Singleton.AstralManager.regist(_AstralElement);
         }
 

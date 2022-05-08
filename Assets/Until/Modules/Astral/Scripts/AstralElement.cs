@@ -23,17 +23,10 @@ namespace until.modules.astral
         #endregion
 
         #region Methods.
-        public AstralElement(TypeAstralAction start_action, AstralInterceptedable receiver)
+        public AstralElement(TypeAstralAction start_action, AstralInterceptedable receiver, TypeAstralSprite sprite)
         {
             _NextAction = start_action;
             _InterceptReceiver = receiver;
-            _RefSprite = null;
-        }
-
-        public AstralElement(TypeAstralAction start_action, TypeAstralSprite sprite)
-        {
-            _NextAction = start_action;
-            _InterceptReceiver = sprite;
             _RefSprite = sprite;
         }
 

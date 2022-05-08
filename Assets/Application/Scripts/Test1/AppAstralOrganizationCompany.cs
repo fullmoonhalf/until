@@ -19,7 +19,7 @@ namespace until.test
 
         #region Methods
         public AppAstralOrganizationCompany()
-            : base(null, null)
+            : base(null, null, null)
         {
         }
 

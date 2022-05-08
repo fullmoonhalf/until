@@ -23,15 +23,9 @@ namespace until.test
 
     public class AppAstralElement : AstralElement<AppAstralActionBase, AppAstralSpriteBase>
     {
-        public AppAstralElement(AppAstralActionBase start_action, AppAstralSpriteBase sprite)
-            : base(start_action, sprite)
+        public AppAstralElement(AppAstralActionBase start_action, AstralInterceptedable receiver, AppAstralSpriteBase sprite)
+            : base(start_action, receiver, sprite)
         {
-        }
-
-        public AppAstralElement(AppAstralActionBase start_action, AstralInterceptedable receiver)
-            : base(start_action, receiver)
-        {
-
         }
     }
 }
