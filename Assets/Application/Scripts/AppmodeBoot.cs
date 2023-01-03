@@ -8,7 +8,7 @@ using until.system;
 using until.develop;
 using until.modules.camera;
 using until.modules.gamefield;
-using until.test2;
+
 
 namespace until.test
 {
@@ -70,14 +70,14 @@ namespace until.test
                     transit(Phase.Camera_Start);
                     break;
                 case Phase.Camera_Start:
-                    Singleton.SceneLoader.requestToLoad(BuildinSceneIndex.CameraModule_CameraModule, () => _CurrentPhase = Phase.PermanentCollection_Start);
                     transit(Phase.Camera_Wait);
+                    Singleton.SceneLoader.requestToLoad(BuildinSceneIndex.CameraModule_CameraModule, () => transit(Phase.PermanentCollection_Start));
                     break;
                 case Phase.Camera_Wait:
                     break;
                 case Phase.PermanentCollection_Start:
                     transit(Phase.PermanentCollection_Wait);
-                    Singleton.SceneLoader.requestToLoad(1, () => transit(Phase.System_Start));
+                    Singleton.SceneLoader.requestToLoad(BuildinSceneIndex.AppSystem_PermanentCollection, () => transit(Phase.System_Start));
                     break;
                 case Phase.PermanentCollection_Wait:
                     break;
@@ -88,7 +88,8 @@ namespace until.test
                     break;
                 case Phase.NextMode:
                     Singleton.CameraManager.transitCamera<CameraActionFree>();
-                    Singleton.ModeManager.enqueueNextMode<ModeIngameSetup>();
+                    Singleton.ModeManager.enqueueNextMode<test3.ModeIngameSetup>();
+                    //Singleton.ModeManager.enqueueNextMode<test2.ModeIngameSetup>();
                     //Singleton.ModeManager.enqueueNextMode<test.AppmodeIngameSetup>();
                     transit(Phase.Finish);
                     break;
