@@ -24,10 +24,13 @@ namespace until.test3
         public Mode.Control update()
         {
             // setup.
-            var character = new TestCharacterContext();
-            Singleton.ContextManager.regist(character);
-            var action = new TestCharacterActionWait(character);
-            Singleton.ContextManager.regist(action);
+            for(var index=0; index<2; ++index)
+            {
+                var character = new TestCharacterContext();
+                Singleton.ContextManager.regist(character);
+                var action = new TestCharacterActionWait(character);
+                Singleton.ContextManager.regist(action);
+            }
 
             // mode transition.
             Singleton.ModeManager.enqueueNextMode<ModeIngameRunning>();

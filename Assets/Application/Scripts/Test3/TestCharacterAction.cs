@@ -24,7 +24,13 @@ namespace until.test3
 
         public override Action onUpdate(in DeltaSituation ds)
         {
-            return onUpdateCharacter(ds);
+            var next = onUpdateCharacter(ds);
+            if (next == null)
+            {
+                next = _Subject.ActionSelector.onUpdateCharacter(ds);
+            }
+            return next;
+
         }
         #endregion
 
@@ -36,6 +42,26 @@ namespace until.test3
         }
 #endif
         #endregion
+    }
+    #endregion
+
+    #region Think
+    public class TestCharacterActionSelector : TestCharacterAction
+    {
+        public TestCharacterActionSelector(TestCharacterContext subject)
+            : base(subject)
+        {
+        }
+
+        public override Action onUpdateCharacter(in DeltaSituation ds)
+        {
+            switch (Singleton.RandomizerManager.getGlobalInt(0, 1))
+            {
+                case 0: return new TestCharacterActionWait(_Subject);
+                case 1: return new TestCharacterActionWork(_Subject);
+            }
+            return null;
+        }
     }
     #endregion
 
@@ -56,7 +82,7 @@ namespace until.test3
             _Timer += ds.DeltaTime;
             if (_Timer > _Span)
             {
-                return new TestCharacterActionWork(_Subject);
+                return null;
             }
 
             return this;
@@ -90,7 +116,7 @@ namespace until.test3
             _Timer += ds.DeltaTime;
             if (_Timer > _Span)
             {
-                return new TestCharacterActionWait(_Subject);
+                return null;
             }
 
             return this;
