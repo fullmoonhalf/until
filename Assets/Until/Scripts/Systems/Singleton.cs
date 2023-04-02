@@ -25,7 +25,7 @@ namespace until.system
         #endregion
 
         #region シングルトン生成まわり
-        private static List<SingletonBase> SingletonList = new List<SingletonBase>();
+        private static SingletonBase[] SingletonList = null;
 
         /// <summary>
         /// 全てのシングルトンを生成する。
@@ -33,6 +33,7 @@ namespace until.system
         public static void createAllSingleton()
         {
             // Singleton の生成
+            var list = new List<SingletonBase>();
             var SingletonTypes = typeof(SingletonBase).getSubclasses();
             foreach (var type in SingletonTypes)
             {
@@ -40,13 +41,17 @@ namespace until.system
                 if (instance is SingletonBase singleton)
                 {
                     singleton.onSingletonAwake();
-                    SingletonList.Add(singleton);
+                    list.Add(singleton);
                     Log.info(nameof(SingletonBase), type.FullName + " is created.");
                 }
             }
 
             // Singleton の開始メソッドの呼び出し
-            SingletonList.ForEach(singleton => singleton.onSingletonStart());
+            SingletonList = list.ToArray();
+            for (var index = 0; index < SingletonList.Length; ++index)
+            {
+                SingletonList[index].onSingletonStart();
+            }
         }
 
 
@@ -55,8 +60,11 @@ namespace until.system
         /// </summary>
         public static void destroyAllSingleton()
         {
-            // Singleton の終了メソッドの呼び出し
-            SingletonList.ForEach(singleton => singleton.onSingletonDestroy());
+            // Singleton の終了メソッドの呼び出し(初期化の逆順にしておく)
+            for (var index = SingletonList.Length - 1; index >= 0; --index)
+            {
+                SingletonList[index].onSingletonDestroy();
+            }
 
             // Singleton 破棄メソッドの呼び出し
             foreach (var singleton in SingletonList)
@@ -65,7 +73,7 @@ namespace until.system
             }
 
             // 破棄を誘発
-            SingletonList.Clear();
+            SingletonList = null;
         }
 
         #endregion
