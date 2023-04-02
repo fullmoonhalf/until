@@ -20,6 +20,8 @@ namespace until.test3
 
         public Mode.Control update()
         {
+            var ds = new DeltaSituation();
+            Singleton.ContextManager.update(ds);
             return Mode.Control.Keep;
         }
 
@@ -30,6 +32,5 @@ namespace until.test3
         #endregion
         #endregion
     }
-
 }
 

@@ -11,89 +11,49 @@ namespace until.test3
 
         #region Fields.
         private List<Context> _ContextCollection = null;
-        private List<ContextSyncRequest> _SyncRequestCollection = null;
         #endregion
 
 
         #region Methods.
         #region ContextManager
-        public void update()
+        public void update(in DeltaSituation ds)
         {
             var count = _ContextCollection.Count;
             for (var index = 0; index < count; ++index)
             {
-                execUpdate(_ContextCollection[index]);
+                execUpdate(_ContextCollection[index], ds);
             }
         }
 
-        private void execUpdate(Context context)
+        private void execUpdate(Context context, in DeltaSituation ds)
         {
-            context.update();
-        }
-
-        public void mediateSyncRequest()
-        {
-            _SyncRequestCollection.Sort((a, b) => a.Priority - b.Priority);
-            _SyncRequestCollection.RemoveAll(execSyncRequest);
+            context.update(ds);
         }
 
         /// <summary>
-        /// ìØä˙ÉäÉNÉGÉXÉgÇÃê¨óßämîF
+        /// ìoò^
         /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        private bool execSyncRequest(ContextSyncRequest request)
+        /// <param name="context"></param>
+        public void regist(Context context)
         {
-            var all_accepted = true;
-            var all_denied = true;
-            foreach (var target in request.Targets)
-            {
-                var result = target.checkSyncRequestAcceptable(request);
-                switch (result)
-                {
-                    case ContextRequestArrivalResult.Accept:
-                        all_denied = false;
-                        break;
-                    case ContextRequestArrivalResult.Hold:
-                        all_accepted = false;
-                        all_denied = false;
-                        break;
-                    case ContextRequestArrivalResult.Deny:
-                        all_accepted = false;
-                        break;
-                }
-            }
+            _ContextCollection.Add(context);
+        }
 
-            if (all_accepted)
-            {
-                request.Requester.notifySyncRequestEstablished(request, true);
-                foreach (var target in request.Targets)
-                {
-                    target.notifySyncRequestEstablished(request, false);
-                }
-                return true;
-            }
 
-            if (all_denied)
-            {
-                request.Requester.notifySyncRequestCanceled(request);
-                foreach (var target in request.Targets)
-                {
-                    target.notifySyncRequestCanceled(request);
-                }
-                return true;
-            }
-
-            return false;
+        /// <summary>
+        /// ìoò^âèú
+        /// </summary>
+        /// <param name="context"></param>
+        public void unregist(Context context)
+        {
+            _ContextCollection.Remove(context);
         }
         #endregion
-
 
         #region Singleton
         public override void onSingletonAwake()
         {
             _ContextCollection = new List<Context>();
-            _SyncRequestCollection = new List<ContextSyncRequest>();
         }
 
         public override void onSingletonStart()
@@ -102,7 +62,6 @@ namespace until.test3
 
         public override void onSingletonDestroy()
         {
-            _SyncRequestCollection = null;
             _ContextCollection = null;
         }
         #endregion
