@@ -15,11 +15,21 @@ namespace until.test3
         #region mode
         public Mode.Control init()
         {
+#if TEST
+            Singleton.DevelopIndicator.regist(Singleton.ContextManager);
+#endif
             return Mode.Control.Done;
         }
 
         public Mode.Control update()
         {
+            // setup.
+            var character = new TestCharacterContext();
+            Singleton.ContextManager.regist(character);
+            var action = new TestCharacterActionWait(character);
+            Singleton.ContextManager.regist(action);
+
+            // mode transition.
             Singleton.ModeManager.enqueueNextMode<ModeIngameRunning>();
             return Mode.Control.Done;
         }

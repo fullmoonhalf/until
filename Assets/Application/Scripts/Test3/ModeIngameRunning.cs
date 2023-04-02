@@ -1,4 +1,5 @@
 using until.system;
+using UnityEngine;
 
 
 namespace until.test3
@@ -20,7 +21,7 @@ namespace until.test3
 
         public Mode.Control update()
         {
-            var ds = new DeltaSituation();
+            var ds = new DeltaSituation(Time.deltaTime);
             Singleton.ContextManager.update(ds);
             return Mode.Control.Keep;
         }

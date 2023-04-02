@@ -1,21 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
-using until.system;
+using UnityEngine;
 
 
 namespace until.test3
 {
-    public class Context
+    public abstract class Action
     {
         #region Definition
-        #endregion
-
-        #region Properties
-        #endregion
-
-        #region Fields
-        #endregion
-
-        #region Methods
+        public abstract Action onUpdate(in DeltaSituation ds);
         #endregion
 
         #region Develop
