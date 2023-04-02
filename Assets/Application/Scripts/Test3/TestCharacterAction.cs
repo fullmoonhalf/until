@@ -42,12 +42,13 @@ namespace until.test3
     #region WaitAction 
     public class TestCharacterActionWait : TestCharacterAction
     {
-        private float _Span = 3.0f;
+        private float _Span = 0.0f;
         private float _Timer = 0.0f;
 
         public TestCharacterActionWait(TestCharacterContext subject)
             : base(subject)
         {
+            _Span = Singleton.RandomizerManager.getGlobalFloat() * 3.0f + 3.0f;
         }
 
         public override Action onUpdateCharacter(in DeltaSituation ds)
@@ -60,6 +61,15 @@ namespace until.test3
 
             return this;
         }
+
+        #region Develop
+#if TEST
+        public override string DebugStatus
+        {
+            get => $"{base.DebugStatus} {_Timer}";
+        }
+#endif
+        #endregion
     }
     #endregion
 
@@ -72,6 +82,7 @@ namespace until.test3
         public TestCharacterActionWork(TestCharacterContext subject)
             : base(subject)
         {
+            _Span = Singleton.RandomizerManager.getGlobalFloat() * 3.0f + 3.0f;
         }
 
         public override Action onUpdateCharacter(in DeltaSituation ds)
@@ -84,6 +95,15 @@ namespace until.test3
 
             return this;
         }
+
+        #region Develop
+#if TEST
+        public override string DebugStatus
+        {
+            get => $"{base.DebugStatus} {_Timer}";
+        }
+#endif
+        #endregion
     }
     #endregion
 }
