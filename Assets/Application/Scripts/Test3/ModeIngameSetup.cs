@@ -17,6 +17,8 @@ namespace until.test3
         {
 #if TEST
             Singleton.DevelopIndicator.regist(Singleton.ContextManager);
+            utils.algorithm.Test.testPriorityQueue();
+            utils.algorithm.Test.testAstar();
 #endif
             return Mode.Control.Done;
         }
@@ -34,7 +36,7 @@ namespace until.test3
             {
                 var character = new TestCharacterContext();
                 Singleton.ContextManager.regist(character);
-                var locator = new PseudoLocator(area.Area, 0);
+                var locator = new PseudoMobileLocator(area.Area);
                 area.regist(locator);
                 character.bind(locator);
 

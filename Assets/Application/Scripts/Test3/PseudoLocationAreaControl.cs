@@ -12,25 +12,39 @@ namespace until.test3
         #endregion
 
         #region Fields
-        private List<PseudoLocator> _LocatorCollection = null;
+        private List<PseudoFixedLocator> _FixedLocatorCollection = null;
+        private List<PseudoMobileLocator> _MobileLocatorCollection = null;
         #endregion
 
         #region Methods
         public PseudoLocationAreaControl(int area)
             : base(area)
         {
-            _LocatorCollection = new List<PseudoLocator>();
+            _FixedLocatorCollection = new List<PseudoFixedLocator>();
+            _MobileLocatorCollection = new List<PseudoMobileLocator>();
         }
 
-        public void regist(PseudoLocator locator)
+        #region Management
+        public void regist(PseudoFixedLocator locator)
         {
-            _LocatorCollection.Add(locator);
+            _FixedLocatorCollection.Add(locator);
         }
 
-        public void unregist(PseudoLocator locator)
+        public void regist(PseudoMobileLocator locator)
         {
-            _LocatorCollection.Remove(locator);
+            _MobileLocatorCollection.Add(locator);
         }
+
+        public void unregist(PseudoFixedLocator locator)
+        {
+            _FixedLocatorCollection.Remove(locator);
+        }
+
+        public void unregist(PseudoMobileLocator locator)
+        {
+            _MobileLocatorCollection.Remove(locator);
+        }
+        #endregion
 
         #region LocationAreaControl
         public override Locator[] extractLocation(LocatorRange range)

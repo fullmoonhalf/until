@@ -1,6 +1,6 @@
 namespace until.test3
 {
-    public class PseudoLocator : Locator
+    public class PseudoMobileLocator : Locator
     {
         #region Definition
         #endregion
@@ -9,25 +9,18 @@ namespace until.test3
         #endregion
 
         #region Fields
-        private int _ID = 0;
         #endregion
 
         #region Methods
-        public PseudoLocator(int area, int id)
+        public PseudoMobileLocator(int area)
             : base(area)
         {
-            _ID = id;
         }
 
         #region Locator
         public override LocatorRange checkRange(Locator locator)
         {
-            if (locator is PseudoLocator pseudo_locator)
-            {
-                return _ID == pseudo_locator._ID ? LocatorRange.InRange : LocatorRange.OutRange;
-            }
             return LocatorRange.OutRange;
-
         }
         #endregion
         #endregion
