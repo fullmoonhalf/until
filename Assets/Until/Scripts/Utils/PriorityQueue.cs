@@ -5,12 +5,19 @@ using until.develop;
 
 namespace until.utils.algorithm
 {
-    public class PriorityQueue<T> where T : IComparable
+    public class PriorityQueue<T> where T : IComparable<T>
     {
+        #region Properties.
         public int Capacity { get; private set; }
         public int Count { get; private set; }
-        private T[] _Heap = null;
+        #endregion
 
+        #region Fields.
+        private T[] _Heap = null;
+        #endregion
+
+
+        #region Methods
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -107,6 +114,74 @@ namespace until.utils.algorithm
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        public void remove(T element)
+        {
+            var index = find(element);
+            if (index < 0)
+            {
+                return;
+            }
+
+            // 削除
+            var node = _Heap[--Count];
+            while (index > 0)
+            {
+                int parent = (index - 1) / 2;
+                if (compare(_Heap[parent], node))
+                {
+                    break;
+                }
+                _Heap[index] = _Heap[parent];
+                index = parent;
+            }
+
+            while (true)
+            {
+                int a = index * 2 + 1;
+                if (a >= Count)
+                {
+                    break;
+                }
+                int b = a + 1;
+                if (b < Count && compare(_Heap[b], _Heap[a]))
+                {
+                    a = b;
+                }
+
+                if (compare(node, _Heap[a]))
+                {
+                    break;
+                }
+
+                _Heap[index] = _Heap[a];
+                index = a;
+            }
+
+            _Heap[index] = node;
+        }
+
+        /// <summary>
+        /// 要素が入っている index を見付ける
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private int find(T element)
+        {
+            for (var index = 0; index < Count; ++index)
+            {
+                var value = _Heap[index];
+                if (value.Equals(element))
+                {
+                    return index;
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
         /// 比較。
         /// </summary>
         /// <param name="a"></param>
@@ -116,7 +191,9 @@ namespace until.utils.algorithm
         {
             return a.CompareTo(b) <= 0;
         }
+        #endregion
 
+        #region Develop
 #if TEST
         /// <summary>
         /// デバッグ用の内容出力
@@ -125,9 +202,24 @@ namespace until.utils.algorithm
         {
             for (var index = 0; index < Count; ++index)
             {
-                Log.info(this, $"[{index}] = {_Heap[index]}");
+                int a = index * 2 + 1;
+                bool? chkA = null;
+                if (a < Count)
+                {
+                    chkA = compare(_Heap[index], _Heap[a]);
+                }
+
+                int b = a + 1;
+                bool? chkB = null;
+                if (b < Count)
+                {
+                    chkB = compare(_Heap[index], _Heap[b]);
+                }
+
+                Log.info(this, $"[{index}] = {_Heap[index]} {chkA} {chkB}");
             }
         }
 #endif
+        #endregion
     }
 }
