@@ -90,17 +90,17 @@ namespace until.utils.algorithm
         }
 
         #region Methods
-        public static int[] resolvePath(DijkstraCondition condition)
+        public static int[] resolvePath(DijkstraCondition condition, int start, int goal)
         {
             // 探査
             var context = new Context(condition.EntityCount);
-            var start_node = context.enqueue(condition.Goal);
+            var start_node = context.enqueue(goal);
             var found = false;
             start_node.Cost = 0.0f;
             while (context.hasSearchNode)
             {
                 var search_node = context.dequeue();
-                if (search_node.Index == condition.Start)
+                if (search_node.Index == start)
                 {
                     found = true;
                     break;
@@ -124,7 +124,7 @@ namespace until.utils.algorithm
             }
 
             var answer = new List<int>();
-            var node = context.Nodes[condition.Start];
+            var node = context.Nodes[start];
             while (node != null)
             {
                 answer.Add(node.Index);
@@ -149,11 +149,11 @@ namespace until.utils.algorithm
         }
 
 
-        private static Context resolveAllCostSearch(DijkstraCondition condition)
+        private static Context resolveAllCostSearch(DijkstraCondition condition, int start)
         {
             // 探査
             var context = new Context(condition.EntityCount);
-            var start_node = context.enqueue(condition.Start);
+            var start_node = context.enqueue(start);
             start_node.Cost = 0.0f;
             while (context.hasSearchNode)
             {
@@ -173,9 +173,9 @@ namespace until.utils.algorithm
         }
 
 
-        public static float[] resolveAllCost(DijkstraCondition condition)
+        public static float[] resolveAllCost(DijkstraCondition condition, int start)
         {
-            var context = resolveAllCostSearch(condition);
+            var context = resolveAllCostSearch(condition, start);
             var cost_list = new float[condition.EntityCount];
             for (int index = 0; index < condition.EntityCount; ++index)
             {
@@ -185,9 +185,9 @@ namespace until.utils.algorithm
         }
 
 
-        public static int[] resolveNearestIndexList(DijkstraCondition condition)
+        public static int[] resolveNearestIndexList(DijkstraCondition condition, int start)
         {
-            var context = resolveAllCostSearch(condition);
+            var context = resolveAllCostSearch(condition, start);
             var list = new List<Node>(context.Nodes);
             list.Sort((a, b) => Math.Sign(a.Cost - b.Cost));
 
@@ -201,12 +201,15 @@ namespace until.utils.algorithm
         #endregion
     }
 
-    public interface DijkstraCondition
+
+    public interface TraversalCondition
     {
-        public int Start { get; }
-        public int Goal { get; }
         public int EntityCount { get; }
         public float getLinkCost(int start, int end);
         public int[] getNeighbours(int start);
+    }
+
+    public interface DijkstraCondition : TraversalCondition
+    {
     }
 }

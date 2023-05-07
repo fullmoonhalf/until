@@ -12,14 +12,17 @@ namespace until.test3
         public abstract Action onUpdateCharacter(in DeltaSituation ds);
         #endregion
 
+        #region Properties
+        protected TestCharacterContext Subject { get; private set; }
+        #endregion
+
         #region Fields
-        protected TestCharacterContext _Subject;
         #endregion
 
         #region Methods
         public TestCharacterAction(TestCharacterContext subject)
         {
-            _Subject = subject;
+            Subject = subject;
         }
 
         public override Action onUpdate(in DeltaSituation ds)
@@ -27,7 +30,7 @@ namespace until.test3
             var next = onUpdateCharacter(ds);
             if (next == null)
             {
-                next = _Subject.ActionSelector.onUpdateCharacter(ds);
+                next = Subject.ActionSelector.onUpdateCharacter(ds);
             }
             return next;
 
@@ -38,7 +41,7 @@ namespace until.test3
 #if TEST
         public override string DebugStatus
         {
-            get => $"{base.DebugStatus} {_Subject.DebugStatus}";
+            get => $"{base.DebugStatus} {Subject.DebugStatus}";
         }
 #endif
         #endregion
@@ -57,8 +60,8 @@ namespace until.test3
         {
             switch (Singleton.RandomizerManager.getGlobalInt(0, 1))
             {
-                case 0: return new TestCharacterActionWait(_Subject);
-                case 1: return new TestCharacterActionWork(_Subject);
+                case 0: return new TestCharacterActionWait(Subject);
+                case 1: return new TestCharacterActionWork(Subject);
             }
             return null;
         }

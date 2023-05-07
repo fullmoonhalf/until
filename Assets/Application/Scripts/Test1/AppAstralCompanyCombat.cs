@@ -47,8 +47,6 @@ namespace until.test
         }
         private class BattleOrderRouteContidtion : DijkstraCondition
         {
-            public int Start { get; set; }
-            public int Goal { get; set; }
             public int EntityCount => _RefTemplate.EntityCount;
             private DijkstraCondition _RefTemplate = null;
             private float[,] _AdditionalLinkCost = null;
@@ -146,15 +144,13 @@ namespace until.test
                         continue;
                     }
 
-                    route_condition.Start = order.CurrentSector;
-                    route_condition.Goal = order.TargetSector;
-                    var route = DijkstraResolver.resolvePath(route_condition);
+                    var route = DijkstraResolver.resolvePath(route_condition, order.CurrentSector, order.TargetSector);
                     var interferer = new AppAstralInterfererOnCombatSectorUpdate(route);
                     for (int route_index = 1; route_index < route.Length; ++route_index)
                     {
                         route_condition.addLinkCost(route[route_index - 1], route[route_index], 1.5f);
                     }
-                    route_condition.addNodeCost(route_condition.Goal, 3.0f);
+                    route_condition.addNodeCost(order.TargetSector, 3.0f);
                     //Singleton.AstralManager.interfere(interferer, order.Squad);
                 }
             }
