@@ -95,7 +95,14 @@ namespace until.utils.algorithm
         {
             var condition = new TestAstarCondition();
             var resolver = new AstatResolver(condition);
-            resolver.resolvePath(2, 6);
+            var path = resolver.resolvePath(2, 6);
+            if (path != null)
+            {
+                for (var index = 0; index < path.Length; ++index)
+                {
+                    Log.info(resolver, $"[{index}] {path[index]}");
+                }
+            }
         }
         #endregion
     }

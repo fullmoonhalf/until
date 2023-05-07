@@ -201,10 +201,15 @@ namespace until.utils.algorithm
         #endregion
     }
 
-    public interface DijkstraCondition
+
+    public interface TraversalCondition
     {
         public int EntityCount { get; }
         public float getLinkCost(int start, int end);
         public int[] getNeighbours(int start);
+    }
+
+    public interface DijkstraCondition : TraversalCondition
+    {
     }
 }

@@ -18,7 +18,6 @@ namespace until.utils.algorithm
             Close,
         }
 
-
         private class Node : IComparable<Node>
         {
             public NodeStatus Status = NodeStatus.None;
@@ -58,6 +57,11 @@ namespace until.utils.algorithm
 
         public int[] resolvePath(int start, int goal)
         {
+            return resolvePathExec(goal, start);
+        }
+
+        private int[] resolvePathExec(int start, int goal)
+        {
             var active_node = _NodeList[start];
             open(active_node, 0.0f, _Condition.getHeuristicsCost(start, goal));
 
@@ -66,9 +70,8 @@ namespace until.utils.algorithm
                 active_node = _OpenQueue.pop();
                 if (active_node == null)
                 {
-                    break;
+                    return null;
                 }
-                Log.info(this, $"search {active_node.Index}");
                 if (active_node.Index == goal)
                 {
                     break;
@@ -82,7 +85,6 @@ namespace until.utils.algorithm
                     var test_node = _NodeList[test_node_index];
                     var cost = active_node.Cost + _Condition.getLinkCost(active_node.Index, test_node_index);
                     var heuristics = _Condition.getHeuristicsCost(test_node_index, goal);
-                    Log.info(this, $"check {test_node.Index}({test_node.Score}) : {cost}+{heuristics}={cost + heuristics}");
                     switch (test_node.Status)
                     {
                         case NodeStatus.None:
@@ -114,16 +116,13 @@ namespace until.utils.algorithm
                 }
             }
 
+            var path = new List<int>(_Condition.EntityCount);
             while (active_node != null)
             {
-                Log.info(this, $"{active_node.Index}");
+                path.Add(active_node.Index);
                 active_node = active_node.Parent;
             }
-
-
-
-
-            return null;
+            return path.ToArray();
         }
 
         private void open(Node node, float cost, float heuristics)
@@ -138,11 +137,8 @@ namespace until.utils.algorithm
         #endregion
     }
 
-    public interface AstarCondition
+    public interface AstarCondition : TraversalCondition
     {
-        public int EntityCount { get; }
-        public float getLinkCost(int start, int end);
-        public int[] getNeighbours(int start);
         public float getHeuristicsCost(int start, int end);
     }
 }
