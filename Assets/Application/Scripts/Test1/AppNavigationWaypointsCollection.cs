@@ -115,13 +115,13 @@ namespace until.test
         public int[] getPath(int start, int goal)
         {
             var filter = new DijkstraInfo(_DijkstraConditionTemplate, start, goal);
-            return DijkstraResolver.resolvePath(filter);
+            return DijkstraResolver.resolvePath(filter, start, goal);
         }
 
         public float[] getAllCost(int start)
         {
             var filter = new DijkstraInfo(_DijkstraConditionTemplate, start, 0);
-            return DijkstraResolver.resolveAllCost(filter);
+            return DijkstraResolver.resolveAllCost(filter, start);
         }
 
         public int[] getWaypointsNearestList(Vector3 position)
